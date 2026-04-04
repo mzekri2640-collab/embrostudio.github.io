@@ -42,7 +42,7 @@ body::after{content:'';position:fixed;inset:0;z-index:1;background:repeating-lin
   padding: 0;
   height: 100%;
   overflow-x: hidden;
-    overscroll-behavior: none;⁸
+    overscroll-behavior-y: contain;
     
   }
 #loader{position:fixed;inset:0;z-index:9999;background:#020408;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:56px}
@@ -2791,13 +2791,15 @@ document.addEventListener("touchmove", function(e) {
   let y = e.touches[0].clientY;
   let scrollTop = window.scrollY || document.documentElement.scrollTop;
 
-  // 🔥 autorise seulement si vraiment en haut (avec marge)
-  if (scrollTop < 5 && y > lastY) {
-    // en haut → on laisse faire
-  } else {
-    // sinon → on bloque
+  // ✅ Autorise uniquement si on est VRAIMENT en haut
+  if (scrollTop <= 0 && y > lastY) {
+    return;
+  }
+
+  // ❌ Bloque le pull-to-refresh ailleurs
+  if (y > lastY) {
     e.preventDefault();
   }
+
 }, { passive: false });
 </script>
-  
