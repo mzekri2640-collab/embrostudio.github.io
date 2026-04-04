@@ -1,0 +1,2702 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EARTHPULSE — Statistiques Mondiales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--void:#020408;--deep:#060d16;--panel:rgba(8,18,32,0.65);--glass:rgba(0,200,255,0.03);--glass2:rgba(0,200,255,0.06);--rim:rgba(0,200,255,0.08);--rim2:rgba(0,200,255,0.18);--cyan:#00d4ff;--cyan-dim:rgba(0,212,255,0.6);--cyan-glow:rgba(0,212,255,0.12);--teal:#00ffcc;--teal-dim:rgba(0,255,204,0.5);--amber:#ffb347;--amber-glow:rgba(255,179,71,0.15);--coral:#ff4d6d;--coral-glow:rgba(255,77,109,0.15);--lime:#7fff6b;--violet:#b06bff;--txt:#eaf2ff;--txt2:rgba(200,230,255,0.55);--txt3:rgba(160,210,255,0.28);--txt4:rgba(120,190,255,0.14);--fd:'Orbitron',monospace;--fm:'Space Mono',monospace;--fb:'Rajdhani',sans-serif;--radius:18px;--card-blur:blur(20px) saturate(180%)}
+[data-theme="light"]{--void:#f0f6ff;--deep:#e4eef8;--panel:rgba(220,235,250,0.7);--glass:rgba(0,80,160,0.03);--glass2:rgba(0,80,160,0.06);--rim:rgba(0,100,200,0.12);--rim2:rgba(0,100,200,0.22);--cyan:#0066cc;--cyan-dim:rgba(0,102,204,0.7);--cyan-glow:rgba(0,102,204,0.1);--teal:#009973;--teal-dim:rgba(0,153,115,0.6);--amber:#cc7700;--amber-glow:rgba(204,119,0,0.1);--coral:#cc2244;--coral-glow:rgba(204,34,68,0.1);--lime:#3a8c2e;--violet:#7733cc;--txt:#0a1a2e;--txt2:rgba(10,26,46,0.6);--txt3:rgba(10,26,46,0.3);--txt4:rgba(10,26,46,0.12)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;width:100%;overflow-x:hidden}
+body{font-family:'Rajdhani',sans-serif;background:var(--void);color:var(--txt);min-height:100vh;overflow-x:hidden;max-width:100vw;transition:background .5s,color .5s}
+body::after{content:'';position:fixed;inset:0;z-index:1;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.012) 2px,rgba(0,0,0,0.012) 4px);pointer-events:none}
+[data-theme="light"] body::after{background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,20,.008) 3px,rgba(0,0,20,.008) 6px)}
+
+/* COSMOS */
+#cosmos{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.cg{position:absolute;inset:-50%;background-image:linear-gradient(rgba(0,212,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.025) 1px,transparent 1px);background-size:60px 60px;animation:gdrift 20s linear infinite;transform-origin:center}
+@keyframes gdrift{0%{transform:perspective(700px) rotateX(18deg) translateY(0)}100%{transform:perspective(700px) rotateX(18deg) translateY(60px)}}
+[data-theme="light"] .cg{background-image:linear-gradient(rgba(0,80,180,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,80,180,.04) 1px,transparent 1px)}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);animation:ofloat 22s ease-in-out infinite}
+.o1{width:500px;height:500px;top:-160px;left:-80px;background:radial-gradient(circle,rgba(0,212,255,.06),transparent 70%);animation-delay:0s}
+.o2{width:380px;height:380px;top:35%;right:-100px;background:radial-gradient(circle,rgba(0,255,204,.045),transparent 70%);animation-delay:-8s}
+.o3{width:560px;height:560px;bottom:-200px;left:28%;background:radial-gradient(circle,rgba(176,107,255,.045),transparent 70%);animation-delay:-15s}
+@keyframes ofloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(28px,-18px) scale(1.04)}66%{transform:translate(-18px,14px) scale(.96)}}
+.stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 8% 18%,rgba(255,255,255,.45) 0%,transparent 100%),radial-gradient(1px 1px at 28% 62%,rgba(255,255,255,.3) 0%,transparent 100%),radial-gradient(1.5px 1.5px at 54% 13%,rgba(0,212,255,.5) 0%,transparent 100%),radial-gradient(1px 1px at 71% 74%,rgba(255,255,255,.35) 0%,transparent 100%),radial-gradient(1px 1px at 86% 33%,rgba(0,255,204,.4) 0%,transparent 100%),radial-gradient(1px 1px at 19% 81%,rgba(255,255,255,.25) 0%,transparent 100%),radial-gradient(1.5px 1.5px at 91% 88%,rgba(176,107,255,.4) 0%,transparent 100%),radial-gradient(1px 1px at 44% 44%,rgba(255,255,255,.3) 0%,transparent 100%),radial-gradient(1px 1px at 66% 57%,rgba(255,255,255,.2) 0%,transparent 100%),radial-gradient(1px 1px at 79% 11%,rgba(0,212,255,.3) 0%,transparent 100%);animation:stwink 9s ease-in-out infinite alternate}
+@keyframes stwink{0%{opacity:.6}100%{opacity:1}}
+[data-theme="light"] #cosmos{opacity:.25}
+
+/* APP */
+#app{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;width:100%}
+.hidden{display:none!important}
+#app.visible{display:flex;animation:arev .8s cubic-bezier(.16,1,.3,1) both}
+@keyframes arev{from{opacity:0}to{opacity:1}}
+
+/* LOADER */
+#loader{position:fixed;inset:0;z-index:9999;background:#020408;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:56px}
+#loader.out{animation:lout .9s cubic-bezier(.7,0,.3,1) forwards}
+@keyframes lout{to{opacity:0;transform:scale(1.06);pointer-events:none}}
+.l-hex{width:100px;height:100px;position:relative;display:flex;align-items:center;justify-content:center}
+.l-hex svg{position:absolute;width:100%;height:100%}
+.l-hex svg.r1{animation:hspin 3.5s linear infinite}
+.l-hex svg.r2{animation:hspin 2.2s linear infinite reverse}
+@keyframes hspin{to{transform:rotate(360deg)}}
+.l-earth{font-size:2.4rem;z-index:1;animation:epulse 2s ease-in-out infinite}
+@keyframes epulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.l-brand{font-family:'Orbitron',monospace;font-size:2.5rem;font-weight:900;letter-spacing:.45em;background:linear-gradient(135deg,#00d4ff,#00ffcc,#b06bff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.l-sub{font-family:'Rajdhani',sans-serif;font-size:.72rem;letter-spacing:.35em;color:rgba(0,212,255,.4);margin-top:8px;text-transform:uppercase;text-align:center;font-weight:500}
+.l-prog{width:320px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.l-bw{width:100%;height:2px;background:rgba(0,212,255,.08);border-radius:2px;overflow:hidden}
+.l-bf{height:100%;width:0%;background:linear-gradient(90deg,#00d4ff,#00ffcc);border-radius:2px;transition:width .18s ease;box-shadow:0 0 18px #00d4ff}
+.l-st{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.14em;color:rgba(0,212,255,.35);text-transform:uppercase}
+.l-pct{font-family:'Orbitron',monospace;font-size:3.5rem;font-weight:900;color:rgba(0,212,255,.07);letter-spacing:-.03em;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;user-select:none}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:100;background:rgba(2,4,8,.92);backdrop-filter:blur(32px) saturate(200%);border-bottom:1px solid var(--rim);padding:0 32px;transition:background .5s}
+[data-theme="light"] .hdr{background:rgba(240,246,255,.92)}
+.hdr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),var(--teal),transparent);opacity:.3}
+.hdr-in{max-width:1440px;margin:0 auto;height:72px;display:flex;align-items:center;gap:28px}
+.brand{display:flex;align-items:center;gap:14px;flex-shrink:0}
+.b-icon{width:42px;height:42px;border:1px solid var(--rim2);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;background:var(--glass2);position:relative;overflow:hidden;flex-shrink:0}
+.b-icon::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(0,212,255,.12))}
+.b-name{font-family:'Orbitron',monospace;font-weight:900;font-size:1.05rem;letter-spacing:.22em;background:linear-gradient(90deg,var(--cyan),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.b-ver{font-family:'Space Mono',monospace;font-size:.5rem;letter-spacing:.1em;color:var(--cyan-dim);border:1px solid var(--rim2);padding:3px 8px;border-radius:4px;background:var(--glass2)}
+.nav{flex:1;display:flex;gap:2px;justify-content:center}
+.nbtn{position:relative;padding:8px 16px;background:transparent;border:1px solid transparent;border-radius:7px;color:var(--txt2);font-family:'Rajdhani',sans-serif;font-size:.82rem;font-weight:600;letter-spacing:.08em;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:7px;text-transform:uppercase}
+.nbtn-e{transition:transform .25s}
+.nbtn:hover{color:var(--txt);background:var(--glass);border-color:var(--rim)}
+.nbtn:hover .nbtn-e{transform:scale(1.2)}
+.nbtn.on{color:var(--cyan);background:var(--glass2);border-color:var(--rim2)}
+.nbtn.on::after{content:'';position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);width:45%;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);box-shadow:0 0 8px var(--cyan)}
+.hdr-r{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.estim-badge{display:flex;align-items:center;gap:8px;background:rgba(0,255,204,.06);border:1px solid rgba(0,255,204,.2);padding:6px 14px;border-radius:24px}
+.estim-icon{font-size:.7rem}
+.estim-txt{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.16em;color:var(--teal);text-transform:uppercase}
+.ibtn{width:40px;height:40px;border-radius:10px;border:1px solid var(--rim);background:var(--glass);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.05rem;transition:all .25s;color:var(--txt2)}
+.ibtn:hover{background:var(--glass2);border-color:var(--rim2);color:var(--cyan);box-shadow:0 0 20px var(--cyan-glow)}
+
+/* MOBILE NAV — supprimée, remplacée par bnav uniquement */
+
+/* TICKER */
+.ticker{background:rgba(3,8,16,.7);backdrop-filter:blur(16px);border-bottom:1px solid var(--rim);height:42px;display:flex;align-items:center;overflow:hidden;position:relative}
+.ticker::before,.ticker::after{content:'';position:absolute;top:0;bottom:0;width:100px;z-index:1;pointer-events:none}
+.ticker::before{left:0;background:linear-gradient(90deg,var(--void),transparent)}
+.ticker::after{right:0;background:linear-gradient(-90deg,var(--void),transparent)}
+.ttrack{display:flex;align-items:center;white-space:nowrap;animation:troll 65s linear infinite;padding-left:100%}
+@keyframes troll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ti{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.08em;color:var(--txt2);padding:0 28px;display:flex;align-items:center;gap:8px}
+.tv{color:var(--cyan);font-weight:700}
+.tsep{color:var(--rim2);font-size:.7rem;padding:0 4px}
+
+/* MAIN */
+.main{flex:1;max-width:1440px;margin:0 auto;width:100%;padding:40px 32px 100px;overflow-x:hidden}
+
+/* SECTION */
+.sec{display:none;will-change:opacity,transform}
+.sec.on{display:block;animation:srev .48s cubic-bezier(.16,1,.3,1) both}
+.sec.slide-left{animation:slide-in-left .42s cubic-bezier(.16,1,.3,1) both}
+.sec.slide-right{animation:slide-in-right .42s cubic-bezier(.16,1,.3,1) both}
+.sec.slide-out-left{animation:slide-out-left .28s cubic-bezier(.7,0,.3,1) both}
+.sec.slide-out-right{animation:slide-out-right .28s cubic-bezier(.7,0,.3,1) both}
+@keyframes srev{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes slide-in-left{from{opacity:0;transform:translateX(48px)}to{opacity:1;transform:none}}
+@keyframes slide-in-right{from{opacity:0;transform:translateX(-48px)}to{opacity:1;transform:none}}
+@keyframes slide-out-left{from{opacity:1;transform:none}to{opacity:0;transform:translateX(-48px)}}
+@keyframes slide-out-right{from{opacity:1;transform:none}to{opacity:0;transform:translateX(48px)}}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:44px;gap:24px;flex-wrap:wrap}
+.sec-head.centered{justify-content:center;text-align:center}
+.sec-title{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(1.8rem,5vw,3.1rem);letter-spacing:-.01em;background:linear-gradient(135deg,var(--txt) 20%,var(--cyan-dim));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.sec-src{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.14em;color:var(--txt3);background:var(--glass2);border:1px solid var(--rim);padding:7px 16px;border-radius:6px;white-space:nowrap;text-transform:uppercase}
+
+/* HERO */
+.hero{position:relative;margin-bottom:32px;border-radius:var(--radius);overflow:hidden;background:var(--panel);backdrop-filter:var(--card-blur);border:1px solid var(--rim);padding:56px 48px}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 5%,var(--cyan) 30%,var(--teal) 70%,transparent 95%);box-shadow:0 0 30px var(--cyan-glow),0 0 60px var(--cyan-glow)}
+.hero::after{content:'';position:absolute;bottom:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--rim2),transparent)}
+.hero-bg{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% -20%,rgba(0,212,255,.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 120%,rgba(0,212,255,.03) 0%,transparent 50%)}
+.hero.g .hero-bg{background:radial-gradient(ellipse at 50% -20%,rgba(0,255,204,.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 120%,rgba(0,255,204,.03) 0%,transparent 50%)}
+.hero.a .hero-bg{background:radial-gradient(ellipse at 50% -20%,rgba(255,179,71,.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 120%,rgba(255,179,71,.03) 0%,transparent 50%)}
+.hero.r .hero-bg{background:radial-gradient(ellipse at 50% -20%,rgba(255,77,109,.08) 0%,transparent 60%),radial-gradient(ellipse at 80% 120%,rgba(255,77,109,.03) 0%,transparent 50%)}
+.hero.g::before{background:linear-gradient(90deg,transparent 5%,var(--teal) 30%,var(--lime) 70%,transparent 95%);box-shadow:0 0 30px rgba(0,255,204,.15)}
+.hero.a::before{background:linear-gradient(90deg,transparent 5%,var(--amber) 30%,#ffcc66 70%,transparent 95%);box-shadow:0 0 30px var(--amber-glow)}
+.hero.r::before{background:linear-gradient(90deg,transparent 5%,var(--coral) 30%,#ff8fa3 70%,transparent 95%);box-shadow:0 0 30px var(--coral-glow)}
+.hero-in{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center}
+.hero-tag{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.32em;text-transform:uppercase;color:var(--cyan);background:var(--cyan-glow);border:1px solid var(--rim2);padding:6px 20px;border-radius:24px;display:inline-flex;align-items:center;gap:8px}
+.hero.g .hero-tag{color:var(--teal);background:rgba(0,255,204,.06);border-color:rgba(0,255,204,.2)}
+.hero.a .hero-tag{color:var(--amber);background:var(--amber-glow);border-color:rgba(255,179,71,.22)}
+.hero.r .hero-tag{color:var(--coral);background:var(--coral-glow);border-color:rgba(255,77,109,.22)}
+.htdot{width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor;animation:lpulse 1.5s ease-in-out infinite}
+@keyframes lpulse{0%,100%{box-shadow:0 0 4px currentColor}50%{box-shadow:0 0 18px currentColor}}
+.hero-num{font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(2.4rem,9vw,5.6rem);letter-spacing:-.04em;line-height:1;color:var(--txt);font-variant-numeric:tabular-nums;text-shadow:0 0 80px rgba(0,212,255,.2),0 0 160px rgba(0,212,255,.06);position:relative}
+.hero.g .hero-num{text-shadow:0 0 80px rgba(0,255,204,.2),0 0 160px rgba(0,255,204,.06)}
+.hero.a .hero-num{text-shadow:0 0 80px var(--amber-glow),0 0 120px rgba(255,179,71,.05)}
+.hero.r .hero-num{text-shadow:0 0 80px var(--coral-glow),0 0 120px rgba(255,77,109,.05)}
+.hero-desc{font-family:'Rajdhani',sans-serif;font-size:1.05rem;font-weight:400;color:var(--txt2);letter-spacing:.04em;max-width:520px;line-height:1.5}
+.hero-sp{width:320px;height:56px;opacity:.6}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:18px;margin-bottom:36px}
+.card{position:relative;background:var(--panel);backdrop-filter:var(--card-blur);border:1px solid var(--rim);border-radius:var(--radius);padding:28px 24px;overflow:hidden;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s,border-color .35s;display:flex;flex-direction:column;gap:16px;animation:crev .55s cubic-bezier(.16,1,.3,1) both}
+.card:nth-child(1){animation-delay:.05s}.card:nth-child(2){animation-delay:.1s}.card:nth-child(3){animation-delay:.16s}.card:nth-child(4){animation-delay:.22s}.card:nth-child(5){animation-delay:.28s}.card:nth-child(6){animation-delay:.34s}
+@keyframes crev{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+.card::before{content:'';position:absolute;inset:0;background:linear-gradient(145deg,var(--glass2) 0%,transparent 50%);pointer-events:none}
+.cshine{position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(0,212,255,.06) 0%,transparent 55%);opacity:0;transition:opacity .4s;pointer-events:none}
+.card:hover .cshine{opacity:1}
+.card:hover{transform:translateY(-5px) scale(1.01);border-color:var(--rim2);box-shadow:0 28px 72px rgba(0,0,0,.5),0 0 40px var(--cyan-glow)}
+.ctop{display:flex;align-items:flex-start;justify-content:space-between}
+.ciw{width:50px;height:50px;border-radius:14px;background:var(--glass2);border:1px solid var(--rim2);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;position:relative}
+.ciw::after{content:'';position:absolute;bottom:-1px;left:18%;right:18%;height:2px;background:var(--cyan);box-shadow:0 0 10px var(--cyan);opacity:.4;border-radius:1px}
+.cb .ciw::after{background:var(--lime);box-shadow:0 0 10px var(--lime)}
+.cd .ciw::after,.cw .ciw::after{background:var(--coral);box-shadow:0 0 10px var(--coral)}
+.ce .ciw::after{background:var(--teal);box-shadow:0 0 10px var(--teal)}
+.cm .ciw::after{background:var(--amber);box-shadow:0 0 10px var(--amber)}
+.cbadge{font-family:'Space Mono',monospace;font-size:.52rem;letter-spacing:.12em;color:var(--txt3);background:var(--glass);border:1px solid var(--rim);padding:3px 10px;border-radius:4px;text-transform:uppercase;align-self:flex-start}
+.clabel{font-family:'Rajdhani',sans-serif;font-size:.88rem;font-weight:500;color:var(--txt2);letter-spacing:.06em;text-transform:uppercase}
+.cval{font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(1.2rem,3.5vw,1.75rem);letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--txt);line-height:1;margin-top:6px;transition:color .15s}
+.cval.bump{animation:nbump .25s ease}
+@keyframes nbump{0%{color:var(--cyan);text-shadow:0 0 12px var(--cyan-glow)}100%{color:var(--txt);text-shadow:none}}
+.cfoot{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:14px;border-top:1px solid var(--rim)}
+.crate{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.06em;color:var(--teal);display:flex;align-items:center;gap:6px}
+.cb .crate{color:var(--lime)}.cd .crate,.cw .crate{color:var(--coral)}.cm .crate{color:var(--amber)}
+.rdot{width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 6px currentColor;animation:lpulse 2s ease-in-out infinite}
+.cspk{width:80px;height:32px;opacity:.7}
+
+/* CHART */
+.cpanel{background:var(--panel);backdrop-filter:var(--card-blur);border:1px solid var(--rim);border-radius:var(--radius);padding:32px;margin-bottom:36px;position:relative;overflow:hidden}
+.cpanel::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--rim2),transparent)}
+.cph{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.cpt{font-family:'Orbitron',monospace;font-weight:700;font-size:.95rem;letter-spacing:.05em;color:var(--txt)}
+.cpl{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.14em;color:var(--txt3);text-transform:uppercase;background:var(--glass);border:1px solid var(--rim);padding:4px 12px;border-radius:4px}
+
+/* FOOTER */
+.foot{position:relative;z-index:2;border-top:1px solid var(--rim);background:rgba(3,8,16,.85);backdrop-filter:blur(20px);padding:22px 32px 90px}
+.foot::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--rim2),transparent)}
+.foot-in{max-width:1440px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.foot-brand{font-family:'Orbitron',monospace;font-size:.68rem;font-weight:900;letter-spacing:.2em;background:linear-gradient(90deg,var(--cyan),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.foot-txt{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.07em;color:var(--txt3)}
+.foot-upd{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.07em;color:var(--cyan-dim)}
+
+/* ═══ 3D GLOBE SECTION ═══ */
+#globe-container{width:100%;height:520px;border-radius:var(--radius);overflow:hidden;position:relative;background:var(--panel);backdrop-filter:var(--card-blur);border:1px solid var(--rim);margin-bottom:36px}
+.globe-label{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.2em;color:var(--txt3);text-transform:uppercase;background:var(--glass);border:1px solid var(--rim);padding:6px 18px;border-radius:20px;white-space:nowrap}
+
+/* ═══ COMPARATEUR PAYS ═══ */
+/* ═══ COUNTRY SELECTOR — chips compacts ═══ */
+.country-selector{
+  display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px;
+  max-height:160px;overflow-y:auto;padding-right:4px;
+}
+/* Scrollbar discrète */
+.country-selector::-webkit-scrollbar{width:3px}
+.country-selector::-webkit-scrollbar-track{background:transparent}
+.country-selector::-webkit-scrollbar-thumb{background:var(--rim2);border-radius:2px}
+/* Sur mobile : scroll horizontal en 1 ligne */
+@media(max-width:960px){
+  .country-selector{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;max-height:none;padding-bottom:4px;scrollbar-width:none;-ms-overflow-style:none}
+  .country-selector::-webkit-scrollbar{display:none}
+}
+.cbtn{
+  padding:6px 12px;border-radius:20px;border:1px solid var(--rim);
+  background:var(--glass);font-family:'Space Mono',monospace;font-size:.58rem;
+  font-weight:400;letter-spacing:.06em;cursor:pointer;transition:all .2s;
+  color:var(--txt2);display:flex;align-items:center;gap:6px;
+  text-transform:uppercase;white-space:nowrap;flex-shrink:0;
+}
+.cbtn:hover{background:var(--glass2);border-color:var(--rim2);color:var(--txt)}
+.cbtn.active{
+  border-color:var(--cyan);background:rgba(0,212,255,.1);
+  color:var(--cyan);box-shadow:0 0 10px var(--cyan-glow);
+}
+.cbtn .cflag{font-size:.85rem}
+
+.compare-metric-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.ctab{padding:7px 16px;border-radius:6px;border:1px solid var(--rim);background:var(--glass);font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.1em;cursor:pointer;color:var(--txt3);transition:all .2s;text-transform:uppercase}
+.ctab:hover{color:var(--txt2);border-color:var(--rim2)}
+.ctab.on{color:var(--cyan);border-color:var(--rim2);background:var(--glass2)}
+
+.compare-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:32px}
+.ccard{background:var(--panel);backdrop-filter:var(--card-blur);border:1px solid var(--rim);border-radius:var(--radius);padding:22px 20px;position:relative;overflow:hidden;transition:all .3s}
+.ccard:hover{border-color:var(--rim2);transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,.4)}
+.ccard-flag{font-size:1.8rem;margin-bottom:10px}
+.ccard-name{font-family:'Orbitron',monospace;font-size:.72rem;font-weight:700;letter-spacing:.1em;color:var(--txt);margin-bottom:14px}
+.ccard-metric{margin-bottom:8px}
+.ccard-ml{font-family:'Space Mono',monospace;font-size:.54rem;letter-spacing:.1em;color:var(--txt3);text-transform:uppercase}
+.ccard-mv{font-family:'Orbitron',monospace;font-size:1.05rem;font-weight:700;color:var(--cyan);margin-top:3px}
+.ccard-bar-wrap{margin-top:12px;height:5px;background:var(--rim);border-radius:3px;overflow:hidden}
+.ccard-bar{height:100%;border-radius:3px;transition:width .8s cubic-bezier(.16,1,.3,1)}
+.ccard-rank{position:absolute;top:14px;right:14px;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',monospace;font-size:.6rem;font-weight:900;border:1px solid var(--rim2);background:var(--glass2)}
+.ccard-rank.gold{color:#ffd700;border-color:rgba(255,215,0,.4);background:rgba(255,215,0,.08)}
+.ccard-rank.silver{color:#c0c0c0;border-color:rgba(192,192,192,.35);background:rgba(192,192,192,.07)}
+.ccard-rank.bronze{color:#cd7f32;border-color:rgba(205,127,50,.35);background:rgba(205,127,50,.07)}
+
+.compare-chart-panel{background:var(--panel);backdrop-filter:var(--card-blur);border:1px solid var(--rim);border-radius:var(--radius);padding:30px;margin-bottom:28px;position:relative;overflow:hidden}
+.compare-chart-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--rim2),transparent)}
+
+/* ═══ SEARCH + FILTER BAR ═══ */
+.compare-toolbar{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;align-items:center}
+.csearch-wrap{position:relative;flex:1;min-width:180px}
+.csearch-wrap::before{content:'🔍';position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:.75rem;pointer-events:none;opacity:.5}
+.csearch{width:100%;background:var(--glass);border:1px solid var(--rim);border-radius:8px;padding:9px 12px 9px 34px;color:var(--txt);font-family:'Rajdhani',sans-serif;font-size:.88rem;letter-spacing:.04em;outline:none;transition:all .2s}
+.csearch::placeholder{color:var(--txt3)}
+.csearch:focus{border-color:var(--rim2);background:var(--glass2);box-shadow:0 0 0 3px var(--cyan-glow)}
+.continent-pills{display:flex;gap:6px;flex-wrap:wrap}
+.cpill{padding:6px 13px;border-radius:20px;border:1px solid var(--rim);background:var(--glass);font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.1em;cursor:pointer;color:var(--txt3);transition:all .2s;text-transform:uppercase;white-space:nowrap}
+.cpill:hover{border-color:var(--rim2);color:var(--txt2)}
+.cpill.on{border-color:var(--cyan);background:var(--cyan-glow);color:var(--cyan)}
+
+/* ═══ HISTORIQUE MULTI-PAYS ═══ */
+.history-panel{background:var(--panel);backdrop-filter:var(--card-blur);border:1px solid var(--rim);border-radius:var(--radius);padding:30px;margin-bottom:28px;position:relative;overflow:hidden}
+.history-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--violet),transparent);opacity:.5}
+.hist-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px}
+.hist-title{font-family:'Orbitron',monospace;font-weight:700;font-size:.9rem;letter-spacing:.06em;color:var(--txt);display:flex;align-items:center;gap:10px}
+.hist-badge{font-family:'Space Mono',monospace;font-size:.5rem;letter-spacing:.12em;padding:3px 9px;border-radius:3px;background:rgba(176,107,255,.1);border:1px solid rgba(176,107,255,.3);color:var(--violet);text-transform:uppercase}
+.hist-loading{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.12em;color:var(--txt3);text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.hist-spin{width:10px;height:10px;border:1.5px solid var(--rim2);border-top-color:var(--violet);border-radius:50%;animation:hspin 0.8s linear infinite}
+.hist-legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.hist-leg-item{display:flex;align-items:center;gap:6px;font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.08em;color:var(--txt2)}
+.hist-leg-dot{width:10px;height:3px;border-radius:2px}
+
+/* ═══ AI ANALYSIS PANEL ═══ */
+.ai-panel{background:var(--panel);backdrop-filter:var(--card-blur);border:1px solid rgba(176,107,255,.2);border-radius:var(--radius);padding:30px;margin-bottom:28px;position:relative;overflow:hidden}
+.ai-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--violet),#00d4ff,transparent)}
+.ai-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:14px;flex-wrap:wrap}
+.ai-title{font-family:'Orbitron',monospace;font-weight:700;font-size:.9rem;letter-spacing:.06em;color:var(--txt);display:flex;align-items:center;gap:10px}
+.ai-title-icon{font-size:1.1rem}
+.ai-btn{display:flex;align-items:center;gap:8px;padding:10px 20px;background:linear-gradient(135deg,rgba(176,107,255,.15),rgba(0,212,255,.1));border:1px solid rgba(176,107,255,.4);border-radius:9px;color:var(--violet);font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.14em;cursor:pointer;transition:all .25s;text-transform:uppercase;white-space:nowrap}
+.ai-btn:hover:not(:disabled){background:linear-gradient(135deg,rgba(176,107,255,.25),rgba(0,212,255,.15));border-color:var(--violet);box-shadow:0 0 24px rgba(176,107,255,.2);transform:translateY(-1px)}
+.ai-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.ai-btn-icon{font-size:.85rem}
+.ai-spinner{width:12px;height:12px;border:1.5px solid rgba(176,107,255,.3);border-top-color:var(--violet);border-radius:50%;animation:hspin 0.7s linear infinite;display:none}
+.ai-btn.loading .ai-spinner{display:block}
+.ai-btn.loading .ai-btn-txt{opacity:.6}
+.ai-result{font-family:'Rajdhani',sans-serif;font-size:1rem;line-height:1.7;color:var(--txt2);letter-spacing:.02em;white-space:pre-wrap;min-height:40px;transition:opacity .3s}
+.ai-result.streaming{border-left:2px solid var(--violet);padding-left:16px;background:rgba(176,107,255,.03);border-radius:0 8px 8px 0;padding:12px 16px}
+.ai-result .ai-cursor{display:inline-block;width:2px;height:1em;background:var(--violet);animation:cur .7s steps(2) infinite;vertical-align:text-bottom;margin-left:2px}
+@keyframes cur{0%,100%{opacity:1}50%{opacity:0}}
+.ai-src{font-family:'Space Mono',monospace;font-size:.52rem;letter-spacing:.1em;color:var(--txt3);margin-top:12px;padding-top:10px;border-top:1px solid var(--rim);text-transform:uppercase}
+
+/* PAGE INDICATOR & ARROWS — supprimés (navigation simplifiée) */
+
+/* ═══ DATA SOURCE — minimaliste collapsible ═══ */
+.data-src-toggle{display:flex;align-items:center;gap:7px;margin-bottom:20px;cursor:pointer;width:fit-content;padding:5px 14px;border-radius:20px;border:1px solid var(--rim);background:var(--glass);font-family:'Space Mono',monospace;font-size:.5rem;letter-spacing:.12em;color:var(--txt3);text-transform:uppercase;transition:all .25s;-webkit-tap-highlight-color:transparent;user-select:none}
+.data-src-toggle:hover,.data-src-toggle:active{border-color:var(--rim2);color:var(--txt2);background:var(--glass2)}
+.data-src-toggle .src-dot{width:5px;height:5px;border-radius:50%;background:var(--teal);box-shadow:0 0 6px var(--teal);flex-shrink:0}
+.data-src-toggle .src-arrow{font-size:.5rem;transition:transform .3s;flex-shrink:0}
+.data-src-toggle.open .src-arrow{transform:rotate(180deg)}
+.data-src-panel{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.16,1,.3,1),opacity .25s,margin .25s;opacity:0;margin-bottom:0}
+.data-src-panel.open{max-height:120px;opacity:1;margin-bottom:20px}
+.data-src-inner{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 16px;border-radius:10px;border:1px solid var(--rim);background:var(--glass);font-family:'Space Mono',monospace;font-size:.48rem;letter-spacing:.08em;color:var(--txt3);text-transform:uppercase}
+.data-src-inner .sd{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.data-src-inner .sd-g{background:#00ffcc;box-shadow:0 0 4px #00ffcc}
+.data-src-inner .sd-o{background:#ffb347;box-shadow:0 0 4px #ffb347}
+/* ═══ INFO TOOLTIP ═══ */
+.info-icon{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;border:1px solid var(--rim2);background:var(--glass);font-size:.55rem;cursor:help;color:var(--txt3);flex-shrink:0;position:relative}
+.info-icon:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:rgba(5,12,20,.97);border:1px solid var(--rim2);border-radius:8px;padding:8px 12px;font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.06em;color:var(--txt2);white-space:nowrap;z-index:500;pointer-events:none;max-width:260px;white-space:normal;line-height:1.5;text-transform:none}
+[data-theme="light"] .info-icon:hover::after{background:rgba(240,246,255,.97)}
+/* ═══ PULL TO REFRESH — désactivé ═══ */
+#ptr-indicator{display:none!important}
+.ptr-spin{display:none!important}
+
+@media(max-width:960px){.nav{display:none}.estim-txt{display:none}.main{padding:24px 16px 100px}}
+@media(max-width:640px){.hdr{padding:0 12px}.hero{padding:22px 14px}.hero-num{font-size:clamp(1.5rem,8vw,2.6rem)!important}.grid{grid-template-columns:1fr 1fr;gap:10px}.card{padding:16px 12px;gap:10px}.ciw{width:40px;height:40px;font-size:1.2rem}.cspk{display:none}.foot{padding:14px 16px;padding-bottom:calc(16px + 80px)}#globe-container{height:340px}.compare-grid{grid-template-columns:1fr 1fr}.hdr-in{gap:12px}.main{padding:16px 12px 100px}}
+@media(max-width:420px){.grid{grid-template-columns:1fr}.compare-grid{grid-template-columns:1fr}.hero-num{font-size:clamp(1.3rem,7vw,2rem)!important}.main{padding:12px 10px 100px}.hero{padding:18px 12px}}
+
+/* ═══ BOTTOM NAV MOBILE ═══ */
+.bnav{display:flex!important;position:fixed!important;bottom:0!important;left:0;right:0;z-index:9990;background:rgba(3,8,16,.98);backdrop-filter:blur(32px) saturate(200%);border-top:1px solid var(--rim2);padding:8px 8px calc(10px + env(safe-area-inset-bottom,0px));gap:2px}
+[data-theme="light"] .bnav{background:rgba(235,242,255,.98)}
+.bnav::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--cyan),var(--teal),transparent);opacity:.2}
+.bnav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px 4px;background:transparent;border:none;border-radius:12px;cursor:pointer;transition:all .25s;color:var(--txt3);-webkit-tap-highlight-color:transparent}
+.bnav-btn:active{transform:scale(.88)}
+.bnav-btn.on{color:var(--cyan)}
+.bnav-btn.on .bnav-icon{background:var(--cyan-glow);border-color:var(--rim2);box-shadow:0 0 16px var(--cyan-glow)}
+.bnav-icon{width:42px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.15rem;border:1px solid transparent;transition:all .25s}
+.bnav-lbl{font-family:'Space Mono',monospace;font-size:.48rem;letter-spacing:.08em;text-transform:uppercase;line-height:1;transition:color .25s}
+.bnav-btn.on .bnav-lbl{color:var(--cyan)}
+
+/* ═══ TOASTS ═══ */
+.ep-toast{
+  position:fixed;bottom:100px;left:50%;
+  transform:translateX(-50%) translateY(28px) scale(.92);
+  background:rgba(3,8,16,.96);
+  backdrop-filter:blur(24px) saturate(200%);
+  border:1px solid var(--tc,var(--cyan));
+  border-radius:var(--radius);padding:14px 24px 14px 18px;
+  font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:600;
+  letter-spacing:.06em;color:var(--tc,var(--cyan));
+  box-shadow:0 12px 48px rgba(0,0,0,.7),0 0 24px color-mix(in srgb,var(--tc,#00d4ff) 25%,transparent);
+  z-index:9995;opacity:0;
+  transition:opacity .35s cubic-bezier(.16,1,.3,1),transform .35s cubic-bezier(.16,1,.3,1);
+  white-space:nowrap;pointer-events:none;text-align:center;
+  max-width:90vw;overflow:hidden;text-overflow:ellipsis;
+  display:flex;align-items:center;gap:10px;
+}
+.ep-toast.show{opacity:1;transform:translateX(-50%) translateY(0) scale(1);box-shadow:0 12px 56px rgba(0,0,0,.7),0 0 32px color-mix(in srgb,var(--tc,#00d4ff) 35%,transparent)}
+.ep-toast.hide{opacity:0;transform:translateX(-50%) translateY(-14px) scale(.94)}
+.ep-toast-bar{position:absolute;bottom:0;left:0;height:2px;background:var(--tc,var(--cyan));border-radius:0 0 var(--radius) var(--radius);animation:toast-drain linear forwards}
+@keyframes toast-drain{from{width:100%}to{width:0%}}
+.ep-toast-icon{font-size:1.1rem;flex-shrink:0;animation:icon-pop .4s cubic-bezier(.34,1.56,.64,1) both .1s}
+@keyframes icon-pop{from{transform:scale(0) rotate(-15deg)}to{transform:scale(1) rotate(0deg)}}
+[data-theme="light"] .ep-toast{background:rgba(240,246,255,.96)}
+
+/* SHOCK NOTIFICATIONS — supprimées (trop intrusives) */
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--void)}::-webkit-scrollbar-thumb{background:var(--rim2);border-radius:2px}::-webkit-scrollbar-thumb:hover{background:var(--cyan-dim)}
+::selection{background:rgba(0,212,255,.2);color:var(--cyan)}
+
+/* ═══════════════════════════════════════════════════════════
+   CGU CONSENT SCREEN
+═══════════════════════════════════════════════════════════ */
+#cgu-consent{position:fixed;inset:0;z-index:10000;background:rgba(2,4,8,.97);backdrop-filter:blur(24px);display:flex;align-items:center;justify-content:center;padding:20px;animation:arev .5s ease both}
+#cgu-consent.out{animation:lout .5s ease forwards}
+.cgu-box{background:var(--panel);border:1px solid var(--rim2);border-radius:24px;max-width:520px;width:100%;overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.8),0 0 60px var(--cyan-glow);position:relative}
+.cgu-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 5%,var(--cyan) 30%,var(--teal) 70%,transparent 95%);box-shadow:0 0 30px var(--cyan-glow)}
+.cgu-top{padding:32px 32px 0;text-align:center}
+.cgu-logo{font-size:2.2rem;margin-bottom:12px;animation:epulse 2.5s ease-in-out infinite}
+.cgu-title{font-family:'Orbitron',monospace;font-weight:900;font-size:1.3rem;letter-spacing:.12em;background:linear-gradient(135deg,var(--cyan),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
+.cgu-subtitle{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--txt3);text-transform:uppercase;margin-bottom:20px}
+.cgu-scroll{max-height:320px;overflow-y:auto;padding:0 32px 20px;scrollbar-width:thin;scrollbar-color:var(--rim2) transparent}
+.cgu-scroll::-webkit-scrollbar{width:3px}
+.cgu-scroll::-webkit-scrollbar-thumb{background:var(--rim2);border-radius:2px}
+.cgu-section{margin-bottom:18px}
+.cgu-section h3{font-family:'Orbitron',monospace;font-size:.65rem;font-weight:700;letter-spacing:.18em;color:var(--cyan);text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.cgu-section h3::before{content:'';display:inline-block;width:14px;height:1px;background:var(--cyan);opacity:.5}
+.cgu-section p,.cgu-section li{font-family:'Rajdhani',sans-serif;font-size:.88rem;color:var(--txt2);line-height:1.6;font-weight:400}
+.cgu-section ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:4px}
+.cgu-section li::before{content:'›';color:var(--teal);margin-right:8px;font-weight:700}
+.cgu-divider{height:1px;background:var(--rim);margin:4px 0 18px}
+.cgu-bottom{padding:20px 32px 28px;border-top:1px solid var(--rim);background:rgba(0,212,255,.02)}
+.cgu-check{display:flex;align-items:flex-start;gap:12px;margin-bottom:18px;cursor:pointer}
+.cgu-check input[type=checkbox]{width:18px;height:18px;flex-shrink:0;accent-color:var(--cyan);cursor:pointer;margin-top:2px}
+.cgu-check-lbl{font-family:'Rajdhani',sans-serif;font-size:.9rem;color:var(--txt2);line-height:1.5;cursor:pointer}
+.cgu-check-lbl a{color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(0,212,255,.3)}
+.cgu-check-lbl a:hover{color:var(--teal)}
+.cgu-btn{width:100%;padding:14px 24px;background:linear-gradient(135deg,var(--cyan),var(--teal));border:none;border-radius:12px;font-family:'Orbitron',monospace;font-weight:700;font-size:.85rem;letter-spacing:.15em;color:#020408;cursor:pointer;transition:all .25s;text-transform:uppercase;opacity:.4;pointer-events:none}
+.cgu-btn.active{opacity:1;pointer-events:auto;box-shadow:0 8px 32px var(--cyan-glow)}
+.cgu-btn.active:hover{transform:translateY(-2px);box-shadow:0 14px 48px var(--cyan-glow)}
+.cgu-btn.active:active{transform:translateY(0)}
+.cgu-dev{font-family:'Space Mono',monospace;font-size:.5rem;letter-spacing:.12em;color:var(--txt3);text-align:center;margin-top:14px;text-transform:uppercase}
+
+/* ═══ CGU MODAL (depuis footer) ═══ */
+#cgu-modal{position:fixed;inset:0;z-index:10001;background:rgba(2,4,8,.92);backdrop-filter:blur(20px);display:none;align-items:center;justify-content:center;padding:20px}
+#cgu-modal.open{display:flex;animation:arev .3s ease both}
+.cgu-modal-box{background:var(--panel);border:1px solid var(--rim2);border-radius:24px;max-width:600px;width:100%;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 40px 120px rgba(0,0,0,.8);position:relative}
+.cgu-modal-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 5%,var(--cyan) 30%,var(--teal) 70%,transparent 95%)}
+.cgu-modal-head{padding:24px 28px 20px;border-bottom:1px solid var(--rim);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.cgu-modal-title{font-family:'Orbitron',monospace;font-weight:900;font-size:1rem;letter-spacing:.1em;color:var(--txt)}
+.cgu-modal-close{width:36px;height:36px;border-radius:10px;border:1px solid var(--rim);background:var(--glass);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--txt2);transition:all .2s}
+.cgu-modal-close:hover{background:var(--glass2);border-color:var(--rim2);color:var(--cyan)}
+.cgu-modal-body{overflow-y:auto;padding:24px 28px;flex:1}
+.cgu-modal-body .cgu-section{margin-bottom:22px}
+.cgu-tabs{display:flex;gap:8px;padding:16px 28px 0;border-bottom:1px solid var(--rim);flex-wrap:wrap;flex-shrink:0}
+.cgu-tab{padding:8px 18px;border:none;background:transparent;font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.12em;color:var(--txt3);cursor:pointer;text-transform:uppercase;border-bottom:2px solid transparent;transition:all .2s;margin-bottom:-1px}
+.cgu-tab:hover{color:var(--txt2)}
+.cgu-tab.on{color:var(--cyan);border-bottom-color:var(--cyan)}
+.cgu-tab-content{display:none}
+.cgu-tab-content.on{display:block}
+
+/* Footer link */
+.foot-cgu-link{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.07em;color:var(--cyan-dim);cursor:pointer;background:none;border:none;padding:0;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(0,212,255,.3);transition:color .2s}
+.foot-cgu-link:hover{color:var(--cyan)}
+[data-theme="light"] .cgu-modal-box,[data-theme="light"] .cgu-box{background:rgba(220,235,250,.95)}
+
+/* ═══════════════════════════════════════════════════════════
+   CHART TIME FILTER BAR
+═══════════════════════════════════════════════════════════ */
+.chart-filters{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cft{padding:5px 14px;border-radius:6px;border:1px solid var(--rim);background:var(--glass);font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.12em;cursor:pointer;color:var(--txt3);transition:all .22s;text-transform:uppercase}
+.cft:hover{border-color:var(--rim2);color:var(--txt2)}
+.cft.on{border-color:var(--cyan);background:var(--cyan-glow);color:var(--cyan);box-shadow:0 0 10px var(--cyan-glow)}
+
+/* ═══════════════════════════════════════════════════════════
+   CHOROPLETH MAP
+═══════════════════════════════════════════════════════════ */
+#sec-globe .sec-head{margin-bottom:20px}
+#choro-container{width:100%;position:relative;background:var(--panel);backdrop-filter:var(--card-blur);border:1px solid var(--rim);border-radius:var(--radius);overflow:hidden;margin-bottom:36px}
+#choro-container::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 5%,var(--cyan) 30%,var(--teal) 70%,transparent 95%);z-index:2}
+#choro-svg-wrap{width:100%;overflow:hidden;position:relative}
+#choro-svg{width:100%;height:auto;display:block;cursor:crosshair}
+.choro-country{transition:opacity .2s,filter .2s;cursor:pointer}
+.choro-country:hover{filter:brightness(1.5);opacity:1!important}
+.choro-country.selected{stroke:#fff!important;stroke-width:1.5!important;filter:brightness(1.8)}
+#choro-toolbar{display:flex;align-items:center;gap:10px;padding:14px 20px;border-bottom:1px solid var(--rim);flex-wrap:wrap}
+.choro-metric-btn{padding:6px 14px;border-radius:6px;border:1px solid var(--rim);background:var(--glass);font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.12em;cursor:pointer;color:var(--txt3);transition:all .2s;text-transform:uppercase;white-space:nowrap}
+.choro-metric-btn:hover{border-color:var(--rim2);color:var(--txt2)}
+.choro-metric-btn.on{border-color:var(--cyan);background:var(--cyan-glow);color:var(--cyan)}
+#choro-legend{display:flex;align-items:center;gap:6px;margin-left:auto;flex-shrink:0}
+#choro-legend-bar{width:160px;height:10px;border-radius:5px;flex-shrink:0}
+.choro-legend-lbl{font-family:'Space Mono',monospace;font-size:.5rem;letter-spacing:.08em;color:var(--txt3);white-space:nowrap}
+#choro-tooltip{position:absolute;pointer-events:none;z-index:20;background:rgba(3,8,16,.96);border:1px solid var(--rim2);border-radius:14px;padding:14px 18px;font-family:'Space Mono',monospace;backdrop-filter:blur(24px) saturate(200%);min-width:180px;opacity:0;transition:opacity .15s;box-shadow:0 12px 40px rgba(0,0,0,.7)}
+#choro-tooltip.show{opacity:1}
+[data-theme="light"] #choro-tooltip{background:rgba(240,246,255,.96)}
+.choro-tt-flag{font-size:1.4rem;line-height:1;margin-bottom:6px}
+.choro-tt-name{font-family:'Orbitron',monospace;font-size:.75rem;font-weight:700;color:var(--txt);letter-spacing:.06em;margin-bottom:8px}
+.choro-tt-row{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:3px}
+.choro-tt-label{font-size:.5rem;letter-spacing:.1em;color:var(--txt3);text-transform:uppercase}
+.choro-tt-val{font-family:'Orbitron',monospace;font-size:.72rem;font-weight:700;color:var(--cyan)}
+#choro-country-panel{padding:18px 20px;border-top:1px solid var(--rim);display:none}
+#choro-country-panel.show{display:block;animation:srev .3s cubic-bezier(.16,1,.3,1) both}
+.choro-panel-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.choro-panel-flag{font-size:2rem}
+.choro-panel-name{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:900;color:var(--txt)}
+.choro-panel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.choro-stat{background:var(--glass2);border:1px solid var(--rim);border-radius:12px;padding:14px 16px}
+.choro-stat-l{font-family:'Space Mono',monospace;font-size:.5rem;letter-spacing:.12em;color:var(--txt3);text-transform:uppercase;margin-bottom:4px}
+.choro-stat-v{font-family:'Orbitron',monospace;font-size:.92rem;font-weight:700;color:var(--cyan)}
+@media(max-width:640px){#choro-legend{display:none}#choro-toolbar{gap:6px}}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION TENDANCES
+═══════════════════════════════════════════════════════════ */
+#sec-trends .sec-title{background:linear-gradient(135deg,var(--txt) 30%,var(--violet));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.trend-intro{background:var(--panel);backdrop-filter:var(--card-blur);border:1px solid rgba(176,107,255,.2);border-radius:var(--radius);padding:26px 30px;margin-bottom:36px;position:relative;overflow:hidden}
+.trend-intro::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--violet),var(--cyan),transparent)}
+.trend-intro-txt{font-family:'Rajdhani',sans-serif;font-size:1.05rem;color:var(--txt2);line-height:1.6;letter-spacing:.02em}
+.trend-intro-txt strong{color:var(--violet)}
+.trend-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:22px;margin-bottom:36px}
+@media(max-width:900px){.trend-grid{grid-template-columns:1fr}}
+.trend-card{background:var(--panel);backdrop-filter:var(--card-blur);border:1px solid var(--rim);border-radius:var(--radius);overflow:hidden;position:relative;transition:border-color .3s,box-shadow .3s}
+.trend-card:hover{border-color:var(--rim2);box-shadow:0 20px 56px rgba(0,0,0,.45)}
+.trend-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--tc-grad,linear-gradient(90deg,var(--violet),var(--cyan)))}
+.trend-ch{padding:8px 16px 0}
+.trend-foot{padding:12px 20px 16px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.trend-foot-left{}
+.trend-foot-name{font-family:'Orbitron',monospace;font-size:.72rem;font-weight:700;color:var(--txt);letter-spacing:.06em;margin-bottom:4px}
+.trend-foot-src{font-family:'Space Mono',monospace;font-size:.5rem;letter-spacing:.12em;color:var(--txt3);text-transform:uppercase}
+.trend-badges{display:flex;gap:6px;flex-wrap:wrap}
+.trend-badge{font-family:'Space Mono',monospace;font-size:.5rem;letter-spacing:.1em;padding:4px 9px;border-radius:4px;text-transform:uppercase;border:1px solid;white-space:nowrap}
+.trend-badge.up{color:#7fff6b;border-color:rgba(127,255,107,.3);background:rgba(127,255,107,.07)}
+.trend-badge.down{color:#ff4d6d;border-color:rgba(255,77,109,.3);background:rgba(255,77,109,.07)}
+.trend-badge.neutral{color:var(--amber);border-color:rgba(255,179,71,.3);background:rgba(255,179,71,.07)}
+.trend-badge.proj{color:var(--violet);border-color:rgba(176,107,255,.3);background:rgba(176,107,255,.07)}
+
+/* ═══════════════════════════════════════════════════════════
+   TIME COMPARISON (comparaison 2 années)
+═══════════════════════════════════════════════════════════ */
+.tc-panel{background:var(--panel);backdrop-filter:var(--card-blur);border:1px solid var(--rim);border-radius:var(--radius);overflow:hidden;margin-bottom:36px;position:relative}
+.tc-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--amber),var(--coral),transparent)}
+.tc-head{padding:20px 24px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+.tc-title{font-family:'Orbitron',monospace;font-size:.9rem;font-weight:700;color:var(--txt);letter-spacing:.06em;display:flex;align-items:center;gap:10px}
+.tc-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tc-yr-btn{padding:6px 12px;border-radius:6px;border:1px solid var(--rim);background:var(--glass);font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.1em;cursor:pointer;color:var(--txt2);transition:all .2s;display:flex;align-items:center;gap:6px}
+.tc-yr-btn.a{border-color:var(--amber);color:var(--amber);background:rgba(255,179,71,.08)}
+.tc-yr-btn.b{border-color:var(--coral);color:var(--coral);background:rgba(255,77,109,.08)}
+.tc-yr-sep{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--txt3)}
+.tc-metric-sel{padding:6px 12px;border-radius:6px;border:1px solid var(--rim);background:var(--glass);font-family:'Space Mono',monospace;font-size:.58rem;color:var(--txt);cursor:pointer;outline:none;letter-spacing:.06em}
+[data-theme="light"] .tc-metric-sel{background:var(--deep);color:var(--txt)}
+.tc-body{padding:16px 16px 8px}
+.tc-delta-row{display:flex;gap:12px;padding:16px 24px 20px;flex-wrap:wrap}
+.tc-delta-box{flex:1;min-width:120px;background:var(--glass);border:1px solid var(--rim);border-radius:10px;padding:12px 16px;text-align:center}
+.tc-delta-lbl{font-family:'Space Mono',monospace;font-size:.5rem;letter-spacing:.12em;color:var(--txt3);text-transform:uppercase;margin-bottom:6px}
+.tc-delta-val{font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;color:var(--cyan)}
+.tc-delta-val.pos{color:#7fff6b}
+.tc-delta-val.neg{color:#ff4d6d}
+
+</style>
+</head>
+<body>
+<div id="cosmos">
+  <div class="cg"></div>
+  <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+  <div class="stars"></div>
+</div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:20px;position:relative">
+    <div class="l-hex">
+      <svg class="r1" viewBox="0 0 100 100" fill="none"><polygon points="50,5 93,27.5 93,72.5 50,95 7,72.5 7,27.5" stroke="rgba(0,212,255,.3)" stroke-width="1.5"/></svg>
+      <svg class="r2" viewBox="0 0 100 100" fill="none"><polygon points="50,18 80,34 80,66 50,82 20,66 20,34" stroke="rgba(0,255,204,.4)" stroke-width="1.2"/></svg>
+      <span class="l-earth">🌍</span>
+    </div>
+    <div style="text-align:center">
+      <div class="l-brand">EARTHPULSE</div>
+      <div class="l-sub">Observatoire de Statistiques Mondiales</div>
+    </div>
+    <div class="l-pct" id="lPct">0</div>
+  </div>
+  <div class="l-prog">
+    <div class="l-bw"><div class="l-bf" id="lFill"></div></div>
+    <div class="l-st" id="lSt">Initialisation…</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" class="hidden">
+  <header class="hdr">
+    <div class="hdr-in">
+      <div class="brand">
+        <div class="b-icon">🌍</div>
+        <span class="b-name">EARTHPULSE</span>
+        <span class="b-ver">v8.0</span>
+      </div>
+      <nav class="nav">
+        <button class="nbtn" data-s="population" aria-label="Population"><span class="nbtn-e">🌍</span> Population</button>
+        <button class="nbtn" data-s="environment" aria-label="Environnement"><span class="nbtn-e">🌱</span> Environnement</button>
+        <button class="nbtn" data-s="economy" aria-label="Économie"><span class="nbtn-e">💰</span> Économie</button>
+        <button class="nbtn" data-s="health" aria-label="Santé"><span class="nbtn-e">❤️</span> Santé</button>
+        <button class="nbtn on" data-s="impact" aria-label="Impact"><span class="nbtn-e">💀</span> Impact</button>
+        <button class="nbtn" data-s="trends" aria-label="Tendances"><span class="nbtn-e">📈</span> Tendances</button>
+        <button class="nbtn" data-s="compare" aria-label="Comparateur"><span class="nbtn-e">🏴</span> Pays</button>
+      </nav>
+      <div class="hdr-r">
+        <div class="estim-badge" title="Simulation temps réel — taux annuels officiels convertis en incréments par seconde">
+          <span class="estim-icon" style="width:7px;height:7px;border-radius:50%;background:#00ffcc;box-shadow:0 0 10px #00ffcc;display:inline-block;animation:lpulse 1.5s ease-in-out infinite"></span>
+          <span class="estim-txt">EN DIRECT</span>
+        </div>
+        <button class="ibtn" id="thm" aria-label="Changer de thème">☀️</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="ticker">
+    <div class="ttrack">
+      <span class="ti">🌐 POPULATION <span class="tv" id="tP">—</span></span><span class="tsep">◈</span>
+      <span class="ti">🌡️ CO₂ JOUR <span class="tv" id="tC">—</span> T</span><span class="tsep">◈</span>
+      <span class="ti">👶 NAISSANCES <span class="tv" id="tB">—</span></span><span class="tsep">◈</span>
+      <span class="ti">💀 DÉCÈS <span class="tv" id="tD">—</span></span><span class="tsep">◈</span>
+      <span class="ti">🌳 FORÊT PERDUE <span class="tv" id="tF">—</span> HA</span><span class="tsep">◈</span>
+      <span class="ti">💵 PIB JOUR <span class="tv" id="tG">—</span></span><span class="tsep">◈</span>
+      <span class="ti">🌐 POPULATION <span class="tv" id="tP2">—</span></span><span class="tsep">◈</span>
+      <span class="ti">🌡️ CO₂ JOUR <span class="tv" id="tC2">—</span> T</span><span class="tsep">◈</span>
+      <span class="ti">👶 NAISSANCES <span class="tv" id="tB2">—</span></span><span class="tsep">◈</span>
+      <span class="ti">💀 DÉCÈS <span class="tv" id="tD2">—</span></span><span class="tsep">◈</span>
+      <span class="ti">🌳 FORÊT PERDUE <span class="tv" id="tF2">—</span> HA</span><span class="tsep">◈</span>
+      <span class="ti">💵 PIB JOUR <span class="tv" id="tG2">—</span></span><span class="tsep">◈</span>
+    </div>
+  </div>
+
+  <main class="main">
+
+    <!-- SOURCES — pilule discrète collapsible -->
+    <div class="data-src-toggle" id="srcToggle" onclick="this.classList.toggle('open');document.getElementById('srcPanel').classList.toggle('open')">
+      <span class="src-dot"></span>
+      <span>Sources · 2026</span>
+      <span class="src-arrow">▾</span>
+    </div>
+    <div class="data-src-panel" id="srcPanel">
+      <div class="data-src-inner">
+        <span class="sd sd-g"></span>Officielles
+        <span style="color:var(--rim2)">·</span>
+        <span class="sd sd-o"></span>Simulation
+        <span style="color:var(--rim2)">·</span>
+        <span>ONU · IEA · FMI · OMS · FAO</span>
+        <span style="color:var(--rim2)">·</span>
+        <span>Màj : <span style="color:var(--cyan)">Jan. 2026</span></span>
+      </div>
+    </div>
+
+    <!-- POPULATION -->
+    <section class="sec" id="sec-population">
+      <div class="sec-head">
+        <h1 class="sec-title">Population Mondiale</h1>
+        <span class="sec-src">ONU DESA 2026 — LIVE</span>
+      </div>
+      <div class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-in">
+          <div class="hero-tag"><span class="htdot"></span>HABITANTS SUR TERRE</div>
+          <div class="hero-num" id="wPop">—</div>
+          <div class="hero-desc">Population mondiale estimée en temps réel — croissance nette ~81 millions/an (ONU) <span class="info-icon" style="vertical-align:middle" data-tip="Base officielle : ONU DESA 2026 (~8,2 Mds). Incrémentation simulée à partir du taux de croissance annuel.">ℹ</span></div>
+          <canvas class="hero-sp" id="spPop" width="320" height="56" aria-label="Sparkline population"></canvas>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="card cb"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">👶</div><span class="cbadge">AUJOURD'HUI</span></div>
+          <div><div class="clabel">Naissances</div><div class="cval" id="vB">—</div></div>
+          <div class="cfoot"><div class="crate"><span class="rdot"></span><span id="rB">+0/s</span></div><canvas class="cspk" id="spB" width="80" height="32" aria-label="Sparkline naissances"></canvas></div>
+        </div>
+        <div class="card cd"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">💀</div><span class="cbadge">AUJOURD'HUI</span></div>
+          <div><div class="clabel">Décès</div><div class="cval" id="vD">—</div></div>
+          <div class="cfoot"><div class="crate"><span class="rdot"></span><span id="rD">+0/s</span></div><canvas class="cspk" id="spD" width="80" height="32" aria-label="Sparkline décès"></canvas></div>
+        </div>
+        <div class="card ce"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">📈</div><span class="cbadge">CROISSANCE NETTE</span></div>
+          <div><div class="clabel">Solde naturel</div><div class="cval" id="vN">—</div></div>
+          <div class="cfoot"><div class="crate"><span class="rdot"></span><span id="rN">+0/s</span></div><canvas class="cspk" id="spN" width="80" height="32" aria-label="Sparkline solde naturel"></canvas></div>
+        </div>
+        <div class="card"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">💍</div><span class="cbadge">AUJOURD'HUI</span></div>
+          <div><div class="clabel">Mariages</div><div class="cval" id="vM">—</div></div>
+          <div class="cfoot"><div class="crate"><span class="rdot"></span><span id="rM">+0/s</span></div></div>
+        </div>
+        <div class="card"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">🚴</div><span class="cbadge">CETTE ANNÉE</span></div>
+          <div><div class="clabel">Vélos produits</div><div class="cval" id="vBk">—</div></div>
+          <div class="cfoot"><div class="crate"><span class="rdot"></span><span id="rBk">+0/s</span></div></div>
+        </div>
+        <div class="card"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">🌐</div><span class="cbadge">TOTAL</span></div>
+          <div><div class="clabel">Utilisateurs Internet</div><div class="cval" id="vI">—</div></div>
+          <div class="cfoot"><div class="crate">≈ 67% de la population</div></div>
+        </div>
+      </div>
+      <div class="cpanel">
+        <div class="cph">
+          <div class="cpt">Croissance Démographique Mondiale</div>
+          <div class="chart-filters" data-chart="pop">
+            <button class="cft" data-range="10">10 ans</button>
+            <button class="cft on" data-range="all">Historique</button>
+            <button class="cft" data-range="proj">+ Projections</button>
+          </div>
+        </div>
+        <canvas id="cPop" height="180"></canvas>
+      </div>
+    </section>
+
+    <!-- ENVIRONMENT -->
+    <section class="sec" id="sec-environment">
+      <div class="sec-head">
+        <h1 class="sec-title">Environnement</h1>
+        <span class="sec-src">IEA · FAO · GCP 2026 — LIVE</span>
+      </div>
+      <div class="hero g">
+        <div class="hero-bg"></div>
+        <div class="hero-in">
+          <div class="hero-tag"><span class="htdot"></span>CO₂ ÉMIS DEPUIS LE 1ER JANVIER</div>
+          <div class="hero-num" id="vCo2Y">—</div>
+          <div class="hero-desc">Tonnes de CO₂ rejetées dans l'atmosphère — 38,2 Gt/an (IEA 2026)</div>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="card cw"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">🌡️</div><span class="cbadge">AUJOURD'HUI</span></div>
+          <div><div class="clabel">CO₂ émis</div><div class="cval" id="vCo2D">—</div></div>
+          <div class="cfoot"><div class="crate"><span class="rdot"></span><span id="rCo2">t/s</span></div><canvas class="cspk" id="spCo2" width="80" height="32"></canvas></div>
+        </div>
+        <div class="card ce"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">🌳</div><span class="cbadge">AUJOURD'HUI</span></div>
+          <div><div class="clabel">Forêt perdue</div><div class="cval" id="vFor">—</div></div>
+          <div class="cfoot"><div class="crate">hectares</div><canvas class="cspk" id="spFor" width="80" height="32"></canvas></div>
+        </div>
+        <div class="card"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">⚡</div><span class="cbadge">AUJOURD'HUI</span></div>
+          <div><div class="clabel">Énergie consommée</div><div class="cval" id="vEn">—</div></div>
+          <div class="cfoot"><div class="crate">MWh</div></div>
+        </div>
+        <div class="card"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">💧</div><span class="cbadge">AUJOURD'HUI</span></div>
+          <div><div class="clabel">Eau consommée</div><div class="cval" id="vWt">—</div></div>
+          <div class="cfoot"><div class="crate">m³</div></div>
+        </div>
+        <div class="card ce"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">☀️</div><span class="cbadge">CETTE ANNÉE</span></div>
+          <div><div class="clabel">Énergie solaire</div><div class="cval" id="vSol">—</div></div>
+          <div class="cfoot"><div class="crate">MWh</div></div>
+        </div>
+        <div class="card cw"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">🗑️</div><span class="cbadge">AUJOURD'HUI</span></div>
+          <div><div class="clabel">Déchets produits</div><div class="cval" id="vWst">—</div></div>
+          <div class="cfoot"><div class="crate">tonnes</div></div>
+        </div>
+      </div>
+      <div class="cpanel">
+        <div class="cph">
+          <div class="cpt">Émissions Mondiales de CO₂</div>
+          <div class="chart-filters" data-chart="co2">
+            <button class="cft" data-range="10">10 ans</button>
+            <button class="cft on" data-range="all">Historique</button>
+            <button class="cft" data-range="proj">+ Projections</button>
+          </div>
+        </div>
+        <canvas id="cCo2" height="180"></canvas>
+      </div>
+    </section>
+
+    <!-- ECONOMY -->
+    <section class="sec" id="sec-economy">
+      <div class="sec-head">
+        <h1 class="sec-title">Économie Mondiale</h1>
+        <span class="sec-src">FMI · Banque Mondiale · WTO 2026 — LIVE</span>
+      </div>
+      <div class="hero a">
+        <div class="hero-bg"></div>
+        <div class="hero-in">
+          <div class="hero-tag"><span class="htdot"></span>PIB MONDIAL DEPUIS LE 1ER JANVIER</div>
+          <div class="hero-num" id="vGdpY">—</div>
+          <div class="hero-desc">Production économique mondiale cumulée cette année — 110 000 Mds USD/an (FMI 2026)</div>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="card cm"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">💵</div><span class="cbadge">AUJOURD'HUI</span></div>
+          <div><div class="clabel">PIB produit</div><div class="cval" id="vGdpD">—</div></div>
+          <div class="cfoot"><div class="crate"><span class="rdot"></span><span id="rGdp">$/s</span></div><canvas class="cspk" id="spGdp" width="80" height="32"></canvas></div>
+        </div>
+        <div class="card cm"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">🚢</div><span class="cbadge">AUJOURD'HUI</span></div>
+          <div><div class="clabel">Commerce mondial</div><div class="cval" id="vTrd">—</div></div>
+          <div class="cfoot"><div class="crate"><span class="rdot"></span><span id="rTrd">$/s</span></div></div>
+        </div>
+        <div class="card"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">🌾</div><span class="cbadge">AUJOURD'HUI</span></div>
+          <div><div class="clabel">Nourriture produite</div><div class="cval" id="vFd">—</div></div>
+          <div class="cfoot"><div class="crate">tonnes</div></div>
+        </div>
+        <div class="card"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">🚗</div><span class="cbadge">CETTE ANNÉE</span></div>
+          <div><div class="clabel">Voitures produites</div><div class="cval" id="vCa">—</div></div>
+          <div class="cfoot"><div class="crate"><span class="rdot"></span><span id="rCa">+0/s</span></div></div>
+        </div>
+        <div class="card cw"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">🛢️</div><span class="cbadge">AUJOURD'HUI</span></div>
+          <div><div class="clabel">Pétrole consommé</div><div class="cval" id="vOil">—</div></div>
+          <div class="cfoot"><div class="crate">barils</div></div>
+        </div>
+        <div class="card cd"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">📊</div><span class="cbadge">TOTAL</span></div>
+          <div><div class="clabel">Dette publique mondiale</div><div class="cval" id="vDbt">—</div></div>
+          <div class="cfoot"><div class="crate">≈ 100% du PIB mondial</div></div>
+        </div>
+      </div>
+      <div class="cpanel">
+        <div class="cph">
+          <div class="cpt">Évolution du PIB Mondial</div>
+          <div class="chart-filters" data-chart="gdp">
+            <button class="cft" data-range="10">10 ans</button>
+            <button class="cft on" data-range="all">Historique</button>
+            <button class="cft" data-range="proj">+ Projections</button>
+          </div>
+        </div>
+        <canvas id="cGdp" height="180"></canvas>
+      </div>
+    </section>
+
+    <!-- HEALTH -->
+    <section class="sec" id="sec-health">
+      <div class="sec-head">
+        <h1 class="sec-title">Santé Mondiale</h1>
+        <span class="sec-src">OMS · IHME · UNAIDS 2026 — LIVE</span>
+      </div>
+      <div class="hero r">
+        <div class="hero-bg"></div>
+        <div class="hero-in">
+          <div class="hero-tag"><span class="htdot"></span>DÉCÈS MALADIES INFECTIEUSES CETTE ANNÉE</div>
+          <div class="hero-num" id="vInf">—</div>
+          <div class="hero-desc">Décès liés aux maladies infectieuses depuis le 1er janvier (IHME GBD 2026)</div>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="card cw"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">🦟</div><span class="cbadge">CETTE ANNÉE</span></div>
+          <div><div class="clabel">Décès paludisme</div><div class="cval" id="vMal">—</div></div>
+          <div class="cfoot"><div class="crate"><span class="rdot"></span><span id="rMal">+0/s</span></div><canvas class="cspk" id="spMal" width="80" height="32"></canvas></div>
+        </div>
+        <div class="card cw"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">🔴</div><span class="cbadge">CETTE ANNÉE</span></div>
+          <div><div class="clabel">Nouvelles infections VIH</div><div class="cval" id="vHiv">—</div></div>
+          <div class="cfoot"><div class="crate"><span class="rdot"></span><span id="rHiv">+0/s</span></div></div>
+        </div>
+        <div class="card cw"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">🎗️</div><span class="cbadge">CETTE ANNÉE</span></div>
+          <div><div class="clabel">Décès cancer</div><div class="cval" id="vCnc">—</div></div>
+          <div class="cfoot"><div class="crate"><span class="rdot"></span><span id="rCnc">+0/s</span></div></div>
+        </div>
+        <div class="card ce"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">💉</div><span class="cbadge">AUJOURD'HUI</span></div>
+          <div><div class="clabel">Vaccins administrés</div><div class="cval" id="vVac">—</div></div>
+          <div class="cfoot"><div class="crate"><span class="rdot"></span><span id="rVac">+0/s</span></div></div>
+        </div>
+        <div class="card"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">🍽️</div><span class="cbadge">TOTAL</span></div>
+          <div><div class="clabel">Personnes souffrant de faim</div><div class="cval" id="vHgr">—</div></div>
+          <div class="cfoot"><div class="crate">≈ 10% population mondiale</div></div>
+        </div>
+        <div class="card cw"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">🚬</div><span class="cbadge">CETTE ANNÉE</span></div>
+          <div><div class="clabel">Décès liés au tabac</div><div class="cval" id="vSmk">—</div></div>
+          <div class="cfoot"><div class="crate"><span class="rdot"></span><span id="rSmk">+0/s</span></div></div>
+        </div>
+      </div>
+      <div class="cpanel">
+        <div class="cph"><div class="cpt">Espérance de Vie Mondiale Moyenne</div><div class="cpl">En années</div></div>
+        <canvas id="cHlth" height="180"></canvas>
+      </div>
+    </section>
+
+    <!-- 💀 IMPACT — Compteurs choc en temps réel -->
+    <section class="sec on" id="sec-impact">
+      <div class="sec-head">
+        <h1 class="sec-title" style="background:linear-gradient(135deg,var(--txt) 20%,var(--coral));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">Impact en Direct</h1>
+        <span class="sec-src" style="border-color:rgba(255,77,109,.3);color:var(--coral)">⚠ TEMPS RÉEL</span>
+      </div>
+
+      <!-- HERO TIMER -->
+      <div class="hero r">
+        <div class="hero-bg"></div>
+        <div class="hero-in">
+          <div class="hero-tag" style="color:var(--coral);background:var(--coral-glow);border-color:rgba(255,77,109,.25)"><span class="htdot"></span>DEPUIS VOTRE ARRIVÉE</div>
+          <div class="hero-num" id="impactTimer" style="font-size:clamp(2.2rem,8vw,4.5rem)">00:00:00</div>
+          <div class="hero-desc" style="max-width:560px;font-size:1.1rem">Chaque seconde compte. Pendant que vous lisez, voici ce qui se passe sur Terre — en ce moment même.</div>
+        </div>
+      </div>
+
+      <!-- COMPTEUR MORT EN DIRECT -->
+      <div style="display:flex;gap:16px;margin-bottom:32px;flex-wrap:wrap;justify-content:center">
+        <div style="flex:1;min-width:240px;max-width:420px;background:linear-gradient(135deg,rgba(255,77,109,.08),rgba(255,77,109,.02));backdrop-filter:var(--card-blur);border:1px solid rgba(255,77,109,.2);border-radius:var(--radius);padding:24px;text-align:center;position:relative;overflow:hidden">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--coral),transparent)"></div>
+          <div style="font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.3em;color:var(--coral);text-transform:uppercase;margin-bottom:12px">Personnes décédées depuis votre arrivée</div>
+          <div class="cval" id="impMorts" style="color:var(--coral);font-size:clamp(1.8rem,6vw,3rem)">0</div>
+          <div style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--txt3);margin-top:8px">≈ 1,9 décès chaque seconde dans le monde</div>
+        </div>
+        <div style="flex:1;min-width:240px;max-width:420px;background:linear-gradient(135deg,rgba(127,255,107,.08),rgba(127,255,107,.02));backdrop-filter:var(--card-blur);border:1px solid rgba(127,255,107,.2);border-radius:var(--radius);padding:24px;text-align:center;position:relative;overflow:hidden">
+          <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),transparent)"></div>
+          <div style="font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.3em;color:var(--lime);text-transform:uppercase;margin-bottom:12px">Bébés nés depuis votre arrivée</div>
+          <div class="cval" id="impNaissances" style="color:var(--lime);font-size:clamp(1.8rem,6vw,3rem)">0</div>
+          <div style="font-family:'Rajdhani',sans-serif;font-size:.85rem;color:var(--txt3);margin-top:8px">≈ 4,4 naissances chaque seconde</div>
+        </div>
+      </div>
+
+      <!-- GRILLE COMPTEURS CHOC -->
+      <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr));align-items:stretch">
+        <div class="card cw"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">💀</div><span class="cbadge" style="color:var(--coral);border-color:rgba(255,77,109,.3)">FAMINE</span></div>
+          <div><div class="clabel">Morts de la faim</div><div class="cval" id="impFaim" style="color:var(--coral)">0</div></div>
+          <div class="cfoot"><div class="crate" style="color:var(--coral)"><span class="rdot"></span>1 mort toutes les 3,5 sec</div></div>
+        </div>
+        <div class="card cw"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">🌡️</div><span class="cbadge" style="color:#ff6b35;border-color:rgba(255,107,53,.3)">POLLUTION</span></div>
+          <div><div class="clabel">Tonnes de CO₂ émises</div><div class="cval" id="impCo2" style="color:#ff6b35">0</div></div>
+          <div class="cfoot"><div class="crate" style="color:#ff6b35"><span class="rdot"></span>1 211 tonnes chaque seconde</div></div>
+        </div>
+        <div class="card cw"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">🌳</div><span class="cbadge" style="color:var(--lime);border-color:rgba(127,255,107,.3)">DÉFORESTATION</span></div>
+          <div><div class="clabel">Hectares de forêt détruits</div><div class="cval" id="impForet" style="color:var(--lime)">0</div></div>
+          <div class="cfoot"><div class="crate" style="color:var(--lime)"><span class="rdot"></span>27 terrains de foot / min</div></div>
+        </div>
+        <div class="card cw"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">🐋</div><span class="cbadge" style="color:var(--cyan);border-color:rgba(0,212,255,.3)">OCÉANS</span></div>
+          <div><div class="clabel">Kg de plastique dans les mers</div><div class="cval" id="impPlastique" style="color:var(--cyan)">0</div></div>
+          <div class="cfoot"><div class="crate" style="color:var(--cyan)"><span class="rdot"></span>+ de plastique que de poissons en 2050</div></div>
+        </div>
+        <div class="card cw"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">🚬</div><span class="cbadge" style="color:var(--amber);border-color:rgba(255,179,71,.3)">TABAC</span></div>
+          <div><div class="clabel">Morts du tabac</div><div class="cval" id="impTabac" style="color:var(--amber)">0</div></div>
+          <div class="cfoot"><div class="crate" style="color:var(--amber)"><span class="rdot"></span>1 mort toutes les 4 secondes</div></div>
+        </div>
+        <div class="card cw"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">🎗️</div><span class="cbadge" style="color:var(--violet);border-color:rgba(176,107,255,.3)">CANCER</span></div>
+          <div><div class="clabel">Décès par cancer</div><div class="cval" id="impCancer" style="color:var(--violet)">0</div></div>
+          <div class="cfoot"><div class="crate" style="color:var(--violet)"><span class="rdot"></span>10 millions de vies / an</div></div>
+        </div>
+        <div class="card cw"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">🍽️</div><span class="cbadge">GASPILLAGE</span></div>
+          <div><div class="clabel">Tonnes de nourriture gaspillées</div><div class="cval" id="impGaspillage">0</div></div>
+          <div class="cfoot"><div class="crate"><span class="rdot"></span>1/3 de toute la nourriture produite</div></div>
+        </div>
+        <div class="card cw"><div class="cshine"></div>
+          <div class="ctop"><div class="ciw">💧</div><span class="cbadge" style="color:var(--teal);border-color:rgba(0,255,204,.3)">EAU</span></div>
+          <div><div class="clabel">Litres d'eau potable gaspillés</div><div class="cval" id="impEau" style="color:var(--teal)">0</div></div>
+          <div class="cfoot"><div class="crate" style="color:var(--teal)"><span class="rdot"></span>2,2 milliards sans eau potable</div></div>
+        </div>
+      </div>
+
+      <!-- EQUIVALENCES CHOC -->
+      <div class="cpanel" style="border-color:rgba(255,77,109,.15)">
+        <div class="cph"><div class="cpt" style="display:flex;align-items:center;gap:10px">⚡ Équivalences choc — depuis votre arrivée</div></div>
+        <div id="impact-equivalences" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px">
+          <div style="padding:18px 20px;background:var(--glass2);border-radius:12px;border-left:3px solid var(--coral);display:flex;align-items:center;gap:14px">
+            <span style="font-size:1.8rem">🏟️</span>
+            <div><div style="font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;color:var(--coral)" id="impEqForet">0</div><div style="font-size:.8rem;color:var(--txt2)">terrains de foot de forêt rasés</div></div>
+          </div>
+          <div style="padding:18px 20px;background:var(--glass2);border-radius:12px;border-left:3px solid #ff6b35;display:flex;align-items:center;gap:14px">
+            <span style="font-size:1.8rem">✈️</span>
+            <div><div style="font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;color:#ff6b35" id="impEqAvion">0</div><div style="font-size:.8rem;color:var(--txt2)">vols Paris→New York en CO₂</div></div>
+          </div>
+          <div style="padding:18px 20px;background:var(--glass2);border-radius:12px;border-left:3px solid var(--cyan);display:flex;align-items:center;gap:14px">
+            <span style="font-size:1.8rem">🐘</span>
+            <div><div style="font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;color:var(--cyan)" id="impEqPlastique">0</div><div style="font-size:.8rem;color:var(--txt2)">éléphants de plastique dans les mers</div></div>
+          </div>
+          <div style="padding:18px 20px;background:var(--glass2);border-radius:12px;border-left:3px solid var(--amber);display:flex;align-items:center;gap:14px">
+            <span style="font-size:1.8rem">🏫</span>
+            <div><div style="font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;color:var(--amber)" id="impEqNourriture">0</div><div style="font-size:.8rem;color:var(--txt2)">écoles qu'on pourrait nourrir 1 an</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAITS CHOC -->
+      <div class="cpanel" style="border-color:rgba(176,107,255,.15)">
+        <div class="cph"><div class="cpt">🧠 Le saviez-vous ?</div></div>
+        <div style="display:flex;flex-direction:column;gap:14px;font-family:'Rajdhani',sans-serif;font-size:1.05rem;line-height:1.6;color:var(--txt2)">
+          <div style="padding:16px 20px;background:var(--glass2);border-radius:12px;border-left:3px solid var(--coral)"><strong style="color:var(--coral)">Faim paradoxale :</strong> 733 millions souffrent de faim, mais on jette 1,3 milliard de tonnes de nourriture par an. De quoi nourrir 2 milliards de personnes.</div>
+          <div style="padding:16px 20px;background:var(--glass2);border-radius:12px;border-left:3px solid #ff6b35"><strong style="color:#ff6b35">CO₂ invisible :</strong> L'humanité émet en 1 heure autant de CO₂ qu'un million de voitures en un an. Chaque respiration compte.</div>
+          <div style="padding:16px 20px;background:var(--glass2);border-radius:12px;border-left:3px solid var(--lime)"><strong style="color:var(--lime)">Poumons de la Terre :</strong> 15 milliards d'arbres abattus par an. Au rythme actuel, les forêts tropicales auront disparu dans 80 ans.</div>
+          <div style="padding:16px 20px;background:var(--glass2);border-radius:12px;border-left:3px solid var(--cyan)"><strong style="color:var(--cyan)">Plastique éternel :</strong> Chaque minute, l'équivalent d'un camion poubelle de plastique est déversé dans l'océan. Il met 450 ans à se décomposer.</div>
+          <div style="padding:16px 20px;background:var(--glass2);border-radius:12px;border-left:3px solid var(--violet)"><strong style="color:var(--violet)">Note d'espoir :</strong> L'énergie solaire a été multipliée par 70 en 16 ans. 4,4 bébés naissent chaque seconde. L'humanité se bat.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TENDANCES & PROJECTIONS 2030/2050 -->
+    <section class="sec" id="sec-trends">
+      <div class="sec-head">
+        <h1 class="sec-title">Tendances & Projections</h1>
+        <span class="sec-src">ONU · IEA · FMI · OMS — Projections officielles</span>
+      </div>
+
+      <div class="trend-intro">
+        <div class="trend-intro-txt">
+          Les graphiques ci-dessous combinent <strong>données historiques vérifiées</strong> et <strong>projections officielles 2030–2050</strong> issues des agences onusiennes, de l'IEA et du FMI. La zone pointillée représente la fourchette de projection.
+        </div>
+      </div>
+
+      <!-- COMPARAISON TEMPORELLE -->
+      <div class="tc-panel">
+        <div class="tc-head">
+          <div class="tc-title">⚖️ Comparaison Temporelle — 2 Années</div>
+          <div class="tc-controls">
+            <button class="tc-yr-btn a" id="tc-yr-a">📅 <span id="tc-yr-a-val">2015</span></button>
+            <span class="tc-yr-sep">vs</span>
+            <button class="tc-yr-btn b" id="tc-yr-b">📅 <span id="tc-yr-b-val">2025</span></button>
+            <select class="tc-metric-sel" id="tc-metric">
+              <option value="pop">Population mondiale</option>
+              <option value="co2">Émissions CO₂</option>
+              <option value="gdp" selected>PIB mondial</option>
+              <option value="life">Espérance de vie</option>
+            </select>
+          </div>
+        </div>
+        <div class="tc-body">
+          <canvas id="cTimeComp" height="220"></canvas>
+        </div>
+        <div class="tc-delta-row" id="tc-delta-row">
+          <div class="tc-delta-box"><div class="tc-delta-lbl" id="tc-d-label-a">2015</div><div class="tc-delta-val" id="tc-d-val-a">—</div></div>
+          <div class="tc-delta-box"><div class="tc-delta-lbl" id="tc-d-label-b">2025</div><div class="tc-delta-val" id="tc-d-val-b">—</div></div>
+          <div class="tc-delta-box"><div class="tc-delta-lbl">Variation</div><div class="tc-delta-val" id="tc-d-delta">—</div></div>
+          <div class="tc-delta-box"><div class="tc-delta-lbl">Variation %</div><div class="tc-delta-val" id="tc-d-pct">—</div></div>
+        </div>
+      </div>
+
+      <!-- GRILLE PROJECTIONS -->
+      <div class="trend-grid" id="trend-grid">
+        <!-- Populated by JS -->
+      </div>
+
+    </section>
+
+    <!-- COMPARATEUR PAYS -->
+    <section class="sec" id="sec-compare">
+      <div class="sec-head">
+        <h1 class="sec-title">Comparateur de Pays</h1>
+        <span class="sec-src">WorldBank · ONU — LIVE</span>
+      </div>
+
+      <!-- SEARCH + CONTINENT FILTERS -->
+      <div class="compare-toolbar">
+        <div class="csearch-wrap">
+          <input class="csearch" id="country-search" type="text" placeholder="Rechercher un pays…" autocomplete="off"/>
+        </div>
+        <div class="continent-pills" id="continent-pills">
+          <button class="cpill on" data-continent="all">🌐 Tous</button>
+          <button class="cpill" data-continent="Europe">🇪🇺 Europe</button>
+          <button class="cpill" data-continent="Amériques">🌎 Amériques</button>
+          <button class="cpill" data-continent="Asie">🌏 Asie</button>
+          <button class="cpill" data-continent="Afrique">🌍 Afrique</button>
+        </div>
+      </div>
+
+      <div class="country-selector" id="country-selector" role="group" aria-label="Sélection des pays"></div>
+
+      <div class="compare-metric-tabs" id="metric-tabs" role="tablist"></div>
+
+      <div class="compare-grid" id="compare-grid"></div>
+
+      <!-- GRAPHIQUE COMPARAISON INSTANTANÉE -->
+      <div class="compare-chart-panel">
+        <div class="cph"><div class="cpt" id="compare-chart-title">Comparaison</div><div class="cpl" id="compare-chart-unit">—</div></div>
+        <canvas id="cCompare" height="200"></canvas>
+      </div>
+
+      <!-- HISTORIQUE MULTI-PAYS (20 ANS) -->
+      <div class="history-panel">
+        <div class="hist-head">
+          <div class="hist-title">
+            <span>📈</span> Évolution Historique — 20 ans
+            <span class="hist-badge" id="hist-badge">WorldBank</span>
+          </div>
+          <div class="hist-loading hidden" id="hist-loading">
+            <div class="hist-spin"></div>Chargement historique…
+          </div>
+        </div>
+        <canvas id="cHistory" height="220"></canvas>
+        <div class="hist-legend" id="hist-legend"></div>
+      </div>
+
+      <!-- ANALYSE IA -->
+      <div class="ai-panel">
+        <div class="ai-head">
+          <div class="ai-title">
+            <span class="ai-title-icon">🤖</span> Analyse IA des données
+          </div>
+          <button class="ai-btn" id="ai-analyze-btn" onclick="analyzeWithAI()">
+            <div class="ai-spinner"></div>
+            <span class="ai-btn-icon">✨</span>
+            <span class="ai-btn-txt">Analyser la sélection</span>
+          </button>
+        </div>
+        <div class="ai-result" id="ai-result" style="color:var(--txt3);font-size:.85rem">Sélectionnez des pays et cliquez sur Analyser pour obtenir une analyse comparative par l'IA.</div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <div class="foot-in">
+      <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+        <span class="foot-brand">EARTHPULSE v8.0</span>
+        <span class="foot-txt">Sources : ONU · OMS · IEA · FAO · FMI · Banque Mondiale · UNAIDS · IHME — Simulation temps réel</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+        <span class="foot-upd" id="fUpd">—</span>
+        <button class="foot-cgu-link" onclick="openCguModal('cgu')">CGU</button>
+        <button class="foot-cgu-link" onclick="openCguModal('privacy')">Confidentialité</button>
+        <button class="foot-cgu-link" onclick="openCguModal('legal')">Mentions légales</button>
+      </div>
+    </div>
+    <div style="max-width:1440px;margin:10px auto 0">
+      <span class="foot-txt" style="font-size:.5rem;opacity:.6">© 2025-2026 Embrostudio — EARTHPULSE. Toutes les statistiques sont des estimations basées sur des données publiques. Elles ne constituent pas des faits certifiés.</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+// DONNÉES MONDIALES
+// ═══════════════════════════════════════════════
+const YS=365.25*24*3600,_N=new Date(),_NY=new Date(_N.getFullYear(),0,1),SY=(_N-_NY)/1e3,SD=(_N.getHours()*3600+_N.getMinutes()*60+_N.getSeconds());
+// ── Données de base mises à jour 2026 ──
+// Sources : ONU DESA 2026 (pop), IEA 2026 (CO₂ ~38,2 Gt), FMI WEO 2026 (PIB ~110 000 Mds)
+const D={pop:{base:8200e6,yr:81e6},b:{yr:140e6},d:{yr:59e6},m:{yr:140e6},bk:{yr:130e6},inet:{tot:5600e6},co2:{yr:38.2e9},def:{yr:10e6},en:{yr:182e9},wt:{yr:4e12},sol:{yr:1600e6},wst:{yr:2050e6},gdp:{yr:110e12},trd:{yr:33e12},fd:{yr:9.8e9},ca:{yr:85e6},oil:{yr:35.6e9},dbt:{tot:100e12,yr:4e12},inf:{yr:11e6},mal:{yr:597e3},hiv:{yr:1.3e6},cnc:{yr:10e6},vac:{yr:4380e6},hgr:{tot:783e6},smk:{yr:8e6}};
+function ps(k){const d=D[k];return d&&d.yr?d.yr/YS:0}
+function yv(k){const d=D[k];return d&&d.yr?Math.floor(ps(k)*SY):(d?.tot||0)}
+function dv(k){const d=D[k];return d&&d.yr?Math.floor(ps(k)*SD):(d?.tot||0)}
+function mkSnap(t0){const e=(Date.now()-t0)/1e3;return{pop:D.pop.base+Math.floor(ps('b')*SY)-Math.floor(ps('d')*SY),b:dv('b')+Math.floor(ps('b')*e),d:dv('d')+Math.floor(ps('d')*e),m:dv('m')+Math.floor(ps('m')*e),bk:yv('bk')+Math.floor(ps('bk')*e),co2y:yv('co2')+Math.floor(ps('co2')*e),co2d:dv('co2')+Math.floor(ps('co2')*e),frd:dv('def')+Math.floor(ps('def')*e),en:dv('en')+Math.floor(ps('en')*e),wt:dv('wt')+Math.floor(ps('wt')*e),sol:yv('sol')+Math.floor(ps('sol')*e),wst:dv('wst')+Math.floor(ps('wst')*e),gdpy:yv('gdp')+Math.floor(ps('gdp')*e),gdpd:dv('gdp')+Math.floor(ps('gdp')*e),trd:dv('trd')+Math.floor(ps('trd')*e),fd:dv('fd')+Math.floor(ps('fd')*e),ca:yv('ca')+Math.floor(ps('ca')*e),oil:dv('oil')+Math.floor(ps('oil')*e),dbt:D.dbt.tot+yv('dbt')+Math.floor(ps('dbt')*e),inf:yv('inf')+Math.floor(ps('inf')*e),mal:yv('mal')+Math.floor(ps('mal')*e),hiv:yv('hiv')+Math.floor(ps('hiv')*e),cnc:yv('cnc')+Math.floor(ps('cnc')*e),vac:dv('vac')+Math.floor(ps('vac')*e),smk:yv('smk')+Math.floor(ps('smk')*e)}}
+const CD={pop:{l:['1960','1970','1980','1990','2000','2010','2015','2020','2026'],v:[3.03,3.70,4.45,5.33,6.14,6.97,7.38,7.80,8.20]},co2:{l:['1990','1995','2000','2005','2010','2015','2020','2023','2026'],v:[22.7,23.5,25.0,29.1,33.1,35.3,34.1,37.4,38.2]},gdp:{l:['2000','2005','2010','2015','2018','2020','2022','2024','2026'],v:[33.5,47.4,65.9,74.8,85.8,84.7,100.6,105.0,110.0]},life:{l:['1960','1970','1980','1990','2000','2010','2015','2020','2026'],v:[52.5,56.0,62.0,65.0,67.5,70.5,72.0,72.4,73.6]}};
+
+// ═══════════════════════════════════════════════
+// FONCTIONS FORMAT — GLOBALES (utilisées par METRICS)
+// ═══════════════════════════════════════════════
+function fmPop(n){if(n>=1e9)return(n/1e9).toFixed(2)+' Milliards';if(n>=1e6)return(n/1e6).toFixed(1)+' Millions';if(n>=1e3)return Math.floor(n/1e3).toLocaleString('fr-FR')+' k';return n.toLocaleString('fr-FR')}
+function fmMoney(n){if(n>=1e12)return(n/1e12).toFixed(2)+' Billions $';if(n>=1e9)return(n/1e9).toFixed(2)+' Milliards $';return n.toLocaleString('fr-FR')+' $'}
+
+// ═══════════════════════════════════════════════
+// DONNÉES PAYS (7 grands pays européens + USA)
+// ═══════════════════════════════════════════════
+const COUNTRIES=[
+  // Europe
+  {id:'fr',name:'France',flag:'🇫🇷',color:'#4e8cff',pop:68e6,gdp:3.13e12,gdppc:46e3,co2:305e6,life:82.5,unemp:7.3,debt:111,renewables:24,hdi:0.903},
+  {id:'de',name:'Allemagne',flag:'🇩🇪',color:'#f9c74f',pop:84e6,gdp:4.46e12,gdppc:53e3,co2:675e6,life:81.1,unemp:5.5,debt:66,renewables:46,hdi:0.942},
+  {id:'uk',name:'Royaume-Uni',flag:'🇬🇧',color:'#90e0ef',pop:67e6,gdp:3.13e12,gdppc:46e3,co2:330e6,life:81.3,unemp:4.2,debt:97,renewables:42,hdi:0.929},
+  {id:'it',name:'Italie',flag:'🇮🇹',color:'#43aa8b',pop:60e6,gdp:2.19e12,gdppc:36e3,co2:330e6,life:83.6,unemp:6.7,debt:143,renewables:37,hdi:0.895},
+  {id:'es',name:'Espagne',flag:'🇪🇸',color:'#f4845f',pop:47e6,gdp:1.58e12,gdppc:34e3,co2:245e6,life:83.4,unemp:12.2,debt:113,renewables:48,hdi:0.905},
+  {id:'pl',name:'Pologne',flag:'🇵🇱',color:'#e05263',pop:38e6,gdp:752e9,gdppc:20e3,co2:318e6,life:77.8,unemp:2.9,debt:49,renewables:16,hdi:0.876},
+  {id:'nl',name:'Pays-Bas',flag:'🇳🇱',color:'#ff9a3c',pop:17e6,gdp:1.10e12,gdppc:62e3,co2:155e6,life:82.4,unemp:3.7,debt:51,renewables:33,hdi:0.941},
+  // Amériques
+  {id:'us',name:'États-Unis',flag:'🇺🇸',color:'#b06bff',pop:335e6,gdp:27.36e12,gdppc:81e3,co2:4.97e9,life:79.1,unemp:3.7,debt:122,renewables:22,hdi:0.927},
+  {id:'br',name:'Brésil',flag:'🇧🇷',color:'#2aff9e',pop:215e6,gdp:2.08e12,gdppc:10e3,co2:480e6,life:75.5,unemp:8.0,debt:88,renewables:83,hdi:0.754},
+  // Asie
+  {id:'cn',name:'Chine',flag:'🇨🇳',color:'#ff4d6d',pop:1412e6,gdp:17.73e12,gdppc:12.5e3,co2:11.5e9,life:78.2,unemp:5.1,debt:51,renewables:29,hdi:0.788},
+  {id:'in',name:'Inde',flag:'🇮🇳',color:'#ff9933',pop:1428e6,gdp:3.73e12,gdppc:2.6e3,co2:2.9e9,life:70.2,unemp:7.5,debt:84,renewables:20,hdi:0.644},
+  {id:'jp',name:'Japon',flag:'🇯🇵',color:'#ff6b9d',pop:124e6,gdp:4.23e12,gdppc:34e3,co2:1.09e9,life:84.3,unemp:2.6,debt:261,renewables:22,hdi:0.920},
+  // Afrique
+  {id:'ng',name:'Nigeria',flag:'🇳🇬',color:'#00cc66',pop:220e6,gdp:477e9,gdppc:2.2e3,co2:130e6,life:55.2,unemp:5.0,debt:38,renewables:15,hdi:0.535},
+  {id:'za',name:'Afrique du Sud',flag:'🇿🇦',color:'#ffcc00',pop:60e6,gdp:380e9,gdppc:6.3e3,co2:459e6,life:64.1,unemp:32.1,debt:72,renewables:12,hdi:0.713},
+];
+
+const METRICS=[
+  {id:'pop',label:'Population',unit:'habitants',fmt:n=>fmPop(n),barMax:1428e6},
+  {id:'gdp',label:'PIB Total',unit:'USD',fmt:n=>fmMoney(n),barMax:27.36e12},
+  {id:'gdppc',label:'PIB / hab.',unit:'USD/hab.',fmt:n=>Math.round(n).toLocaleString('fr-FR')+' $',barMax:85e3},
+  {id:'co2',label:'CO₂/an',unit:'tonnes CO₂',fmt:n=>fmPop(n),barMax:12e9},
+  {id:'life',label:'Espérance vie',unit:'années',fmt:n=>n.toFixed(1)+' ans',barMax:85},
+  {id:'unemp',label:'Chômage',unit:'%',fmt:n=>n.toFixed(1)+' %',barMax:35,invert:true},
+  {id:'debt',label:'Dette / PIB',unit:'%',fmt:n=>n.toFixed(0)+' %',barMax:270,invert:true},
+  {id:'renewables',label:'Énergies ren.',unit:'%',fmt:n=>n.toFixed(1)+' %',barMax:90},
+  {id:'hdi',label:'IDH',unit:'score',fmt:n=>n.toFixed(3),barMax:1}
+];
+
+// ═══════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════
+(()=>{
+'use strict';
+const ST={t0:Date.now(),sn:null,sec:'impact',th:'dark',ch:{},sp:{},sh:{},impactInited:false,trendsInited:false,compareMetric:'gdp',activeCountries:new Set(['fr','us'])};
+const $=id=>document.getElementById(id);
+
+function f(n,c=false){if(typeof n!=='number'||isNaN(n))return'—';if(c){if(n>=1e12)return(n/1e12).toFixed(2)+' Billions';if(n>=1e9)return(n/1e9).toFixed(2)+' Milliards';if(n>=1e6)return(n/1e6).toFixed(1)+' Millions';if(n>=1e3)return Math.floor(n/1e3).toLocaleString('fr-FR')+' k';}return n.toLocaleString('fr-FR',{maximumFractionDigits:0})}
+function fm(n){if(n>=1e12)return(n/1e12).toFixed(2)+' Billions $';if(n>=1e9)return(n/1e9).toFixed(2)+' Milliards $';if(n>=1e6)return(n/1e6).toFixed(1)+' Millions $';return n.toLocaleString('fr-FR')+' $'}
+function fr(r){if(r>=1)return'+'+r.toFixed(1)+' / sec';if(r>=1/60)return'+'+(r*60).toFixed(1)+' / min';return'+'+(r*3600).toFixed(1)+' / h'}
+
+function st(id,v,b){const el=$(id);if(!el)return;if(el.textContent!==String(v)){el.textContent=v;if(b){el.classList.remove('bump');void el.offsetWidth;el.classList.add('bump')}}}
+
+// ═══ SPARKLINES ═══
+function mkSp(id,col){const cv=$(id);if(!cv)return null;const ctx=cv.getContext('2d');ST.sh[id]=[];return{push(v){const h=ST.sh[id];h.push(v);if(h.length>50)h.shift();this.draw(h)},draw(data){if(data.length<2)return;const W=cv.width,H=cv.height;ctx.clearRect(0,0,W,H);const mn=Math.min(...data),mx=Math.max(...data),rng=mx-mn||1;const pts=data.map((v,i)=>({x:(i/(data.length-1))*W,y:H-((v-mn)/rng)*H*.75-H*.12}));ctx.beginPath();ctx.moveTo(pts[0].x,H);pts.forEach(p=>ctx.lineTo(p.x,p.y));ctx.lineTo(pts[pts.length-1].x,H);ctx.closePath();const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,col+'50');g.addColorStop(1,col+'00');ctx.fillStyle=g;ctx.fill();ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.strokeStyle=col;ctx.lineWidth=1.5;ctx.stroke();const lp=pts[pts.length-1];ctx.beginPath();ctx.arc(lp.x,lp.y,2.5,0,Math.PI*2);ctx.fillStyle=col;ctx.fill();ctx.beginPath();ctx.arc(lp.x,lp.y,4.5,0,Math.PI*2);ctx.fillStyle=col+'28';ctx.fill()}}}
+function initSp(){ST.sp={pop:mkSp('spPop','#00d4ff'),b:mkSp('spB','#7fff6b'),d:mkSp('spD','#ff4d6d'),n:mkSp('spN','#00ffcc'),co2:mkSp('spCo2','#ff6b35'),for:mkSp('spFor','#00ffcc'),gdp:mkSp('spGdp','#ffb347'),mal:mkSp('spMal','#ff4d6d')}}
+
+// ═══ CHARTS ═══
+function mkCh(id,labels,values,col,label,opts={}){
+  const cv=$(id);if(!cv)return;
+  if(ST.ch[id])ST.ch[id].destroy();
+  const ctx=cv.getContext('2d'),dk=ST.th==='dark';
+  const gc=dk?'rgba(0,212,255,.055)':'rgba(0,80,160,.06)';
+  const tc=dk?'rgba(160,210,255,.4)':'rgba(10,26,46,.45)';
+  const g=ctx.createLinearGradient(0,0,0,cv.offsetHeight||180);
+  g.addColorStop(0,col+'28');g.addColorStop(.6,col+'0c');g.addColorStop(1,col+'00');
+  const datasets=[{
+    label,data:values,borderColor:col,backgroundColor:g,
+    borderWidth:2,pointRadius:4,pointBackgroundColor:col,
+    pointBorderColor:dk?'#07111d':'#dae8f5',pointBorderWidth:2,
+    tension:.4,fill:true
+  }];
+  // Optional projection dataset (dashed)
+  if(opts.projLabels&&opts.projValues){
+    const gp=ctx.createLinearGradient(0,0,0,cv.offsetHeight||180);
+    gp.addColorStop(0,col+'14');gp.addColorStop(1,col+'00');
+    datasets.push({
+      label:'Projection',data:[...Array(labels.length-1).fill(null),values[values.length-1],...opts.projValues],
+      borderColor:col+'99',backgroundColor:gp,borderWidth:1.5,
+      borderDash:[6,4],pointRadius:3,pointBackgroundColor:col+'80',
+      pointBorderColor:'transparent',tension:.4,fill:true
+    });
+  }
+  ST.ch[id]=new Chart(ctx,{
+    type:'line',
+    data:{labels:opts.projLabels?[...labels,...opts.projLabels]:labels,datasets},
+    options:{
+      responsive:true,maintainAspectRatio:true,
+      plugins:{
+        legend:{display:!!opts.projLabels,labels:{color:tc,font:{family:'Space Mono',size:9},boxWidth:16,padding:14}},
+        tooltip:{backgroundColor:dk?'rgba(5,12,20,.95)':'rgba(240,246,255,.95)',titleColor:col,bodyColor:dk?'#e8f4ff':'#0a1a2e',borderColor:col+'40',borderWidth:1,padding:12,titleFont:{family:'Space Mono',size:10},bodyFont:{family:'Space Mono',size:11}}
+      },
+      scales:{
+        x:{grid:{color:gc},ticks:{color:tc,font:{family:'Space Mono',size:9},maxRotation:0}},
+        y:{grid:{color:gc},ticks:{color:tc,font:{family:'Space Mono',size:9}}}
+      },
+      animation:{
+        duration:900,
+        easing:'easeOutCubic',
+        onProgress(anim){
+          const p=anim.currentStep/anim.numSteps;
+          cv.style.opacity=Math.min(1,p*2);
+        },
+        onComplete(){cv.style.opacity=1;}
+      }
+    }
+  });
+}
+
+function mkBarCh(id,labels,values,colors,label,unit){const cv=$(id);if(!cv)return;if(ST.ch[id])ST.ch[id].destroy();const ctx=cv.getContext('2d'),dk=ST.th==='dark',gc=dk?'rgba(0,212,255,.055)':'rgba(0,80,160,.06)',tc=dk?'rgba(160,210,255,.4)':'rgba(10,26,46,.45)';ST.ch[id]=new Chart(ctx,{type:'bar',data:{labels,datasets:[{label,data:values,backgroundColor:colors.map(c=>c+'aa'),borderColor:colors,borderWidth:1.5,borderRadius:6}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false},tooltip:{backgroundColor:dk?'rgba(5,12,20,.95)':'rgba(240,246,255,.95)',titleColor:dk?'#e8f4ff':'#0a1a2e',bodyColor:dk?'#e8f4ff':'#0a1a2e',borderColor:'rgba(0,212,255,.4)',borderWidth:1,padding:12,callbacks:{label:ctx=>`${ctx.parsed.y} ${unit}`}}},scales:{x:{grid:{color:gc},ticks:{color:tc,font:{family:'Space Mono',size:9}}},y:{grid:{color:gc},ticks:{color:tc,font:{family:'Space Mono',size:9}}}},animation:{duration:700,easing:'easeOutCubic'}}})}
+
+function mkDoughnut(id,labels,values,colors){const cv=$(id);if(!cv)return;if(ST.ch[id])ST.ch[id].destroy();const ctx=cv.getContext('2d'),dk=ST.th==='dark';ST.ch[id]=new Chart(ctx,{type:'doughnut',data:{labels,datasets:[{data:values,backgroundColor:colors.map(c=>c+'bb'),borderColor:colors,borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:true,cutout:'60%',plugins:{legend:{display:true,position:'right',labels:{color:dk?'rgba(160,210,255,.7)':'rgba(10,26,46,.6)',font:{family:'Space Mono',size:9},padding:12}},tooltip:{backgroundColor:dk?'rgba(5,12,20,.95)':'rgba(240,246,255,.95)',titleColor:dk?'#e8f4ff':'#0a1a2e',bodyColor:dk?'#e8f4ff':'#0a1a2e',borderColor:'rgba(0,212,255,.4)',borderWidth:1,padding:12}},animation:{duration:800}}})}
+
+function initCh(){
+  mkCh('cPop',CD.pop.l,CD.pop.v,'#00d4ff','Milliards');
+  mkCh('cCo2',CD.co2.l,CD.co2.v,'#ff6b35','Gigatonnes CO₂/an');
+  mkCh('cGdp',CD.gdp.l,CD.gdp.v,'#ffb347','Billions USD');
+  mkCh('cHlth',CD.life.l,CD.life.v,'#ff4d6d','Années');
+  mkDoughnut('cContinent',
+    ['Asie','Afrique','Europe','Amériques','Océanie'],
+    [4.7,1.46,0.75,1.04,0.04],
+    ['#00d4ff','#ffb347','#7fff6b','#b06bff','#ff4d6d']
+  );
+  renderCompareChart();
+}
+
+// ═══ UPDATE ═══
+function upd(){
+  const e=(Date.now()-ST.t0)/1e3,s=ST.sn;
+  const pop=s.pop+Math.floor(ps('b')*e)-Math.floor(ps('d')*e);
+  const b=s.b+Math.floor(ps('b')*e),d=s.d+Math.floor(ps('d')*e),net=Math.max(0,b-d);
+  st('wPop',f(pop));st('vB',f(b),true);st('vD',f(d),true);st('vN',f(net),true);
+  st('vM',f(s.m+Math.floor(ps('m')*e)),true);st('vBk',f(s.bk+Math.floor(ps('bk')*e)));
+  st('vI',f(D.inet.tot,true));st('rB',fr(ps('b')));st('rD',fr(ps('d')));st('rN',fr(ps('b')-ps('d')));st('rM',fr(ps('m')));st('rBk',fr(ps('bk')));
+  if(ST.sp.pop)ST.sp.pop.push(pop);if(ST.sp.b)ST.sp.b.push(b);if(ST.sp.d)ST.sp.d.push(d);if(ST.sp.n)ST.sp.n.push(net);
+
+  const co2y=s.co2y+Math.floor(ps('co2')*e),co2d=s.co2d+Math.floor(ps('co2')*e),frd=s.frd+Math.floor(ps('def')*e);
+  st('vCo2Y',f(co2y,true)+' tonnes');st('vCo2D',f(co2d,true)+' t');st('rCo2',fr(ps('co2')));
+  st('vFor',f(frd));st('vEn',f(s.en+Math.floor(ps('en')*e),true));st('vWt',f(s.wt+Math.floor(ps('wt')*e),true));
+  st('vSol',f(s.sol+Math.floor(ps('sol')*e),true));st('vWst',f(s.wst+Math.floor(ps('wst')*e),true));
+  if(ST.sp.co2)ST.sp.co2.push(co2d);if(ST.sp.for)ST.sp.for.push(frd);
+
+  const gdpd=s.gdpd+Math.floor(ps('gdp')*e);
+  st('vGdpY',fm(s.gdpy+Math.floor(ps('gdp')*e)));st('vGdpD',fm(gdpd));
+  st('rGdp',Math.floor(ps('gdp')).toLocaleString('fr-FR')+' $ / sec');
+  st('vTrd',fm(s.trd+Math.floor(ps('trd')*e)));st('rTrd',Math.floor(ps('trd')).toLocaleString('fr-FR')+' $ / sec');
+  st('vFd',f(s.fd+Math.floor(ps('fd')*e),true));st('vCa',f(s.ca+Math.floor(ps('ca')*e)));st('rCa',fr(ps('ca')));
+  st('vOil',f(s.oil+Math.floor(ps('oil')*e),true));st('vDbt',fm(s.dbt+Math.floor(ps('dbt')*e)));
+  if(ST.sp.gdp)ST.sp.gdp.push(gdpd);
+
+  const mal=s.mal+Math.floor(ps('mal')*e);
+  st('vInf',f(s.inf+Math.floor(ps('inf')*e)));st('vMal',f(mal));st('rMal',fr(ps('mal')));
+  st('vHiv',f(s.hiv+Math.floor(ps('hiv')*e)));st('rHiv',fr(ps('hiv')));
+  st('vCnc',f(s.cnc+Math.floor(ps('cnc')*e)));st('rCnc',fr(ps('cnc')));
+  st('vVac',f(s.vac+Math.floor(ps('vac')*e),true));st('rVac',fr(ps('vac')));
+  st('vHgr',f(D.hgr.tot,true));st('vSmk',f(s.smk+Math.floor(ps('smk')*e)));st('rSmk',fr(ps('smk')));
+  if(ST.sp.mal)ST.sp.mal.push(mal);
+
+  // Ticker
+  st('tP',f(pop));st('tP2',f(pop));st('tC',f(co2d,true));st('tC2',f(co2d,true));
+  st('tB',f(b));st('tB2',f(b));st('tD',f(d));st('tD2',f(d));
+  st('tF',f(frd));st('tF2',f(frd));st('tG',fm(gdpd));st('tG2',fm(gdpd));
+  st('fUpd',new Date().toLocaleTimeString('fr-FR'));
+  checkMilestones(e,s);
+  if(ST.impactInited&&ST.sec==='impact')updateImpact();
+}
+
+// ═══ NAV ═══
+const SECTIONS_ORDER=['impact','population','environment','economy','health','trends','compare'];
+function goTo(n){
+  if(ST.sec===n)return;
+  const prevIdx=SECTIONS_ORDER.indexOf(ST.sec);
+  const nextIdx=SECTIONS_ORDER.indexOf(n);
+  const dir=nextIdx>prevIdx?'left':'right'; // going forward = slide left
+  const prevSec=$('sec-'+ST.sec);
+  ST.sec=n;
+  document.querySelectorAll('[data-s]').forEach(b=>{
+    b.classList.toggle('on',b.dataset.s===n);
+  });
+  const sec=$('sec-'+n);
+  if(sec){
+    sec.classList.remove('on','slide-left','slide-right');
+    sec.style.display='block';
+    requestAnimationFrame(()=>{
+      sec.classList.add('on',dir==='left'?'slide-left':'slide-right');
+    });
+  }
+  if(prevSec&&prevSec!==sec){
+    prevSec.classList.remove('on','slide-left','slide-right');
+    prevSec.style.display='none';
+  }
+  if(n==='impact'&&!ST.impactInited){initImpact();ST.impactInited=true;}
+  if(n==='trends'&&!ST.trendsInited){initTrends();ST.trendsInited=true;}
+  if(n==='compare'){
+    renderCompareCards();
+    fetchWorldBankData();
+    fetchAndRenderHistory();
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ═══ THEME ═══
+function tgl(){ST.th=ST.th==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',ST.th);$('thm').textContent=ST.th==='dark'?'☀️':'🌙';setTimeout(initCh,100)}
+
+// ═══ GLOW ═══
+function initGlow(){document.querySelectorAll('.card').forEach(c=>{c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();c.style.setProperty('--mx',((e.clientX-r.left)/r.width*100).toFixed(1)+'%');c.style.setProperty('--my',((e.clientY-r.top)/r.height*100).toFixed(1)+'%')})})}
+
+// ═══════════════════════════════════════════════════════════════
+// ① CHOROPLÈTHE MONDIALE — SVG + colorisation + tooltip + panel
+// ═══════════════════════════════════════════════════════════════
+const CHORO_METRICS={
+  gdp:{label:'PIB Total',fmt:n=>{if(n>=1e12)return(n/1e12).toFixed(1)+' Billions $';if(n>=1e9)return(n/1e9).toFixed(0)+' Milliards $';return n.toLocaleString()+' $'},colors:['#071a2e','#0a3a5c','#0d5c8c','#1a7ab5','#2aa8d8','#3ed4f5'],desc:'USD courants (FMI 2026)'},
+  pop:{label:'Population',fmt:n=>{if(n>=1e9)return(n/1e9).toFixed(2)+' Milliards';if(n>=1e6)return(n/1e6).toFixed(0)+' Millions';return n.toLocaleString()},colors:['#071a2e','#0d3b22','#145e32','#1a8c47','#26c25f','#7fff6b'],desc:'Habitants (ONU 2026)'},
+  co2:{label:'CO₂ / an',fmt:n=>{if(n>=1e9)return(n/1e9).toFixed(1)+' Gigatonnes';if(n>=1e6)return(n/1e6).toFixed(0)+' Mégatonnes';return n.toLocaleString()+' tonnes'},colors:['#071a2e','#1a1010','#3b1a0a','#7a2a0a','#c44a1a','#ff6b35'],desc:'Tonnes CO₂/an (IEA 2026)'},
+  life:{label:'Espérance vie',fmt:n=>n.toFixed(1)+' ans',colors:['#2a0a1a','#6b1a2a','#b03050','#e05070','#ff9090','#ffcccc'],desc:'Années (OMS 2026)'},
+  hdi:{label:'IDH',fmt:n=>n.toFixed(3),colors:['#1a0a2e','#2e1a5c','#4e2a9c','#7a50d0','#aa85f0','#d4b8ff'],desc:'Score 0–1 (PNUD 2026)'},
+  renewables:{label:'Renouvelables',fmt:n=>n.toFixed(1)+' %',colors:['#1a0a07','#3b1a0a','#8c4a10','#c88a20','#e0c040','#7fff6b'],desc:'% production électrique (IEA 2026)'},
+};
+
+// Carte mondiale SVG embarquee - contours realistes
+const MAP_CONTINENTS=[
+  {id:'na',d:'M50,90 L80,70 L140,60 L200,55 L250,65 L310,70 L320,95 L314,119 L306,133 L296,150 L278,175 L265,180 L250,185 L230,190 L210,185 L195,178 L180,175 L170,170 L160,165 L156,145 L145,130 L120,115 L80,105 Z'},
+  {id:'sa',d:'M290,235 L306,264 L310,275 L305,290 L310,310 L330,340 L340,355 L345,370 L340,385 L330,395 L315,405 L305,415 L295,420 L290,410 L285,395 L275,380 L265,360 L260,340 L255,325 L260,310 L265,295 L275,275 L280,260 L285,245 Z'},
+  {id:'af',d:'M475,150 L485,148 L500,150 L520,145 L540,150 L555,155 L568,165 L575,175 L580,190 L582,210 L580,225 L575,240 L570,255 L572,270 L575,285 L580,300 L585,315 L580,330 L570,340 L560,345 L547,342 L540,335 L530,340 L520,345 L510,340 L505,330 L500,315 L498,300 L495,285 L492,270 L490,255 L488,240 L485,225 L482,210 L480,195 L478,180 L475,165 Z'},
+  {id:'eu',d:'M480,75 L495,72 L510,68 L525,70 L545,68 L560,72 L575,80 L585,90 L580,100 L570,105 L562,108 L555,112 L548,108 L540,100 L535,95 L530,100 L526,105 L520,108 L515,106 L510,100 L505,95 L500,92 L495,88 L488,85 L482,82 Z'},
+  {id:'ru',d:'M560,72 L580,65 L620,55 L680,50 L740,48 L800,52 L860,58 L900,65 L940,72 L960,80 L950,95 L940,108 L920,115 L890,118 L860,117 L830,115 L800,118 L770,120 L740,118 L710,120 L680,125 L650,122 L630,118 L610,115 L595,110 L585,105 L580,98 L575,90 L570,82 Z'},
+  {id:'me',d:'M575,155 L595,148 L620,145 L645,150 L660,158 L665,168 L660,178 L650,185 L638,188 L625,185 L610,180 L598,175 L590,168 L580,162 Z'},
+  {id:'ca2',d:'M630,118 L660,115 L690,118 L720,122 L740,128 L730,140 L715,148 L700,150 L685,148 L665,142 L648,138 L635,132 L628,125 Z'},
+  {id:'sea',d:'M790,190 L810,185 L830,188 L850,195 L870,200 L890,210 L900,220 L895,235 L880,245 L865,250 L848,248 L835,242 L820,235 L808,225 L798,215 L792,205 L788,198 Z'},
+  {id:'oc',d:'M820,310 L845,300 L870,295 L895,300 L915,310 L925,325 L920,340 L910,355 L895,365 L875,370 L855,368 L835,360 L820,348 L812,335 L810,320 Z'},
+  {id:'cam',d:'M210,185 L225,188 L240,192 L255,198 L268,205 L278,212 L285,220 L290,228 L295,235 L290,238 L282,235 L270,230 L258,225 L248,218 L238,210 L228,202 L218,195 L212,190 Z'},
+  {id:'gl',d:'M330,30 L360,22 L395,20 L420,25 L435,35 L440,50 L430,65 L415,72 L395,75 L370,72 L350,65 L338,55 L332,42 Z'},
+  {id:'scan',d:'M510,55 L518,48 L528,45 L535,50 L540,58 L542,68 L538,78 L530,85 L522,88 L515,85 L508,78 L505,70 L507,62 Z'},
+];
+const MAP_COUNTRIES={
+  fr:{id:'fr',pts:'487,117 495,112 507,108 518,112 521,118 521,128 515,131 508,133 498,131 493,126 489,122'},
+  de:{id:'de',pts:'520,100 526,98 535,98 542,100 542,106 540,112 536,116 530,118 524,118 519,114 518,110 518,105'},
+  uk:{id:'uk',pts:'488,112 492,108 498,105 502,102 500,96 496,92 492,88 488,90 486,95 485,100 484,106 486,110'},
+  it:{id:'it',pts:'522,122 528,122 534,124 538,128 542,134 544,140 542,145 538,142 533,136 528,132 524,127'},
+  es:{id:'es',pts:'475,132 482,128 492,128 502,130 506,135 504,140 500,145 494,148 486,150 480,146 476,140 474,136'},
+  pl:{id:'pl',pts:'540,98 550,97 560,98 566,100 567,106 566,112 560,114 552,115 544,112 540,108 539,103'},
+  nl:{id:'nl',pts:'510,107 514,104 518,102 520,104 519,108 516,110 512,109'},
+  us:{id:'us',pts:'155,116 175,114 200,113 230,112 260,114 290,115 310,118 315,125 310,135 305,145 295,155 285,165 278,178 265,180 245,182 230,180 215,175 200,168 185,162 175,158 165,148 158,138 155,128'},
+  br:{id:'br',pts:'335,242 350,238 370,236 390,242 405,255 408,270 400,285 390,300 380,315 368,328 355,335 340,328 330,318 325,305 318,290 315,275 318,262 325,252'},
+  cn:{id:'cn',pts:'710,138 730,132 755,128 780,130 805,132 830,128 850,122 862,118 870,125 860,135 845,145 838,155 835,165 825,175 815,185 800,190 785,185 770,178 755,168 740,155 725,148 715,145'},
+  in:{id:'in',pts:'695,165 710,158 725,155 738,162 745,172 748,182 745,192 740,205 732,218 722,228 715,232 708,225 700,212 694,198 690,185 690,175'},
+  jp:{id:'jp',pts:'878,128 885,125 892,130 895,138 892,145 888,152 882,158 876,160 872,155 875,148 880,140 882,134'},
+  ng:{id:'ng',pts:'508,215 518,212 530,212 540,215 542,222 540,230 535,235 525,238 515,236 508,232 506,225'},
+  za:{id:'za',pts:'555,318 565,312 578,310 588,318 592,328 590,338 582,345 570,348 558,348 548,342 545,332 548,325'},
+};
+let CHORO_METRIC='gdp';
+let CHORO_SELECTED=null;
+function lerpColor(c1,c2,t){
+  const r1=parseInt(c1.slice(1,3),16),g1=parseInt(c1.slice(3,5),16),b1=parseInt(c1.slice(5,7),16);
+  const r2=parseInt(c2.slice(1,3),16),g2=parseInt(c2.slice(3,5),16),b2=parseInt(c2.slice(5,7),16);
+  const r=Math.round(r1+(r2-r1)*t),g=Math.round(g1+(g2-g1)*t),b=Math.round(b1+(b2-b1)*t);
+  return '#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('');
+}
+function getChoroColor(val,minVal,maxVal,palette){
+  if(val==null||isNaN(val))return'#0a1a2e';
+  const t=Math.max(0,Math.min(1,(val-minVal)/(maxVal-minVal)));
+  const n=palette.length-1;
+  const i=Math.floor(t*n),j=Math.min(i+1,n);
+  return lerpColor(palette[i],palette[j],(t*n)-i);
+}
+function initChoropleth(){
+  const wrap=document.getElementById('choro-svg-wrap');
+  if(!wrap)return;
+  const dk=ST.th==='dark';
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('id','choro-svg');svg.setAttribute('viewBox','0 0 1000 500');
+  svg.style.cssText='width:100%;height:auto;display:block;cursor:crosshair';
+  const bg=document.createElementNS('http://www.w3.org/2000/svg','rect');
+  bg.setAttribute('width','1000');bg.setAttribute('height','500');
+  bg.setAttribute('fill',dk?'#020d1a':'#d0e4f5');svg.appendChild(bg);
+  for(let x=0;x<=1000;x+=100){const l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('x1',x);l.setAttribute('y1','0');l.setAttribute('x2',x);l.setAttribute('y2','500');l.setAttribute('stroke',dk?'rgba(0,212,255,0.03)':'rgba(0,80,160,0.04)');l.setAttribute('stroke-width','0.5');svg.appendChild(l);}
+  for(let y=0;y<=500;y+=50){const l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('x1','0');l.setAttribute('y1',y);l.setAttribute('x2','1000');l.setAttribute('y2',y);l.setAttribute('stroke',dk?'rgba(0,212,255,0.03)':'rgba(0,80,160,0.04)');l.setAttribute('stroke-width','0.5');svg.appendChild(l);}
+  MAP_CONTINENTS.forEach(c=>{
+    const el=document.createElementNS('http://www.w3.org/2000/svg','path');
+    el.setAttribute('d',c.d);el.setAttribute('fill',dk?'#0d1e2e':'#c5d8ea');
+    el.setAttribute('stroke',dk?'rgba(0,212,255,0.06)':'rgba(0,80,160,0.08)');
+    el.setAttribute('stroke-width','0.4');el.setAttribute('stroke-linejoin','round');
+    svg.appendChild(el);
+  });
+  Object.values(MAP_COUNTRIES).forEach(c=>{
+    const el=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+    el.setAttribute('points',c.pts);el.setAttribute('fill','#1a3a5c');
+    el.setAttribute('stroke',dk?'rgba(0,212,255,0.3)':'rgba(0,80,160,0.2)');
+    el.setAttribute('stroke-width','0.6');el.setAttribute('stroke-linejoin','round');
+    el.classList.add('choro-country');el.setAttribute('data-id',c.id);
+    el.style.cssText='cursor:pointer;transition:fill .5s,filter .2s';
+    el.addEventListener('mouseenter',evt=>showChoroTooltip(evt,c));
+    el.addEventListener('mouseleave',hideChoroTooltip);
+    el.addEventListener('mousemove',evt=>{const tt=document.getElementById('choro-tooltip');if(!tt)return;const wr=wrap.getBoundingClientRect();let tx=evt.clientX-wr.left+14,ty=evt.clientY-wr.top-10;if(tx+200>wr.width)tx=evt.clientX-wr.left-210;tt.style.left=tx+'px';tt.style.top=ty+'px';});
+    el.addEventListener('click',()=>selectChoroCountry(c));
+    svg.appendChild(el);
+    const country=COUNTRIES.find(x=>x.id===c.id);
+    if(country){const pts=c.pts.split(' ').map(p=>p.split(',').map(Number));const cx=pts.reduce((s,p)=>s+p[0],0)/pts.length;const cy=pts.reduce((s,p)=>s+p[1],0)/pts.length;const t=document.createElementNS('http://www.w3.org/2000/svg','text');t.setAttribute('x',cx);t.setAttribute('y',cy+3);t.setAttribute('text-anchor','middle');t.setAttribute('font-size',c.id==='nl'||c.id==='jp'?'6':'9');t.setAttribute('pointer-events','none');t.textContent=country.flag;svg.appendChild(t);}
+  });
+  wrap.insertBefore(svg,wrap.firstChild);
+  document.querySelectorAll('.choro-metric-btn').forEach(btn=>{btn.addEventListener('click',()=>{CHORO_METRIC=btn.dataset.cm;document.querySelectorAll('.choro-metric-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');updateChoroColors();});});
+  updateChoroColors();
+}
+
+function updateChoroColors(){
+  const metric=CHORO_METRICS[CHORO_METRIC];
+  const vals=COUNTRIES.map(c=>c[CHORO_METRIC]).filter(v=>v!=null&&!isNaN(v));
+  const minV=Math.min(...vals),maxV=Math.max(...vals);
+  // Update legend
+  const legMin=document.getElementById('choro-leg-min');
+  const legMax=document.getElementById('choro-leg-max');
+  if(legMin)legMin.textContent=metric.fmt(minV);
+  if(legMax)legMax.textContent=metric.fmt(maxV);
+  // Draw legend gradient
+  const legCanvas=document.getElementById('choro-legend-bar');
+  if(legCanvas){
+    const lctx=legCanvas.getContext('2d');
+    const grad=lctx.createLinearGradient(0,0,160,0);
+    metric.colors.forEach((c,i)=>grad.addColorStop(i/(metric.colors.length-1),c));
+    lctx.clearRect(0,0,160,10);
+    lctx.fillStyle=grad;lctx.fillRect(0,0,160,10);
+    lctx.strokeStyle='rgba(0,212,255,0.2)';lctx.lineWidth=0.5;
+    lctx.strokeRect(0,0,160,10);
+  }
+  // Color each country polygon with animated transition
+  const svgEl=document.getElementById('choro-svg');
+  if(!svgEl)return;
+  svgEl.querySelectorAll('.choro-country').forEach(el=>{
+    const cId=el.getAttribute('data-id');
+    const country=COUNTRIES.find(c=>c.id===cId);
+    if(!country){el.setAttribute('fill','#0d1e2e');return;}
+    const val=country[CHORO_METRIC];
+    const color=getChoroColor(val,minV,maxV,metric.colors);
+    // Smooth color transition via CSS animation
+    el.style.transition='fill 0.6s ease';
+    el.setAttribute('fill',color);
+  });
+}
+
+function showChoroTooltip(evt,c){
+  const country=COUNTRIES.find(x=>x.id===c.id);
+  if(!country)return;
+  const metric=CHORO_METRICS[CHORO_METRIC];
+  const tt=document.getElementById('choro-tooltip');
+  if(!tt)return;
+  document.getElementById('choro-tt-flag').textContent=country.flag;
+  document.getElementById('choro-tt-name').textContent=country.name;
+  document.getElementById('choro-tt-label').textContent=metric.label;
+  document.getElementById('choro-tt-val').textContent=metric.fmt(country[CHORO_METRIC]);
+  document.getElementById('choro-tt-pop').textContent=country.pop>=1e9?(country.pop/1e9).toFixed(2)+' Milliards':(country.pop/1e6).toFixed(0)+' Millions';
+  const wrap=document.getElementById('choro-svg-wrap');
+  const wr=wrap.getBoundingClientRect();
+  let tx=evt.clientX-wr.left+14,ty=evt.clientY-wr.top-10;
+  if(tx+200>wr.width)tx=evt.clientX-wr.left-210;
+  tt.style.left=tx+'px';tt.style.top=ty+'px';
+  tt.classList.add('show');
+}
+function hideChoroTooltip(){
+  const tt=document.getElementById('choro-tooltip');
+  if(tt)tt.classList.remove('show');
+}
+function selectChoroCountry(c){
+  const country=COUNTRIES.find(x=>x.id===c.id);
+  if(!country)return;
+  // Deselect previous
+  const svg2=document.getElementById('choro-svg');
+  if(!svg2)return;
+  svg2.querySelectorAll('.choro-country.selected').forEach(el=>el.classList.remove('selected'));
+  if(CHORO_SELECTED===c.id){CHORO_SELECTED=null;document.getElementById('choro-country-panel').classList.remove('show');return;}
+  CHORO_SELECTED=c.id;
+  const el=svg2.querySelector(`[data-id="${c.id}"]`);
+  if(el)el.classList.add('selected');
+  // Populate panel
+  document.getElementById('choro-panel-flag').textContent=country.flag;
+  document.getElementById('choro-panel-name').textContent=country.name;
+  const grid=document.getElementById('choro-panel-grid');
+  const metrics=[
+    {l:'PIB Total',v:country.gdp>=1e12?(country.gdp/1e12).toFixed(2)+' Billions $':(country.gdp/1e9).toFixed(0)+' Milliards $'},
+    {l:'PIB / hab.',v:country.gdppc.toLocaleString('fr-FR')+' $'},
+    {l:'Population',v:country.pop>=1e9?(country.pop/1e9).toFixed(2)+' Milliards':(country.pop/1e6).toFixed(0)+' Millions'},
+    {l:'CO₂ / an',v:country.co2>=1e9?(country.co2/1e9).toFixed(2)+' Gigatonnes':(country.co2/1e6).toFixed(0)+' Mégatonnes'},
+    {l:'Espérance vie',v:country.life.toFixed(1)+' ans'},
+    {l:'Chômage',v:country.unemp.toFixed(1)+' %'},
+    {l:'Dette / PIB',v:country.debt.toFixed(0)+' %'},
+    {l:'Renouvelables',v:country.renewables.toFixed(1)+' %'},
+    {l:'IDH',v:country.hdi.toFixed(3)},
+  ];
+  grid.innerHTML=metrics.map(m=>`<div class="choro-stat"><div class="choro-stat-l">${m.l}</div><div class="choro-stat-v" style="color:${country.color}">${m.v}</div></div>`).join('');
+  document.getElementById('choro-country-panel').classList.add('show');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ② TENDANCES & PROJECTIONS 2030/2050
+// ═══════════════════════════════════════════════════════════════
+
+// Données complètes historiques + projections officielles
+const TREND_DATA={
+  pop:{
+    hist:{l:['1960','1970','1980','1990','2000','2010','2020','2026'],v:[3.03,3.70,4.45,5.33,6.14,6.97,7.80,8.20]},
+    proj:{l:['2030','2035','2040','2050'],v:[8.55,8.90,9.20,9.70]},
+    col:'#00d4ff',name:'Population mondiale',unit:'Milliards',src:'ONU DESA 2026',
+    badges:[{t:'up',l:'+18% d\'ici 2050'},{t:'proj',l:'Projection ONU'}],
+    grad:'linear-gradient(90deg,#00d4ff,#00ffcc)'
+  },
+  co2:{
+    hist:{l:['1990','1995','2000','2005','2010','2015','2020','2026'],v:[22.7,23.5,25.0,29.1,33.1,35.3,34.1,38.2]},
+    proj:{l:['2030','2035','2040','2050'],v:[35.0,31.0,25.0,15.0]},
+    col:'#ff6b35',name:'Émissions CO₂',unit:'Gt CO₂/an',src:'IEA Net Zero 2050',
+    badges:[{t:'down',l:'Net Zero 2050 (IEA)'},{t:'neutral',l:'Scénario optimiste'}],
+    grad:'linear-gradient(90deg,#ff6b35,#ffb347)'
+  },
+  gdp:{
+    hist:{l:['2000','2005','2010','2015','2018','2020','2024','2026'],v:[33.5,47.4,65.9,74.8,85.8,84.7,104.5,110.0]},
+    proj:{l:['2030','2035','2040','2050'],v:[130.0,158.0,188.0,250.0]},
+    col:'#ffb347',name:'PIB Mondial',unit:'Billions USD',src:'FMI / Banque Mondiale',
+    badges:[{t:'up',l:'×2.3 d\'ici 2050'},{t:'proj',l:'Projection FMI'}],
+    grad:'linear-gradient(90deg,#ffb347,#ffd700)'
+  },
+  life:{
+    hist:{l:['1960','1970','1980','1990','2000','2010','2020','2026'],v:[52.5,56.0,62.0,65.0,67.5,70.5,72.4,73.6]},
+    proj:{l:['2030','2040','2050'],v:[75.5,77.8,79.5]},
+    col:'#ff4d6d',name:'Espérance de vie',unit:'Années',src:'OMS / ONU 2026',
+    badges:[{t:'up',l:'+6 ans d\'ici 2050'},{t:'proj',l:'Projection OMS'}],
+    grad:'linear-gradient(90deg,#ff4d6d,#ff9090)'
+  },
+  renewables:{
+    hist:{l:['2000','2005','2010','2015','2019','2022','2025'],v:[18,19,20,23,26,29,34]},
+    proj:{l:['2030','2035','2040','2050'],v:[45,57,68,85]},
+    col:'#7fff6b',name:'Énergies renouvelables',unit:'% électricité mondiale',src:'IEA WEO 2026',
+    badges:[{t:'up',l:'85% en 2050 (IEA)'},{t:'proj',l:'Scénario NZE'}],
+    grad:'linear-gradient(90deg,#7fff6b,#00ffcc)'
+  },
+  hdi:{
+    hist:{l:['1990','1995','2000','2005','2010','2015','2020','2026'],v:[0.598,0.625,0.647,0.672,0.700,0.730,0.732,0.742]},
+    proj:{l:['2030','2040','2050'],v:[0.760,0.790,0.815]},
+    col:'#b06bff',name:'Indice de développement humain',unit:'Score moyen mondial',src:'PNUD HDR 2026',
+    badges:[{t:'up',l:'Progression constante'},{t:'proj',l:'Projection PNUD'}],
+    grad:'linear-gradient(90deg,#b06bff,#00d4ff)'
+  },
+};
+
+function initTrends(){
+  buildTrendCards();
+  initTimeComparison();
+  initChartFilters();
+}
+
+function buildTrendCards(){
+  const grid=document.getElementById('trend-grid');
+  if(!grid)return;
+  grid.innerHTML='';
+  Object.entries(TREND_DATA).forEach(([key,td])=>{
+    const card=document.createElement('div');
+    card.className='trend-card';
+    card.style.setProperty('--tc-grad',td.grad);
+    card.innerHTML=`
+      <div class="trend-ch"><canvas id="tc-${key}" height="160" style="opacity:0;transition:opacity .4s"></canvas></div>
+      <div class="trend-foot">
+        <div class="trend-foot-left">
+          <div class="trend-foot-name">${td.name}</div>
+          <div class="trend-foot-src">📎 ${td.src} · ${td.unit}</div>
+        </div>
+        <div class="trend-badges">${td.badges.map(b=>`<span class="trend-badge ${b.t}">${b.l}</span>`).join('')}</div>
+      </div>`;
+    grid.appendChild(card);
+    // Draw chart with stagger
+    setTimeout(()=>{
+      mkCh('tc-'+key,td.hist.l,td.hist.v,td.col,td.name,{
+        projLabels:td.proj.l,projValues:td.proj.v
+      });
+    },50);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ③ COMPARAISON TEMPORELLE — 2 années côte à côte
+// ═══════════════════════════════════════════════════════════════
+
+// Toutes les années disponibles dans les données historiques
+const TC_YEAR_MAP={
+  pop:{1960:3.03,1970:3.70,1980:4.45,1990:5.33,2000:6.14,2005:6.52,2010:6.97,2015:7.38,2020:7.80,2023:8.10,2025:8.19,2026:8.20},
+  co2:{1990:22.7,1995:23.5,2000:25.0,2005:29.1,2010:33.1,2015:35.3,2019:36.7,2020:34.1,2023:37.4,2026:38.2},
+  gdp:{2000:33.5,2005:47.4,2010:65.9,2015:74.8,2018:85.8,2020:84.7,2022:100.6,2024:105.0,2026:110.0},
+  life:{1960:52.5,1970:56.0,1980:62.0,1990:65.0,2000:67.5,2005:68.8,2010:70.5,2015:72.0,2020:72.4,2024:73.3,2026:73.6},
+};
+const TC_UNITS={pop:'Milliards',co2:'Gigatonnes CO₂/an',gdp:'Billions $',life:'ans'};
+const TC_FMTS={
+  pop:v=>v.toFixed(2)+' Milliards',
+  co2:v=>v.toFixed(1)+' Gt',
+  gdp:v=>v.toFixed(1)+' Billions $',
+  life:v=>v.toFixed(1)+' ans',
+};
+let TC_YEAR_A=2015,TC_YEAR_B=2025,TC_METRIC_KEY='gdp';
+
+function initTimeComparison(){
+  const metricSel=document.getElementById('tc-metric');
+  if(metricSel)metricSel.addEventListener('change',()=>{TC_METRIC_KEY=metricSel.value;renderTimeComp();});
+  const btnA=document.getElementById('tc-yr-a');
+  const btnB=document.getElementById('tc-yr-b');
+  if(btnA)btnA.addEventListener('click',()=>pickYear('a'));
+  if(btnB)btnB.addEventListener('click',()=>pickYear('b'));
+  renderTimeComp();
+}
+
+function pickYear(slot){
+  const years=Object.keys(TC_YEAR_MAP[TC_METRIC_KEY]||TC_YEAR_MAP.gdp).map(Number).sort((a,b)=>a-b);
+  const cur=slot==='a'?TC_YEAR_A:TC_YEAR_B;
+  const idx=years.indexOf(cur);
+  const next=slot==='a'
+    ?(idx>0?years[idx-1]:years[years.length-1])
+    :(idx<years.length-1?years[idx+1]:years[0]);
+  if(slot==='a'){TC_YEAR_A=next;document.getElementById('tc-yr-a-val').textContent=next;}
+  else{TC_YEAR_B=next;document.getElementById('tc-yr-b-val').textContent=next;}
+  renderTimeComp();
+}
+
+function renderTimeComp(){
+  const mKey=TC_METRIC_KEY;
+  const yearMap=TC_YEAR_MAP[mKey];
+  if(!yearMap)return;
+  const years=Object.keys(yearMap).map(Number).sort((a,b)=>a-b);
+  const labels=years.map(String);
+  const values=years.map(y=>yearMap[y]);
+  const colA='#ffb347',colB='#ff4d6d';
+  const dk=ST.th==='dark';
+  const cv=document.getElementById('cTimeComp');
+  if(!cv)return;
+  if(ST.ch['cTimeComp'])ST.ch['cTimeComp'].destroy();
+  const ctx=cv.getContext('2d');
+  const gc=dk?'rgba(0,212,255,.05)':'rgba(0,80,160,.06)';
+  const tc=dk?'rgba(160,210,255,.4)':'rgba(10,26,46,.45)';
+  const gA=ctx.createLinearGradient(0,0,0,220);
+  gA.addColorStop(0,colA+'22');gA.addColorStop(1,colA+'00');
+  const gB=ctx.createLinearGradient(0,0,0,220);
+  gB.addColorStop(0,colB+'22');gB.addColorStop(1,colB+'00');
+  // Build point highlights for selected years
+  const ptColors=labels.map(l=>{
+    const y=parseInt(l);
+    if(y===TC_YEAR_A)return colA;
+    if(y===TC_YEAR_B)return colB;
+    return 'transparent';
+  });
+  const ptRadius=labels.map(l=>{
+    const y=parseInt(l);
+    return(y===TC_YEAR_A||y===TC_YEAR_B)?7:3;
+  });
+  ST.ch['cTimeComp']=new Chart(ctx,{
+    type:'line',
+    data:{labels,datasets:[{
+      label:TC_UNITS[mKey],data:values,
+      borderColor:dk?'rgba(0,212,255,0.7)':'rgba(0,80,160,0.7)',
+      backgroundColor:gA,borderWidth:2,
+      pointBackgroundColor:ptColors,pointBorderColor:ptColors,
+      pointRadius:ptRadius,pointHoverRadius:8,
+      tension:.4,fill:true
+    }]},
+    options:{
+      responsive:true,maintainAspectRatio:true,
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          backgroundColor:dk?'rgba(5,12,20,.95)':'rgba(240,246,255,.95)',
+          titleColor:dk?'#e8f4ff':'#0a1a2e',bodyColor:dk?'#e8f4ff':'#0a1a2e',
+          borderColor:'rgba(0,212,255,.4)',borderWidth:1,padding:12,
+          titleFont:{family:'Space Mono',size:10},bodyFont:{family:'Space Mono',size:11},
+          callbacks:{label:ctx=>`${TC_FMTS[mKey](ctx.parsed.y)}`}
+        },
+        annotation:{annotations:{
+          lineA:{type:'line',xMin:String(TC_YEAR_A),xMax:String(TC_YEAR_A),borderColor:colA+'cc',borderWidth:2,borderDash:[5,4],label:{content:String(TC_YEAR_A),display:true,color:colA,font:{family:'Space Mono',size:9},backgroundColor:'rgba(255,179,71,0.12)',borderRadius:4}},
+          lineB:{type:'line',xMin:String(TC_YEAR_B),xMax:String(TC_YEAR_B),borderColor:colB+'cc',borderWidth:2,borderDash:[5,4],label:{content:String(TC_YEAR_B),display:true,color:colB,font:{family:'Space Mono',size:9},backgroundColor:'rgba(255,77,109,0.12)',borderRadius:4}}
+        }}
+      },
+      scales:{
+        x:{grid:{color:gc},ticks:{color:tc,font:{family:'Space Mono',size:9},maxRotation:0,maxTicksLimit:8}},
+        y:{grid:{color:gc},ticks:{color:tc,font:{family:'Space Mono',size:9}}}
+      },
+      animation:{duration:700,easing:'easeOutCubic'}
+    }
+  });
+  // Update delta boxes
+  const valA=yearMap[TC_YEAR_A],valB=yearMap[TC_YEAR_B];
+  const delta=valB!=null&&valA!=null?valB-valA:null;
+  const pct=delta!=null&&valA?((delta/valA)*100):null;
+  document.getElementById('tc-d-label-a').textContent=TC_YEAR_A;
+  document.getElementById('tc-d-label-b').textContent=TC_YEAR_B;
+  document.getElementById('tc-d-val-a').textContent=valA!=null?TC_FMTS[mKey](valA):'—';
+  document.getElementById('tc-d-val-b').textContent=valB!=null?TC_FMTS[mKey](valB):'—';
+  document.getElementById('tc-yr-a-val').textContent=TC_YEAR_A;
+  document.getElementById('tc-yr-b-val').textContent=TC_YEAR_B;
+  const deltaEl=document.getElementById('tc-d-delta');
+  const pctEl=document.getElementById('tc-d-pct');
+  if(delta!=null){
+    deltaEl.textContent=(delta>0?'+':'')+TC_FMTS[mKey](delta);
+    deltaEl.className='tc-delta-val '+(delta>0?'pos':'neg');
+  }
+  if(pct!=null){
+    pctEl.textContent=(pct>0?'+':'')+pct.toFixed(1)+'%';
+    pctEl.className='tc-delta-val '+(pct>0?'pos':'neg');
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ④ FILTRES TEMPORELS SUR LES CHARTS EXISTANTS (10ans / histo / +projections)
+// ═══════════════════════════════════════════════════════════════
+const CHART_FILTER_DATA={
+  pop:{
+    '10':{l:['2016','2018','2020','2022','2024','2026'],v:[7.46,7.63,7.80,7.95,8.08,8.20],col:'#00d4ff',unit:'Milliards d\'habitants'},
+    'all':{l:CD.pop.l,v:CD.pop.v,col:'#00d4ff',unit:'Milliards d\'habitants'},
+    'proj':{l:[...CD.pop.l,'2030','2035','2040','2050'],v:[...CD.pop.v,8.55,8.90,9.20,9.70],col:'#00d4ff',unit:'Milliards d\'habitants',projFrom:CD.pop.l.length-1},
+  },
+  co2:{
+    '10':{l:['2016','2018','2020','2022','2024','2026'],v:[35.6,36.2,34.1,36.8,37.6,38.2],col:'#ff6b35',unit:'Gt CO₂/an'},
+    'all':{l:CD.co2.l,v:CD.co2.v,col:'#ff6b35',unit:'Gt CO₂/an'},
+    'proj':{l:[...CD.co2.l,'2030','2035','2040','2050'],v:[...CD.co2.v,35.0,31.0,25.0,15.0],col:'#ff6b35',unit:'Gt CO₂/an',projFrom:CD.co2.l.length-1},
+  },
+  gdp:{
+    '10':{l:['2016','2018','2020','2022','2024','2026'],v:[76.0,85.8,84.7,100.6,105.0,110.0],col:'#ffb347',unit:'Billions USD'},
+    'all':{l:CD.gdp.l,v:CD.gdp.v,col:'#ffb347',unit:'Billions USD'},
+    'proj':{l:[...CD.gdp.l,'2030','2035','2040','2050'],v:[...CD.gdp.v,130.0,158.0,188.0,250.0],col:'#ffb347',unit:'Billions USD',projFrom:CD.gdp.l.length-1},
+  },
+};
+
+function initChartFilters(){
+  document.querySelectorAll('.chart-filters').forEach(bar=>{
+    const chartKey=bar.dataset.chart;
+    bar.querySelectorAll('.cft').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        bar.querySelectorAll('.cft').forEach(b=>b.classList.remove('on'));
+        btn.classList.add('on');
+        applyChartFilter(chartKey,btn.dataset.range);
+      });
+    });
+  });
+}
+
+function applyChartFilter(chartKey,range){
+  const map={pop:'cPop',co2:'cCo2',gdp:'cGdp'};
+  const canvasId=map[chartKey];if(!canvasId)return;
+  const fd=CHART_FILTER_DATA[chartKey];if(!fd||!fd[range])return;
+  const d=fd[range];
+  if(range==='proj'&&d.projFrom!=null){
+    // Split into hist + projection datasets
+    const histL=d.l.slice(0,d.projFrom+1),histV=d.v.slice(0,d.projFrom+1);
+    const projL=d.l.slice(d.projFrom),projV=d.v.slice(d.projFrom);
+    mkCh(canvasId,histL,histV,d.col,d.unit,{projLabels:projL.slice(1),projValues:projV.slice(1)});
+  } else {
+    mkCh(canvasId,d.l,d.v,d.col,d.unit);
+  }
+}
+
+// ═══ placeholder to not break references ═══
+function initGlobe3D(){}
+
+// ═══════════════════════════════════════════════
+// API WORLDBANK — JSONP (compatible file:// / mobile)
+// ═══════════════════════════════════════════════
+const WB_CODES={fr:'FRA',de:'DEU',uk:'GBR',it:'ITA',es:'ESP',pl:'POL',nl:'NLD',us:'USA',cn:'CHN',in:'IND',br:'BRA',jp:'JPN',ng:'NGA',za:'ZAF'};
+const WB_INDICATORS=[
+  {ind:'NY.GDP.MKTP.CD',field:'gdp'},
+  {ind:'NY.GDP.PCAP.CD',field:'gdppc'},
+  {ind:'SP.POP.TOTL',field:'pop'},
+  {ind:'SP.DYN.LE00.IN',field:'life'},
+  {ind:'SL.UEM.TOTL.ZS',field:'unemp'},
+  {ind:'GC.DOD.TOTL.GD.ZS',field:'debt'},
+  {ind:'EG.FEC.RNEW.ZS',field:'renewables'},
+  {ind:'EN.ATM.CO2E.KT',field:'co2',scale:1000},
+];
+let WB_CACHE={};
+let WB_STATUS='idle';
+let WB_HISTORY={};
+let _jpCnt=0;
+
+// JSONP helper — contourne le blocage CORS/file:// sur mobile
+function wbJSONP(url){
+  return new Promise((resolve,reject)=>{
+    const cb='__wbcb'+(++_jpCnt);
+    const tid=setTimeout(()=>{cleanup();reject(new Error('timeout'));},14000);
+    function cleanup(){
+      delete window[cb];
+      const s=document.getElementById(cb);
+      if(s&&s.parentNode)s.parentNode.removeChild(s);
+      clearTimeout(tid);
+    }
+    window[cb]=(data)=>{cleanup();resolve(data);};
+    const s=document.createElement('script');
+    s.id=cb;
+    // WorldBank JSONP : format=jsonP + prefix=callbackName
+    s.src=url.replace('format=json','format=jsonP')+'&prefix='+cb;
+    s.onerror=()=>{cleanup();reject(new Error('script error'));};
+    document.head.appendChild(s);
+  });
+}
+
+async function fetchWorldBankData(){
+  if(WB_STATUS==='loading'||WB_STATUS==='loaded')return;
+  WB_STATUS='loading';
+  showWBStatus('⏳ Connexion WorldBank…','loading');
+  const countryList=Object.values(WB_CODES).join(';');
+  try{
+    // Une requête JSONP par indicateur — parallèles
+    const fetches=WB_INDICATORS.map(({ind})=>
+      wbJSONP(`https://api.worldbank.org/v2/country/${countryList}/indicator/${ind}?format=json&mrv=1&per_page=300`)
+        .then(d=>d[1]||[])
+    );
+    const allRows=(await Promise.all(fetches)).flat();
+    allRows.forEach(row=>{
+      if(row.value==null||!row.country||!row.indicator)return;
+      const cCode=row.countryiso3code;
+      const indCode=row.indicator.id;
+      if(!WB_CACHE[cCode])WB_CACHE[cCode]={};
+      if(WB_CACHE[cCode][indCode]==null)WB_CACHE[cCode][indCode]=row.value;
+    });
+    COUNTRIES.forEach(c=>{
+      const wbCode=WB_CODES[c.id];
+      if(!wbCode||!WB_CACHE[wbCode])return;
+      WB_INDICATORS.forEach(({ind,field,scale})=>{
+        const val=WB_CACHE[wbCode][ind];
+        if(val!=null){c[field]=scale?val*scale:val;c._wb=c._wb||{};c._wb[field]=true;}
+      });
+    });
+    WB_STATUS='loaded';
+    const year=allRows.find(r=>r.date)?.date||'récente';
+    showWBStatus(`✅ Données WorldBank ${year} chargées`,'ok');
+    setTimeout(()=>hideWBStatus(),4000);
+    renderCompareCards();renderCompareChart();
+  }catch(err){
+    WB_STATUS='error';
+    showWBStatus('⚠️ WorldBank hors ligne — données de référence utilisées','error');
+    setTimeout(()=>hideWBStatus(),5000);
+    // API indisponible — fallback local
+  }
+}
+
+function showWBStatus(msg,type){
+  let el=$('wb-status');
+  if(!el){
+    el=document.createElement('div');el.id='wb-status';
+    el.style.cssText='font-family:Space Mono,monospace;font-size:.6rem;letter-spacing:.1em;padding:8px 16px;border-radius:6px;margin-bottom:16px;display:flex;align-items:center;gap:8px;text-transform:uppercase;border:1px solid';
+    const sel=$('country-selector');
+    if(sel&&sel.parentNode)sel.parentNode.insertBefore(el,sel);
+  }
+  const bg={loading:'rgba(0,212,255,.08)',ok:'rgba(0,255,150,.08)',error:'rgba(255,179,71,.08)'};
+  const bc={loading:'rgba(0,212,255,.3)',ok:'rgba(0,255,150,.3)',error:'rgba(255,179,71,.3)'};
+  const tc2={loading:'rgba(0,212,255,.9)',ok:'rgba(0,255,150,.9)',error:'rgba(255,179,71,.9)'};
+  el.style.background=bg[type];el.style.borderColor=bc[type];el.style.color=tc2[type];
+  el.textContent=msg;el.style.display='flex';
+}
+function hideWBStatus(){const el=$('wb-status');if(el)el.style.display='none';}
+
+// ═══════════════════════════════════════════════
+// HISTORIQUE 20 ANS — WorldBank JSONP
+// ═══════════════════════════════════════════════
+let HIST_STATUS='idle';
+let HIST_LAST_KEY='';
+
+async function fetchAndRenderHistory(){
+  const metric=METRICS.find(m=>m.id===ST.compareMetric);
+  const indObj=WB_INDICATORS.find(w=>w.field===metric.id);
+  if(!indObj){renderHistoryFromStatic();return;}
+  const active=COUNTRIES.filter(c=>ST.activeCountries.has(c.id));
+  const cacheKey=active.map(c=>c.id).join(',')+':'+metric.id;
+  if(cacheKey===HIST_LAST_KEY)return;
+  HIST_LAST_KEY=cacheKey;
+  HIST_STATUS='loading';
+  const histLoading=$('hist-loading');
+  if(histLoading)histLoading.classList.remove('hidden');
+  const countryList=active.map(c=>WB_CODES[c.id]).filter(Boolean).join(';');
+  if(!countryList){if(histLoading)histLoading.classList.add('hidden');return;}
+  try{
+    const d=await wbJSONP(`https://api.worldbank.org/v2/country/${countryList}/indicator/${indObj.ind}?format=json&mrv=20&per_page=400`);
+    const rows=d[1]||[];
+    const byCountry={};
+    rows.forEach(row=>{
+      if(row.value==null)return;
+      const cCode=row.countryiso3code;
+      if(!byCountry[cCode])byCountry[cCode]=[];
+      byCountry[cCode].push({date:row.date,value:indObj.scale?row.value*indObj.scale:row.value});
+    });
+    Object.keys(byCountry).forEach(cc=>{byCountry[cc].sort((a,b)=>a.date-b.date);});
+    WB_HISTORY[cacheKey]=byCountry;
+    HIST_STATUS='loaded';
+    if(histLoading)histLoading.classList.add('hidden');
+    renderHistoryChart(byCountry,active,metric);
+  }catch(err){
+    HIST_STATUS='error';
+    if(histLoading)histLoading.classList.add('hidden');
+    renderHistoryFromStatic();
+    // Historique indisponible — fallback statique
+  }
+}
+
+function renderHistoryFromStatic(){
+  // Fallback : affiche les courbes historiques globales du CD
+  const metric=METRICS.find(m=>m.id===ST.compareMetric);
+  const active=COUNTRIES.filter(c=>ST.activeCountries.has(c.id));
+  // Pas de données historiques par pays → afficher un message
+  const badge=document.getElementById('hist-badge');
+  if(badge)badge.textContent='Données statiques';
+  renderHistoryChart(null,active,metric);
+}
+
+function renderHistoryChart(byCountry,active,metric){
+  const cv=document.getElementById('cHistory');
+  if(!cv)return;
+  const badge=document.getElementById('hist-badge');
+  if(badge)badge.textContent=byCountry?'WorldBank':'Statique';
+  if(ST.ch['cHistory'])ST.ch['cHistory'].destroy();
+  const ctx=cv.getContext('2d');
+  const dk=ST.th==='dark';
+  const gc=dk?'rgba(0,212,255,.04)':'rgba(0,80,160,.05)';
+  const tc=dk?'rgba(160,210,255,.4)':'rgba(10,26,46,.45)';
+  let datasets=[];
+  let allLabels=new Set();
+  if(byCountry){
+    active.forEach(c=>{
+      const wbCode=WB_CODES[c.id];
+      const rows=wbCode?byCountry[wbCode]:null;
+      if(!rows||rows.length<2)return;
+      rows.forEach(r=>allLabels.add(r.date));
+    });
+    const labels=[...allLabels].sort();
+    active.forEach(c=>{
+      const wbCode=WB_CODES[c.id];
+      const rows=wbCode?byCountry[wbCode]:null;
+      if(!rows||rows.length<2)return;
+      const rowMap=Object.fromEntries(rows.map(r=>[r.date,r.value]));
+      const values=labels.map(l=>rowMap[l]??null);
+      datasets.push({label:c.flag+' '+c.name,data:values,borderColor:c.color,backgroundColor:c.color+'18',borderWidth:2,pointRadius:3,pointBackgroundColor:c.color,tension:.35,fill:false,spanGaps:true});
+    });
+    const labelsArr=labels;
+    ST.ch['cHistory']=new Chart(ctx,{type:'line',data:{labels:labelsArr,datasets},options:{responsive:true,maintainAspectRatio:true,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{backgroundColor:dk?'rgba(5,12,20,.95)':'rgba(240,246,255,.95)',titleColor:dk?'#e8f4ff':'#0a1a2e',bodyColor:dk?'#e8f4ff':'#0a1a2e',borderColor:'rgba(176,107,255,.4)',borderWidth:1,padding:12,callbacks:{label:ctx2=>`${ctx2.dataset.label}: ${metric.fmt(ctx2.parsed.y)}`}}},scales:{x:{grid:{color:gc},ticks:{color:tc,font:{family:'Space Mono',size:9}}},y:{grid:{color:gc},ticks:{color:tc,font:{family:'Space Mono',size:9},callback:v=>metric.fmt(v)}}},animation:{duration:600,easing:'easeOutCubic'}}});
+  } else {
+    // Pas de données historiques WB disponibles
+    ST.ch['cHistory']=new Chart(ctx,{type:'line',data:{labels:['—'],datasets:[{label:'Aucune donnée',data:[null],borderColor:'rgba(160,160,160,.3)',tension:.35}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false}},scales:{x:{ticks:{color:tc}},y:{ticks:{color:tc}}}}});
+  }
+  // Légende custom
+  const leg=document.getElementById('hist-legend');
+  if(leg){
+    leg.innerHTML='';
+    datasets.forEach(ds=>{
+      const item=document.createElement('div');item.className='hist-leg-item';
+      item.innerHTML=`<div class="hist-leg-dot" style="background:${ds.borderColor}"></div>${ds.label}`;
+      leg.appendChild(item);
+    });
+  }
+}
+
+// ═══════════════════════════════════════════════
+// ANALYSE IA — Claude API
+// ═══════════════════════════════════════════════
+async function analyzeWithAI(){
+  const btn=document.getElementById('ai-analyze-btn');
+  const result=document.getElementById('ai-result');
+  if(!btn||!result)return;
+  btn.disabled=true;btn.classList.add('loading');
+  result.className='ai-result streaming';result.innerHTML='<span class="ai-cursor"></span>';
+  const metric=METRICS.find(m=>m.id===ST.compareMetric);
+  const active=COUNTRIES.filter(c=>ST.activeCountries.has(c.id));
+  // Préparer les données pour le prompt
+  const dataLines=active.map(c=>{
+    const parts=METRICS.map(m=>`${m.label}: ${m.fmt(c[m.id])}`);
+    return `${c.flag} ${c.name} — ${parts.join(' | ')}`;
+  }).join('\n');
+  const prompt=`Tu es un analyste économique et géopolitique expert. Voici les données comparatives pour ces pays (indicateur principal mis en avant : ${metric.label}) :\n\n${dataLines}\n\nFais une analyse comparative concise (5-7 phrases max) en français. Identifie les tendances clés, les écarts notables, et donne 1-2 points d'interprétation pertinents. Sois factuel et précis. Ne répète pas les chiffres bruts déjà visibles, mais interprète-les.`;
+  try{
+    const response=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        stream:true,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    if(!response.ok)throw new Error('API '+response.status);
+    // Streaming SSE
+    const reader=response.body.getReader();
+    const decoder=new TextDecoder();
+    let text='';
+    result.innerHTML='<span class="ai-cursor"></span>';
+    while(true){
+      const{done,value}=await reader.read();
+      if(done)break;
+      const chunk=decoder.decode(value,{stream:true});
+      const lines=chunk.split('\n');
+      for(const line of lines){
+        if(!line.startsWith('data: '))continue;
+        const raw=line.slice(6).trim();
+        if(raw==='[DONE]')continue;
+        try{
+          const ev=JSON.parse(raw);
+          if(ev.type==='content_block_delta'&&ev.delta?.type==='text_delta'){
+            text+=ev.delta.text;
+            result.innerHTML=text.replace(/\n/g,'<br>')+'<span class="ai-cursor"></span>';
+          }
+        }catch(e){}
+      }
+    }
+    result.innerHTML=text.replace(/\n/g,'<br>')+'<div class="ai-src">✨ Analyse générée par Claude · Données WorldBank & sources officielles</div>';
+  }catch(err){
+    result.innerHTML='<span style="color:var(--coral)">⚠️ Impossible de contacter l\'IA — vérifiez votre connexion.</span>';
+    console.warn('AI error:',err);
+  }finally{
+    btn.disabled=false;btn.classList.remove('loading');
+  }
+}
+
+// ═══════════════════════════════════════════════
+// SEARCH + CONTINENT FILTER
+// ═══════════════════════════════════════════════
+let filterContinent='all';
+let filterSearch='';
+
+function initCompareFilters(){
+  // Continent pills
+  document.querySelectorAll('.cpill').forEach(pill=>{
+    pill.addEventListener('click',()=>{
+      document.querySelectorAll('.cpill').forEach(p=>p.classList.remove('on'));
+      pill.classList.add('on');
+      filterContinent=pill.dataset.continent;
+      buildCountrySelector();
+    });
+  });
+  // Search
+  const search=document.getElementById('country-search');
+  if(search){
+    search.addEventListener('input',()=>{
+      filterSearch=search.value.toLowerCase().trim();
+      buildCountrySelector();
+    });
+  }
+}
+
+
+// ═══════════════════════════════════════════════
+// COMPARATEUR DE PAYS
+// ═══════════════════════════════════════════════
+function buildCountrySelector(){
+  const el=$('country-selector');
+  if(!el)return;
+  el.innerHTML='';
+  // Mapping continent
+  const continentMap={fr:'Europe',de:'Europe',uk:'Europe',it:'Europe',es:'Europe',pl:'Europe',nl:'Europe',us:'Amériques',br:'Amériques',cn:'Asie',in:'Asie',jp:'Asie',ng:'Afrique',za:'Afrique'};
+  const visible=COUNTRIES.filter(c=>{
+    if(filterContinent!=='all'&&continentMap[c.id]!==filterContinent)return false;
+    if(filterSearch&&!c.name.toLowerCase().includes(filterSearch)&&!c.id.includes(filterSearch))return false;
+    return true;
+  });
+  if(visible.length===0){
+    const empty=document.createElement('div');
+    empty.style.cssText='font-family:Space Mono,monospace;font-size:.65rem;color:var(--txt3);padding:12px;letter-spacing:.1em';
+    empty.textContent='Aucun pays trouvé…';
+    el.appendChild(empty);
+    return;
+  }
+  visible.forEach(c=>{
+    const btn=document.createElement('button');
+    btn.className='cbtn'+(ST.activeCountries.has(c.id)?' active':'');
+    btn.setAttribute('aria-pressed',ST.activeCountries.has(c.id)?'true':'false');
+    btn.innerHTML=`<span class="cflag">${c.flag}</span>${c.name}`;
+    btn.addEventListener('click',()=>{
+      if(ST.activeCountries.has(c.id)){if(ST.activeCountries.size>1)ST.activeCountries.delete(c.id);}
+      else ST.activeCountries.add(c.id);
+      btn.classList.toggle('active',ST.activeCountries.has(c.id));
+      btn.setAttribute('aria-pressed',ST.activeCountries.has(c.id)?'true':'false');
+      renderCompareCards();renderCompareChart();
+      HIST_LAST_KEY=''; // force refresh history
+      fetchAndRenderHistory();
+      savePrefs();
+    });
+    el.appendChild(btn);
+  });
+}
+
+function buildMetricTabs(){
+  const el=$('metric-tabs');
+  METRICS.forEach(m=>{
+    const btn=document.createElement('button');
+    btn.className='ctab'+(m.id===ST.compareMetric?' on':'');
+    btn.textContent=m.label;
+    btn.setAttribute('role','tab');
+    btn.addEventListener('click',()=>{
+      ST.compareMetric=m.id;
+      document.querySelectorAll('.ctab').forEach(t=>t.classList.remove('on'));
+      btn.classList.add('on');
+      renderCompareCards();renderCompareChart();
+      HIST_LAST_KEY=''; // force refresh
+      fetchAndRenderHistory();
+      savePrefs();
+    });
+    el.appendChild(btn);
+  });
+}
+
+function renderCompareCards(){
+  const grid=$('compare-grid');
+  if(!grid)return;
+  grid.innerHTML='';
+  const metric=METRICS.find(m=>m.id===ST.compareMetric);
+  // Seulement les pays sélectionnés
+  const active=COUNTRIES.filter(c=>ST.activeCountries.has(c.id));
+  const sorted=[...active].sort((a,b)=>metric.invert?(a[metric.id]-b[metric.id]):(b[metric.id]-a[metric.id]));
+  // barMax dynamique = max des pays affichés (pas max mondial)
+  const maxVal=Math.max(...sorted.map(c=>c[metric.id]))||1;
+  sorted.forEach((c,i)=>{
+    const val=c[metric.id];
+    const barPct=Math.min(100,(val/maxVal)*100);
+    const rankClass=i===0?'gold':i===1?'silver':i===2?'bronze':'';
+    const card=document.createElement('div');
+    card.className='ccard';
+    card.style.borderColor=c.color+'44';
+    const isWB=c._wb&&c._wb[metric.id];
+    card.innerHTML=`
+      <div class="ccard-rank ${rankClass}">${i+1}</div>
+      <div class="ccard-flag">${c.flag}</div>
+      <div class="ccard-name">${c.name}</div>
+      <div class="ccard-metric">
+        <div class="ccard-ml">${metric.label} ${isWB?'<span style="color:rgba(0,255,150,.7);font-size:.45rem;vertical-align:middle;margin-left:4px;letter-spacing:.06em">● WORLDBANK</span>':''}</div>
+        <div class="ccard-mv" style="color:${c.color}">${metric.fmt(val)}</div>
+      </div>
+      <div class="ccard-bar-wrap">
+        <div class="ccard-bar" style="width:${barPct}%;background:linear-gradient(90deg,${c.color}cc,${c.color}66)"></div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function renderCompareChart(){
+  const metric=METRICS.find(m=>m.id===ST.compareMetric);
+  const active=COUNTRIES.filter(c=>ST.activeCountries.has(c.id));
+  const sorted=[...active].sort((a,b)=>metric.invert?(a[metric.id]-b[metric.id]):(b[metric.id]-a[metric.id]));
+  const labels=sorted.map(c=>c.flag+' '+c.name);
+  const values=sorted.map(c=>c[metric.id]);
+  const colors=sorted.map(c=>c.color);
+  st('compare-chart-title',`${metric.label} — Comparaison`);
+  st('compare-chart-unit',metric.unit);
+  mkBarCh('cCompare',labels,values,colors,metric.label,metric.unit);
+}
+
+// ═══ LOADER ═══
+function loader(){return new Promise(res=>{const fill=$('lFill'),pct=$('lPct'),st2=$('lSt');const steps=[[180,18,'Connexion ONU · IEA · FAO…'],[420,42,'Chargement sources mondiales…'],[680,68,'Calcul des taux temps réel…'],[920,92,'Initialisation compteurs…'],[1100,100,'Système prêt']];steps.forEach(([ms,p,msg])=>{setTimeout(()=>{if(fill)fill.style.width=p+'%';if(pct)pct.textContent=p;if(st2)st2.textContent=msg;if(p===100)setTimeout(()=>{$('loader').classList.add('out');setTimeout(res,820)},300)},ms)})})}
+
+// ═══════════════════════════════════════════════
+// 🔔 MILESTONES & TOASTS
+// ═══════════════════════════════════════════════
+const TOAST_Q=[];
+let TOAST_BUSY=false;
+let TOAST_COUNT=0;
+const TOAST_MAX_PER_SESSION=3;
+const MILESTONES=[
+  {key:'pop',v:8200000000,msg:'8,2 milliards d\'habitants sur Terre !',col:'#00d4ff',icon:'🌍'},
+  {key:'b_day',v:200000,msg:'200 000 naissances aujourd\'hui !',col:'#7fff6b',icon:'👶'},
+  {key:'co2d',v:100000000,msg:'100 Mt CO₂ émises aujourd\'hui',col:'#ff6b35',icon:'🌡️'},
+  {key:'gdpd',v:3e12,msg:'3 000 Mds $ de PIB produit aujourd\'hui',col:'#ffb347',icon:'💰'},
+];
+const _triggered=new Set();
+
+function checkMilestones(e,s){
+  if(TOAST_COUNT>=TOAST_MAX_PER_SESSION)return; // plafond atteint
+  const now={
+    pop:s.pop+Math.floor(ps('b')*e)-Math.floor(ps('d')*e),
+    d_day:s.d+Math.floor(ps('d')*e),
+    b_day:s.b+Math.floor(ps('b')*e),
+    co2d:s.co2d+Math.floor(ps('co2')*e),
+    gdpd:s.gdpd+Math.floor(ps('gdp')*e),
+    mal:s.mal+Math.floor(ps('mal')*e),
+    vac:s.vac+Math.floor(ps('vac')*e),
+  };
+  MILESTONES.forEach(m=>{
+    if(TOAST_COUNT>=TOAST_MAX_PER_SESSION)return;
+    const uid=m.key+':'+m.v;
+    if(!_triggered.has(uid)&&now[m.key]>=m.v){
+      _triggered.add(uid);
+      TOAST_COUNT++;
+      queueToast(m.msg,m.col,m.icon||'');
+    }
+  });
+}
+
+function queueToast(msg,col,icon=''){
+  TOAST_Q.push({msg,col,icon});
+  if(!TOAST_BUSY)drainToast();
+}
+function drainToast(){
+  if(!TOAST_Q.length){TOAST_BUSY=false;return;}
+  TOAST_BUSY=true;
+  const{msg,col,icon}=TOAST_Q.shift();
+  showToast(msg,col,icon,()=>setTimeout(drainToast,800));
+}
+function showToast(msg,col,icon,cb){
+  const t=document.createElement('div');
+  t.className='ep-toast';
+  t.style.setProperty('--tc',col);
+  if(icon){
+    const ic=document.createElement('span');
+    ic.className='ep-toast-icon';ic.textContent=icon;
+    t.appendChild(ic);
+  }
+  const txt=document.createElement('span');
+  txt.textContent=msg;
+  t.appendChild(txt);
+  const bar=document.createElement('div');
+  bar.className='ep-toast-bar';
+  bar.style.animationDuration='4.2s';
+  t.appendChild(bar);
+  document.body.appendChild(t);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>t.classList.add('show')));
+  setTimeout(()=>{
+    t.classList.remove('show');t.classList.add('hide');
+    setTimeout(()=>{if(t.parentNode)t.remove();if(cb)cb();},400);
+  },4200);
+}
+
+// ═══════════════════════════════════════════════
+// 💥 SHOCK NOTIFICATIONS — désactivées (UX trop intrusive)
+// ═══════════════════════════════════════════════
+function initShockNotif(){/* désactivé */}
+
+// ═══════════════════════════════════════════════
+// 💀 SECTION IMPACT — compteurs choc temps réel
+// ═══════════════════════════════════════════════
+let IMPACT_T0=Date.now();
+const IMPACT_RATES={
+  morts:59e6/31557600,     // 59M décès/an
+  faim:9e6/31557600,       // 9M morts de faim/an
+  co2:38.2e9/31557600,     // 38.2 Gt CO2/an en tonnes/sec
+  foret:10e6/31557600,     // 10M hectares/an
+  plastique:8e9/31557600,  // 8M tonnes/an en kg/sec
+  tabac:8e6/31557600,      // 8M morts tabac/an
+  cancer:10e6/31557600,    // 10M morts cancer/an
+  gaspillage:1.3e9/31557600, // 1.3 milliard tonnes/an
+  naissances:140e6/31557600, // 140M naissances/an
+  eau:4e12/31557600*1000,  // 4 trillion m3/an en litres/sec
+};
+
+function initImpact(){
+  IMPACT_T0=Date.now();
+  updateImpact();
+}
+
+function fImp(n){if(n>=1e6)return(n/1e6).toFixed(1)+' Millions';if(n>=1e3)return Math.floor(n).toLocaleString('fr-FR');return Math.floor(n).toLocaleString('fr-FR')}
+
+function updateImpact(){
+  const sec=(Date.now()-IMPACT_T0)/1000;
+  if(sec<0.3)return;
+  // Timer
+  const h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=Math.floor(sec%60);
+  const el=$('impactTimer');
+  if(el)el.textContent=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  // Compteurs principaux
+  const raw={
+    morts:IMPACT_RATES.morts*sec,
+    faim:IMPACT_RATES.faim*sec,
+    co2:IMPACT_RATES.co2*sec,
+    foret:IMPACT_RATES.foret*sec,
+    plastique:IMPACT_RATES.plastique*sec,
+    tabac:IMPACT_RATES.tabac*sec,
+    cancer:IMPACT_RATES.cancer*sec,
+    gaspillage:IMPACT_RATES.gaspillage*sec,
+    naissances:IMPACT_RATES.naissances*sec,
+    eau:IMPACT_RATES.eau*sec,
+  };
+  const display={
+    impMorts:fImp(raw.morts),
+    impFaim:fImp(raw.faim),
+    impCo2:raw.co2>=1e6?(raw.co2/1e6).toFixed(1)+' M tonnes':raw.co2>=1e3?Math.floor(raw.co2/1e3).toLocaleString('fr-FR')+' k tonnes':Math.floor(raw.co2).toLocaleString('fr-FR')+' t',
+    impForet:raw.foret>=100?Math.floor(raw.foret).toLocaleString('fr-FR')+' ha':raw.foret.toFixed(1)+' ha',
+    impPlastique:raw.plastique>=1e3?Math.floor(raw.plastique/1e3).toLocaleString('fr-FR')+' tonnes':Math.floor(raw.plastique).toLocaleString('fr-FR')+' kg',
+    impTabac:fImp(raw.tabac),
+    impCancer:fImp(raw.cancer),
+    impGaspillage:raw.gaspillage>=1e3?(raw.gaspillage/1e3).toFixed(0)+' k tonnes':Math.floor(raw.gaspillage).toLocaleString('fr-FR')+' t',
+    impNaissances:fImp(raw.naissances),
+    impEau:raw.eau>=1e6?(raw.eau/1e6).toFixed(1)+' M litres':raw.eau>=1e3?Math.floor(raw.eau/1e3).toLocaleString('fr-FR')+' k litres':Math.floor(raw.eau).toLocaleString('fr-FR')+' L',
+  };
+  Object.entries(display).forEach(([id,txt])=>{
+    const e=$(id);if(!e||e.textContent===txt)return;
+    e.textContent=txt;e.classList.remove('bump');void e.offsetWidth;e.classList.add('bump');
+  });
+  // Equivalences choc
+  const eqForet=Math.floor(raw.foret*14.3); // 1 ha = ~14.3 terrains de foot
+  const eqAvion=Math.floor(raw.co2/0.9);    // 1 vol Paris-NY = ~0.9 tonne CO2
+  const eqPlastique=Math.floor(raw.plastique/5000); // 1 éléphant = ~5000 kg
+  const eqNourriture=Math.floor(raw.gaspillage/182); // 1 école (500 élèves) 1 an = ~182t
+  st('impEqForet',eqForet.toLocaleString('fr-FR'));
+  st('impEqAvion',eqAvion.toLocaleString('fr-FR'));
+  st('impEqPlastique',eqPlastique.toLocaleString('fr-FR'));
+  st('impEqNourriture',eqNourriture.toLocaleString('fr-FR'));
+}
+
+// ═══════════════════════════════════════════════
+// 📱 SWIPE ENTRE SECTIONS
+// ═══════════════════════════════════════════════
+const SECTIONS=['impact','population','environment','economy','health','trends','compare'];
+function initSwipe(){
+  let sx=0,sy=0,sd=false;
+  const app=$('app');
+  app.addEventListener('touchstart',e=>{
+    if(e.touches.length!==1)return;
+    sx=e.touches[0].clientX;sy=e.touches[0].clientY;sd=false;
+  },{passive:true});
+  app.addEventListener('touchmove',e=>{
+    if(sd)return;
+    const dx=e.touches[0].clientX-sx,dy=e.touches[0].clientY-sy;
+    if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>12)sd=true;
+  },{passive:true});
+  app.addEventListener('touchend',e=>{
+    if(!sd)return;
+    const dx=e.changedTouches[0].clientX-sx;
+    if(Math.abs(dx)<50)return;
+    const cur=SECTIONS_ORDER.indexOf(ST.sec);
+    if(dx<0&&cur<SECTIONS_ORDER.length-1)goTo(SECTIONS_ORDER[cur+1]);
+    else if(dx>0&&cur>0)goTo(SECTIONS_ORDER[cur-1]);
+  },{passive:true});
+}
+
+// ═══════════════════════════════════════════════
+// 💾 SAUVEGARDE PRÉFÉRENCES (localStorage)
+// ═══════════════════════════════════════════════
+function savePrefs(){
+  try{
+    localStorage.setItem('ep_prefs',JSON.stringify({
+      theme:ST.th,
+      countries:[...ST.activeCountries],
+      section:ST.sec,
+      metric:ST.compareMetric
+    }));
+  }catch(e){}
+}
+function loadPrefs(){
+  try{
+    const p=JSON.parse(localStorage.getItem('ep_prefs')||'{}');
+    if(p.theme){ST.th=p.theme;document.documentElement.setAttribute('data-theme',p.theme);$('thm').textContent=p.theme==='dark'?'☀️':'🌙';}
+    if(p.countries&&p.countries.length)ST.activeCountries=new Set(p.countries);
+    if(p.section)ST._savedSection=p.section;
+    if(p.metric)ST.compareMetric=p.metric;
+  }catch(e){}
+}
+async function init(){
+  loadPrefs();
+  await loader();
+  ST.sn=mkSnap(ST.t0);
+  const app=$('app');app.classList.remove('hidden');app.classList.add('visible');
+  initSp();initCh();initGlow();
+  buildCountrySelector();
+  buildMetricTabs();
+  initCompareFilters();
+  initSwipe();
+  initShockNotif();
+  initChartFilters();
+  document.querySelectorAll('[data-s]').forEach(btn=>btn.addEventListener('click',()=>{
+    goTo(btn.dataset.s);savePrefs();
+  }));
+  $('thm').addEventListener('click',()=>{tgl();savePrefs();});
+  upd();
+  initImpact();ST.impactInited=true;
+  setInterval(upd,1000);
+  setInterval(()=>{ST.sn=mkSnap(Date.now());ST.t0=Date.now()},3e5);
+  if(ST._savedSection&&ST._savedSection!=='impact')setTimeout(()=>goTo(ST._savedSection),50);
+}
+
+// ═══════════════════════════════════════════════
+// 🔄 AUTO-ACTUALISATION — toutes les 60 secondes
+// ═══════════════════════════════════════════════
+setInterval(()=>{
+  ST.t0=Date.now();
+  ST.sn=mkSnap(ST.t0);
+  upd();
+  queueToast('Données actualisées','#00ffcc','🔄');
+},60000);
+document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
+// Expose analyzeWithAI globally (called via onclick attr)
+window.analyzeWithAI=analyzeWithAI;
+
+// ═══════════════════════════════════════════════
+// 📜 CGU — CONSENTEMENT & MODAL
+// ═══════════════════════════════════════════════
+const CGU_VERSION='1.0';
+const CGU_KEY='ep_cgu_accepted';
+
+function checkCguConsent(){
+  try{
+    const saved=JSON.parse(localStorage.getItem(CGU_KEY)||'null');
+    if(saved&&saved.version===CGU_VERSION){
+      document.getElementById('cgu-consent').style.display='none';
+      return;
+    }
+  }catch(e){}
+  // Afficher l'écran de consentement
+  document.getElementById('cgu-consent').style.display='flex';
+}
+
+function toggleCguBtn(){
+  const cb=document.getElementById('cgu-check-box');
+  const btn=document.getElementById('cgu-accept-btn');
+  if(cb.checked){btn.classList.add('active');}
+  else{btn.classList.remove('active');}
+}
+
+function acceptCgu(){
+  try{
+    localStorage.setItem(CGU_KEY,JSON.stringify({version:CGU_VERSION,date:new Date().toISOString()}));
+  }catch(e){}
+  const el=document.getElementById('cgu-consent');
+  el.classList.add('out');
+  setTimeout(()=>{el.style.display='none';},520);
+}
+
+function openCguModal(tab){
+  const modal=document.getElementById('cgu-modal');
+  modal.classList.add('open');
+  switchCguTab(tab||'cgu');
+  document.body.style.overflow='hidden';
+}
+
+function closeCguModal(){
+  const modal=document.getElementById('cgu-modal');
+  modal.classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function switchCguTab(tab){
+  document.querySelectorAll('.cgu-tab').forEach(t=>{
+    t.classList.toggle('on',t.dataset.tab===tab);
+  });
+  document.querySelectorAll('.cgu-tab-content').forEach(c=>{
+    c.classList.toggle('on',c.id==='tab-'+tab);
+  });
+}
+
+// Exposer les fonctions globalement IMMÉDIATEMENT
+// (avant que le HTML inline onchange="toggleCguBtn()" soit parsé)
+window.openCguModal=openCguModal;
+window.closeCguModal=closeCguModal;
+window.switchCguTab=switchCguTab;
+window.toggleCguBtn=toggleCguBtn;
+window.acceptCgu=acceptCgu;
+
+// Fermer modal avec Echap
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeCguModal();
+});
+
+// Attacher l'écouteur sur #cgu-modal + vérifier consentement
+// une fois le DOM entièrement chargé (l'élément est APRÈS ce script)
+window.addEventListener('load',function(){
+  checkCguConsent();
+  const modal=document.getElementById('cgu-modal');
+  if(modal){
+    modal.addEventListener('click',function(e){
+      if(e.target===this)closeCguModal();
+    });
+  }
+});
+})();
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CGU CONSENT SCREEN — 1er lancement
+═══════════════════════════════════════════════════════════ -->
+<div id="cgu-consent">
+  <div class="cgu-box">
+    <div class="cgu-top">
+      <div class="cgu-logo">🌍</div>
+      <div class="cgu-title">EARTHPULSE</div>
+      <div class="cgu-subtitle">par Embrostudio · v8.0</div>
+    </div>
+    <div class="cgu-scroll">
+      <div class="cgu-section">
+        <h3>Bienvenue</h3>
+        <p>EARTHPULSE est une application de visualisation de statistiques mondiales en temps réel. Avant de continuer, veuillez lire et accepter nos conditions d'utilisation.</p>
+      </div>
+      <div class="cgu-divider"></div>
+      <div class="cgu-section">
+        <h3>Données affichées</h3>
+        <ul>
+          <li>Toutes les statistiques sont des <strong>estimations</strong> basées sur des données publiques (ONU, OMS, FMI, Banque Mondiale, IEA, FAO, IHME).</li>
+          <li>Les chiffres en temps réel sont des <strong>simulations calculées</strong> à partir de taux annuels — ils ne reflètent pas des mesures instantanées réelles.</li>
+          <li>L'application n'est pas destinée à un usage professionnel, médical ou scientifique certifié.</li>
+        </ul>
+      </div>
+      <div class="cgu-divider"></div>
+      <div class="cgu-section">
+        <h3>Vos données</h3>
+        <ul>
+          <li>Aucune donnée personnelle n'est collectée ni transmise.</li>
+          <li>Les préférences (thème, pays sélectionnés) sont stockées <strong>uniquement sur votre appareil</strong> (localStorage).</li>
+          <li>La fonctionnalité d'analyse IA utilise l'API Anthropic — les données de contexte (pays sélectionnés) sont envoyées de façon anonyme.</li>
+        </ul>
+      </div>
+      <div class="cgu-divider"></div>
+      <div class="cgu-section">
+        <h3>Propriété intellectuelle</h3>
+        <p>L'application, son design et son code sont la propriété exclusive d'<strong>Embrostudio</strong>. Toute reproduction est interdite sans autorisation écrite.</p>
+      </div>
+      <div class="cgu-divider"></div>
+      <div class="cgu-section">
+        <h3>Limitation de responsabilité</h3>
+        <p>Embrostudio ne peut être tenu responsable d'éventuelles inexactitudes dans les données affichées, ni de décisions prises sur la base de ces informations.</p>
+      </div>
+    </div>
+    <div class="cgu-bottom">
+      <label class="cgu-check">
+        <input type="checkbox" id="cgu-check-box" onchange="toggleCguBtn()"/>
+        <span class="cgu-check-lbl">J'ai lu et j'accepte les <a href="#" onclick="event.preventDefault();openCguModal('cgu');return false">Conditions Générales d'Utilisation</a> et la <a href="#" onclick="event.preventDefault();openCguModal('privacy');return false">Politique de Confidentialité</a> d'Embrostudio.</span>
+      </label>
+      <button class="cgu-btn" id="cgu-accept-btn" onclick="acceptCgu()">ACCÉDER À L'APPLICATION</button>
+      <div class="cgu-dev">© 2025-2026 Embrostudio · EARTHPULSE · Tous droits réservés</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CGU MODAL — accessible depuis le footer
+═══════════════════════════════════════════════════════════ -->
+<div id="cgu-modal">
+  <div class="cgu-modal-box">
+    <div class="cgu-modal-head">
+      <span class="cgu-modal-title">Documents Légaux — Embrostudio</span>
+      <button class="cgu-modal-close" onclick="closeCguModal()">✕</button>
+    </div>
+    <div class="cgu-tabs">
+      <button class="cgu-tab on" data-tab="cgu" onclick="switchCguTab('cgu')">CGU</button>
+      <button class="cgu-tab" data-tab="privacy" onclick="switchCguTab('privacy')">Confidentialité</button>
+      <button class="cgu-tab" data-tab="legal" onclick="switchCguTab('legal')">Mentions légales</button>
+    </div>
+    <div class="cgu-modal-body">
+
+      <!-- ── CGU ── -->
+      <div class="cgu-tab-content on" id="tab-cgu">
+        <div class="cgu-section">
+          <h3>Article 1 — Objet</h3>
+          <p>Les présentes Conditions Générales d'Utilisation (CGU) régissent l'utilisation de l'application mobile <strong>EARTHPULSE</strong>, développée et éditée par <strong>Embrostudio</strong>, disponible sur Google Play Store. En téléchargeant ou utilisant l'application, l'utilisateur accepte sans réserve les présentes CGU.</p>
+        </div>
+        <div class="cgu-divider"></div>
+        <div class="cgu-section">
+          <h3>Article 2 — Description du service</h3>
+          <p>EARTHPULSE est une application de visualisation de statistiques mondiales (population, environnement, économie, santé) présentées en temps réel sous forme de simulations calculées à partir de données publiques issues d'organismes internationaux (ONU, OMS, FMI, Banque Mondiale, IEA, FAO, IHME). Les données affichées sont des estimations à visée éducative et informative.</p>
+        </div>
+        <div class="cgu-divider"></div>
+        <div class="cgu-section">
+          <h3>Article 3 — Accès et utilisation</h3>
+          <ul>
+            <li>L'application est accessible gratuitement après téléchargement sur Google Play Store.</li>
+            <li>L'utilisateur s'engage à utiliser l'application conformément à sa destination et aux lois en vigueur.</li>
+            <li>Toute utilisation à des fins commerciales, professionnelles ou à des fins de diffusion de données certifiées est strictement interdite.</li>
+            <li>L'utilisateur doit être âgé d'au moins 13 ans pour utiliser l'application.</li>
+          </ul>
+        </div>
+        <div class="cgu-divider"></div>
+        <div class="cgu-section">
+          <h3>Article 4 — Exactitude des données</h3>
+          <p>Les statistiques présentées dans EARTHPULSE sont des <strong>estimations simulées</strong> basées sur des taux annuels publiés par des sources officielles. Elles ne constituent pas des mesures instantanées certifiées. Embrostudio s'efforce de maintenir des données à jour, mais ne garantit pas leur exactitude en temps réel. L'application ne doit pas être utilisée comme source de référence pour des travaux académiques, médicaux, journalistiques ou professionnels sans vérification auprès des sources primaires.</p>
+        </div>
+        <div class="cgu-divider"></div>
+        <div class="cgu-section">
+          <h3>Article 5 — Propriété intellectuelle</h3>
+          <p>L'ensemble des éléments constituant l'application EARTHPULSE (design, code source, graphiques, animations, logotypes, dénominations) est la propriété exclusive d'<strong>Embrostudio</strong> et est protégé par les lois françaises et internationales sur la propriété intellectuelle. Toute reproduction, représentation, modification, publication ou adaptation, totale ou partielle, est interdite sans autorisation écrite préalable d'Embrostudio.</p>
+        </div>
+        <div class="cgu-divider"></div>
+        <div class="cgu-section">
+          <h3>Article 6 — Fonctionnalité IA</h3>
+          <p>L'application propose une fonctionnalité d'analyse comparative utilisant l'API Claude d'Anthropic. Lors de son utilisation, des données statistiques anonymisées (pays sélectionnés et indicateurs chiffrés) sont transmises aux serveurs d'Anthropic. Aucune donnée personnelle identifiable n'est incluse dans ces requêtes. L'utilisation de cette fonctionnalité est soumise aux <a href="https://www.anthropic.com/legal/consumer-terms" style="color:var(--cyan)" target="_blank" rel="noopener">Conditions d'utilisation d'Anthropic</a>.</p>
+        </div>
+        <div class="cgu-divider"></div>
+        <div class="cgu-section">
+          <h3>Article 7 — Limitation de responsabilité</h3>
+          <ul>
+            <li>Embrostudio ne garantit pas la disponibilité continue de l'application.</li>
+            <li>Embrostudio ne saurait être tenu responsable de toute décision prise sur la base des informations affichées.</li>
+            <li>L'application est fournie "en l'état" sans garantie d'aucune sorte, expresse ou implicite.</li>
+            <li>En aucun cas la responsabilité d'Embrostudio ne pourra être engagée pour des dommages directs ou indirects résultant de l'utilisation de l'application.</li>
+          </ul>
+        </div>
+        <div class="cgu-divider"></div>
+        <div class="cgu-section">
+          <h3>Article 8 — Modifications des CGU</h3>
+          <p>Embrostudio se réserve le droit de modifier les présentes CGU à tout moment. Les modifications prendront effet dès leur publication dans l'application ou sur Google Play Store. L'utilisation continuée de l'application après modification vaut acceptation des nouvelles CGU.</p>
+        </div>
+        <div class="cgu-divider"></div>
+        <div class="cgu-section">
+          <h3>Article 9 — Droit applicable</h3>
+          <p>Les présentes CGU sont soumises au droit français. En cas de litige, les parties s'engagent à rechercher une solution amiable avant tout recours judiciaire. À défaut, les tribunaux compétents de France seront seuls compétents.</p>
+        </div>
+        <div class="cgu-divider"></div>
+        <div class="cgu-section">
+          <h3>Article 10 — Contact</h3>
+          <p>Pour toute question relative aux présentes CGU : <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="12717d7c6673716652777f70607d616667767b7d3c717d7f">[email&#160;protected]</a></strong></p>
+        </div>
+      </div>
+
+      <!-- ── CONFIDENTIALITÉ ── -->
+      <div class="cgu-tab-content" id="tab-privacy">
+        <div class="cgu-section">
+          <h3>1. Responsable du traitement</h3>
+          <p><strong>Embrostudio</strong> est responsable du traitement des données dans le cadre de l'application EARTHPULSE, conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés.</p>
+        </div>
+        <div class="cgu-divider"></div>
+        <div class="cgu-section">
+          <h3>2. Données collectées</h3>
+          <p>EARTHPULSE est conçue dans un esprit de respect de la vie privée (<em>privacy by design</em>). Nous ne collectons <strong>aucune donnée personnelle</strong> identifiable. Seules les informations suivantes sont stockées localement sur votre appareil :</p>
+          <ul>
+            <li>Préférence de thème (clair / sombre)</li>
+            <li>Pays sélectionnés pour la comparaison</li>
+            <li>Dernière section consultée</li>
+            <li>Acceptation des CGU (date et version)</li>
+          </ul>
+          <p style="margin-top:8px">Ces données restent sur votre appareil et ne sont <strong>jamais transmises</strong> à nos serveurs.</p>
+        </div>
+        <div class="cgu-divider"></div>
+        <div class="cgu-section">
+          <h3>3. Fonctionnalité Analyse IA</h3>
+          <p>Lorsque vous utilisez la fonctionnalité "Analyser avec l'IA", les données suivantes sont envoyées à l'API d'Anthropic :</p>
+          <ul>
+            <li>Les noms des pays sélectionnés</li>
+            <li>Les indicateurs statistiques chiffrés correspondants</li>
+          </ul>
+          <p style="margin-top:8px">Aucune donnée personnelle n'est incluse. Ces données sont traitées conformément à la <a href="https://www.anthropic.com/legal/privacy" style="color:var(--cyan)" target="_blank" rel="noopener">politique de confidentialité d'Anthropic</a>.</p>
+        </div>
+        <div class="cgu-divider"></div>
+        <div class="cgu-section">
+          <h3>4. Données analytiques (Google Play)</h3>
+          <p>Google Play Store peut collecter des données analytics de base (nombre de téléchargements, crashes, version de l'OS) conformément à ses propres politiques. Embrostudio n'a pas accès aux données personnelles des utilisateurs via ces outils.</p>
+        </div>
+        <div class="cgu-divider"></div>
+        <div class="cgu-section">
+          <h3>5. Droits des utilisateurs</h3>
+          <p>Conformément au RGPD, vous disposez des droits suivants :</p>
+          <ul>
+            <li>Droit d'accès à vos données</li>
+            <li>Droit de rectification</li>
+            <li>Droit à l'effacement (les données locales peuvent être supprimées en désinstallant l'application)</li>
+            <li>Droit à la portabilité</li>
+            <li>Droit d'opposition</li>
+          </ul>
+          <p style="margin-top:8px">Pour exercer vos droits : <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="45262a2b3124263105202827372a363130212c2a6b262a28">[email&#160;protected]</a></strong></p>
+        </div>
+        <div class="cgu-divider"></div>
+        <div class="cgu-section">
+          <h3>6. Conservation des données</h3>
+          <p>Les préférences stockées localement sont conservées jusqu'à désinstallation de l'application ou effacement manuel des données de l'application dans les paramètres de votre appareil.</p>
+        </div>
+        <div class="cgu-divider"></div>
+        <div class="cgu-section">
+          <h3>7. Modifications</h3>
+          <p>La présente politique de confidentialité peut être mise à jour. Toute modification substantielle sera notifiée via une mise à jour de l'application. Dernière mise à jour : <strong>Janvier 2026</strong>.</p>
+        </div>
+      </div>
+
+      <!-- ── MENTIONS LÉGALES ── -->
+      <div class="cgu-tab-content" id="tab-legal">
+        <div class="cgu-section">
+          <h3>Éditeur de l'application</h3>
+          <ul>
+            <li><strong>Dénomination :</strong> Embrostudio</li>
+            <li><strong>Application :</strong> EARTHPULSE</li>
+            <li><strong>Version :</strong> 8.0</li>
+            <li><strong>Contact :</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="680b07061c090b1c280d050a1a071b1c1d0c0107460b0705">[email&#160;protected]</a></li>
+            <li><strong>Plateforme :</strong> Google Play Store (Android)</li>
+          </ul>
+        </div>
+        <div class="cgu-divider"></div>
+        <div class="cgu-section">
+          <h3>Hébergement & Technologie</h3>
+          <ul>
+            <li>L'application fonctionne entièrement côté client (HTML/CSS/JavaScript)</li>
+            <li>Aucun serveur propriétaire Embrostudio n'est utilisé pour le fonctionnement principal</li>
+            <li>API IA : Anthropic, PBC — 548 Market St, San Francisco, CA 94104, USA</li>
+            <li>Données historiques : Banque Mondiale Open Data API (banquemondiale.org)</li>
+            <li>Typographies : Google Fonts (fonts.google.com)</li>
+            <li>Bibliothèque graphique : Chart.js (chartjs.org)</li>
+          </ul>
+        </div>
+        <div class="cgu-divider"></div>
+        <div class="cgu-section">
+          <h3>Sources des données</h3>
+          <ul>
+            <li><strong>ONU DESA</strong> — Département des affaires économiques et sociales (population)</li>
+            <li><strong>OMS</strong> — Organisation Mondiale de la Santé</li>
+            <li><strong>IEA</strong> — Agence Internationale de l'Énergie (CO₂, énergie)</li>
+            <li><strong>FAO</strong> — Organisation des Nations Unies pour l'alimentation</li>
+            <li><strong>FMI</strong> — Fonds Monétaire International (PIB, économie)</li>
+            <li><strong>Banque Mondiale</strong> — Indicateurs de développement mondial</li>
+            <li><strong>UNAIDS</strong> — Programme commun des Nations Unies sur le VIH/SIDA</li>
+            <li><strong>IHME</strong> — Institute for Health Metrics and Evaluation (GBD)</li>
+          </ul>
+        </div>
+        <div class="cgu-divider"></div>
+        <div class="cgu-section">
+          <h3>Propriété intellectuelle</h3>
+          <p>© 2025-2026 Embrostudio. Tous droits réservés. Le nom EARTHPULSE, le design de l'interface, les animations et le code source sont des œuvres protégées par le droit d'auteur. Toute reproduction partielle ou totale est interdite sans autorisation expresse et écrite d'Embrostudio.</p>
+        </div>
+        <div class="cgu-divider"></div>
+        <div class="cgu-section">
+          <h3>Avertissement</h3>
+          <p>Les statistiques affichées dans EARTHPULSE sont des simulations éducatives. Bien que basées sur des données officielles, elles ne peuvent pas être utilisées comme référence certifiée. Embrostudio décline toute responsabilité quant à l'utilisation des données présentées.</p>
+        </div>
+        <div class="cgu-divider"></div>
+        <div class="cgu-section">
+          <h3>Médiation & Litiges</h3>
+          <p>Conformément aux dispositions du Code de la consommation, l'utilisateur peut recourir gratuitement au service de médiation de la consommation. Pour tout litige, les tribunaux français sont seuls compétents.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV — en dehors de #app pour que position:fixed fonctionne -->
+<nav class="bnav" id="bnav" aria-label="Navigation principale">
+  <button class="bnav-btn on" data-s="impact"><div class="bnav-icon">💀</div><span class="bnav-lbl">Impact</span></button>
+  <button class="bnav-btn" data-s="population"><div class="bnav-icon">🌍</div><span class="bnav-lbl">Pop.</span></button>
+  <button class="bnav-btn" data-s="environment"><div class="bnav-icon">🌱</div><span class="bnav-lbl">Env.</span></button>
+  <button class="bnav-btn" data-s="economy"><div class="bnav-icon">💰</div><span class="bnav-lbl">Éco.</span></button>
+  <button class="bnav-btn" data-s="health"><div class="bnav-icon">❤️</div><span class="bnav-lbl">Santé</span></button>
+  <button class="bnav-btn" data-s="trends"><div class="bnav-icon">📈</div><span class="bnav-lbl">Trends</span></button>
+  <button class="bnav-btn" data-s="compare"><div class="bnav-icon">🏴</div><span class="bnav-lbl">Pays</span></button>
+</nav>
+</body>
+</html>
