@@ -2780,28 +2780,19 @@ window.addEventListener('load',function(){
   <p>Contact : earthpulse.app@gmail.com</p>
   <p>Cette application ne nécessite aucune inscription et ne collecte aucune donnée personnelle.</p>
 </div>
-<script>
 let lastY = 0;
 
-document.addEventListener("touchstart", function(e) {
+document.addEventListener("touchstart", function (e) {
   lastY = e.touches[0].clientY;
 }, { passive: true });
 
-document.addEventListener("touchmove", function(e) {
+document.addEventListener("touchmove", function (e) {
   let y = e.touches[0].clientY;
   let scrollTop = window.scrollY || document.documentElement.scrollTop;
 
-  // ✅ Autorise uniquement si on est VRAIMENT en haut
-  
-  if (scrollTop <= 0 && y > lastY) {
-    e.preventDefault();  // ← bloque le PTR natif Android
-    return;
-}
-
-  // ❌ Bloque le pull-to-refresh ailleurs
-  if (y > lastY) {
+  // 👉 bloque UNIQUEMENT le pull-to-refresh en haut
+  if (scrollTop === 0 && y > lastY) {
     e.preventDefault();
   }
 
 }, { passive: false });
-</script>
