@@ -41,18 +41,18 @@ body::after{content:'';position:fixed;inset:0;z-index:1;background:repeating-lin
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
 
-  /* 🔥 BLOQUE le pull-to-refresh proprement */
-  overscroll-behavior-y: contain;
+  overflow: hidden; /* 🔥 on bloque le scroll global */
 }
 
-/* ton app principale */
+/* zone scrollable */
 #app {
   height: 100vh;
   overflow-y: auto;
-  overscroll-behavior-y: contain;
+
+  /* 🔥 TRÈS IMPORTANT */
+ overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
 }
     
 #loader{position:fixed;inset:0;z-index:9999;background:#020408;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:56px}
