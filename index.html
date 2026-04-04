@@ -42,7 +42,17 @@ body::after{content:'';position:fixed;inset:0;z-index:1;background:repeating-lin
   padding: 0;
   height: 100%;
   overflow-x: hidden;
-  overflow-y: auto; /* IMPORTANT */
+  overflow-y: auto;
+
+  /* 🔥 BLOQUE le pull-to-refresh proprement */
+  overscroll-behavior-y: contain;
+}
+
+/* ton app principale */
+#app {
+  height: 100vh;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
 }
     
 #loader{position:fixed;inset:0;z-index:9999;background:#020408;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:56px}
@@ -2781,20 +2791,3 @@ window.addEventListener('load',function(){
   <p>Cette application ne nécessite aucune inscription et ne collecte aucune donnée personnelle.</p>
 </div>
 </div>
-<script>
-let lastY = 0;
-
-document.addEventListener("touchstart", function (e) {
-  lastY = e.touches[0].clientY;
-}, { passive: true });
-
-document.addEventListener("touchmove", function (e) {
-  const y = e.touches[0].clientY;
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-  // ✅ bloque uniquement si on est TOUT en haut + swipe vers le bas
-  if (scrollTop === 0 && y > lastY + 5) {
-    e.preventDefault();
-  }
-}, { passive: false });
-</script>
