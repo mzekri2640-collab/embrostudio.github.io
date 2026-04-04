@@ -42,6 +42,8 @@ body::after{content:'';position:fixed;inset:0;z-index:1;background:repeating-lin
   padding: 0;
   height: 100%;
   overflow-x: hidden;
+    overscroll-behavior: none;⁸
+    
   }
 #loader{position:fixed;inset:0;z-index:9999;background:#020408;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:56px}
 #loader.out{animation:lout .9s cubic-bezier(.7,0,.3,1) forwards}
@@ -2778,3 +2780,19 @@ window.addEventListener('load',function(){
   <p>Contact : earthpulse.app@gmail.com</p>
   <p>Cette application ne nécessite aucune inscription et ne collecte aucune donnée personnelle.</p>
 </div>
+<script>
+let lastY = 0;
+
+document.addEventListener("touchstart", function(e) {
+  lastY = e.touches[0].clientY;
+}, { passive: true });
+
+document.addEventListener("touchmove", function(e) {
+  let y = e.touches[0].clientY;
+  let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+
+  if (scrollTop === 0 && y > lastY) {
+    e.preventDefault();
+  }
+}, { passive: false });
+  </script>
