@@ -2785,13 +2785,14 @@ let lastY = 0;
 
 document.addEventListener("touchstart", function(e) {
   lastY = e.touches[0].clientY;
-}, { passive: false });
+}, { passive: true });
 
 document.addEventListener("touchmove", function(e) {
   let y = e.touches[0].clientY;
-  let scrollTop = document.documentElement.scrollTop;
+  let scrollTop = window.scrollY || document.documentElement.scrollTop;
 
-  if (scrollTop <= 0 && y > lastY + 10) {
+  // Bloque UNIQUEMENT si on est vraiment en haut + geste fort
+  if (scrollTop <= 0 && y > lastY + 30) {
     e.preventDefault();
   }
 }, { passive: false });
