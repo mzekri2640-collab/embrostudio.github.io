@@ -2792,9 +2792,11 @@ document.addEventListener("touchmove", function(e) {
   let scrollTop = window.scrollY || document.documentElement.scrollTop;
 
   // ✅ Autorise uniquement si on est VRAIMENT en haut
+  
   if (scrollTop <= 0 && y > lastY) {
+    e.preventDefault();  // ← bloque le PTR natif Android
     return;
-  }
+}
 
   // ❌ Bloque le pull-to-refresh ailleurs
   if (y > lastY) {
