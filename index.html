@@ -2785,13 +2785,13 @@ let lastY = 0;
 
 document.addEventListener("touchstart", function(e) {
   lastY = e.touches[0].clientY;
-}, { passive: true });
+}, { passive: false });
 
 document.addEventListener("touchmove", function(e) {
   let y = e.touches[0].clientY;
-  let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  let scrollTop = document.documentElement.scrollTop;
 
-  if (scrollTop === 0 && y > lastY) {
+  if (scrollTop <= 0 && y > lastY + 10) {
     e.preventDefault();
   }
 }, { passive: false });
