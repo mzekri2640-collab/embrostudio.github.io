@@ -2781,20 +2781,25 @@ window.addEventListener('load',function(){
   <p>Contact : earthpulse.app@gmail.com</p>
   <p>Cette application ne nécessite aucune inscription et ne collecte aucune donnée personnelle.</p>
 </div>
+</div>
+
 <script>
 let lastY = 0;
 
-document.addEventListener("touchstart", (e) => {
+document.addEventListener("touchstart", function (e) {
   lastY = e.touches[0].clientY;
 }, { passive: true });
 
-document.addEventListener("touchmove", (e) => {
+document.addEventListener("touchmove", function (e) {
   const y = e.touches[0].clientY;
-  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
 
+  // bloque uniquement le pull-to-refresh en haut
   if (scrollTop <= 0 && y > lastY) {
     e.preventDefault();
   }
-
 }, { passive: false });
 </script>
+
+</body>
+</html>
