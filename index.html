@@ -42,9 +42,10 @@ body::after{content:'';position:fixed;inset:0;z-index:1;background:repeating-lin
   padding: 0;
   height: 100%;
   overflow-x: hidden;
-    overscroll-behavior-y: contain;
+  overflow: hidden; /* 🔥 IMPORTANT */
+  overscroll-behavior-y: none; /* 🔥 IMPORTANT */
+}
     
-  }
 #loader{position:fixed;inset:0;z-index:9999;background:#020408;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:56px}
 #loader.out{animation:lout .9s cubic-bezier(.7,0,.3,1) forwards}
 @keyframes lout{to{opacity:0;transform:scale(1.06);pointer-events:none}}
@@ -2782,16 +2783,18 @@ window.addEventListener('load',function(){
 </div>
 let lastY = 0;
 
-document.addEventListener("touchstart", function (e) {
+document.addEventListener("touchstart", (e) => {
   lastY = e.touches[0].clientY;
 }, { passive: true });
 
-document.addEventListener("touchmove", function (e) {
-  let y = e.touches[0].clientY;
-  let scrollTop = window.scrollY || document.documentElement.scrollTop;
+document.addEventListener("touchmove", (e) => {
+  const y = e.touches[0].clientY;
+  const scrollTop = 
+  document.documentElement.scrollTop || 
+  document.body.scrollTop;
 
-  // 👉 bloque UNIQUEMENT le pull-to-refresh en haut
-  if (scrollTop === 0 && y > lastY) {
+  // 🔥 bloque uniquement le pull-to-refresh en haut
+  if (scrollTop <= 0 && y > lastY) {
     e.preventDefault();
   }
 
