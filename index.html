@@ -42,6 +42,7 @@ body::after{content:'';position:fixed;inset:0;z-index:1;background:repeating-lin
   padding: 0;
   height: 100%;
   overflow-x: hidden;
+  overflow-y: auto; /* IMPORTANT */
 }
     
 #loader{position:fixed;inset:0;z-index:9999;background:#020408;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:56px}
@@ -2780,7 +2781,6 @@ window.addEventListener('load',function(){
   <p>Cette application ne nécessite aucune inscription et ne collecte aucune donnée personnelle.</p>
 </div>
 </div>
-
 <script>
 let lastY = 0;
 
@@ -2790,14 +2790,11 @@ document.addEventListener("touchstart", function (e) {
 
 document.addEventListener("touchmove", function (e) {
   const y = e.touches[0].clientY;
-  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-  // bloque uniquement le pull-to-refresh en haut
-  if (scrollTop <= 0 && y > lastY) {
+  // ✅ bloque uniquement si on est TOUT en haut + swipe vers le bas
+  if (scrollTop === 0 && y > lastY + 5) {
     e.preventDefault();
   }
 }, { passive: false });
 </script>
-
-</body>
-</html>
