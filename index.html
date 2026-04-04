@@ -58,16 +58,16 @@ body::after{content:'';position:fixed;inset:0;z-index:1;background:repeating-lin
 @keyframes epulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
 .l-brand {
   font-family: 'Orbitron', monospace;
-  font-size: clamp(1.2rem, 4vw, 2rem);
+  font-size: clamp(1rem, 3.5vw, 1.6rem);
   font-weight: 900;
-  letter-spacing: 0.2em;
+
+  letter-spacing: 0.08em;
 
   text-align: center;
-  max-width: 90vw;
-  margin: 0 auto;
+  width: 100%;
+  padding: 0 10px; /* 👈 marge sécurité */
 
-  overflow: hidden;
-  word-break: break-word;
+  box-sizing: border-box;
 }
 .l-sub{font-family:'Rajdhani',sans-serif;font-size:.72rem;letter-spacing:.35em;color:rgba(0,212,255,.4);margin-top:8px;text-transform:uppercase;text-align:center;font-weight:500}
 .l-prog{width:320px;display:flex;flex-direction:column;align-items:center;gap:12px}
